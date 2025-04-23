@@ -13,6 +13,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     # Rotas das demais aplicações
     path("", include("apps.core.urls")),
+    
 ]
 
 # Configuração de arquivos de mídia
