@@ -1,0 +1,28 @@
+# Dependências principais do Django
+Django==5.2
+asgiref==3.8.1
+sqlparse==0.5.3
+tzdata==2025.2
+
+# Extensões e utilitários do Django
+django-crispy-forms==2.4
+crispy-bootstrap5==2025.4
+django-filter==25.1
+django-import-export==4.3.7
+django-nested-admin==4.1.1
+
+# Banco de dados
+psycopg2-binary==2.9.10
+
+# Gerenciamento de configuração
+python-decouple==3.8
+
+# Manipulação de arquivos estáticos
+whitenoise==6.9.0
+
+# Manipulação de dados e utilitários
+tablib==3.8.0
+diff-match-patch==20241021
+
+# Diversos
+python-monkey-business==1.1.0
