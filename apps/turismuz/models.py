@@ -140,11 +140,39 @@ class GuiasTurismo(models.Model):
     def __str__(self):
         return f"{self.nome} - {self.nome_tour}"
 
-class Publicacao(models.Model){ 
+class Publicacao(models.Model):
     titulo = models.CharField(max_length=255, verbose_name='Título da Publicação', help_text='Título que aparecerá no card de sua publicação.')
     texto_da_noticia = models.TextField(verbose_name = 'Texto da Publicação', help_text = 'Texto que aparecerá no corpo de sua publicação')
-    # imagens
     data_de_publicacao = models.DateTimeField(auto_now_add = True, verbose_name='Data de Publicação')
 
-}
+class Avaliacao(models.Model):
+    nota = models.PositiveSmallIntegerField(
+        verbose_name='Nota',
+        help_text='Nota da avaliação (1 a 5)'
+    )
+    comentario = models.TextField(
+        verbose_name='Comentário',
+        help_text='Comentário da avaliação',
+        blank=True,
+        null=True
+    )
+    data = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Data da Avaliação'
+    )
+    usuario = models.CharField(
+        max_length=100,
+        verbose_name='Usuário',
+        help_text='Nome do usuário que avaliou'
+    )
+
+    class Meta:
+        verbose_name = 'Avaliação'
+        verbose_name_plural = 'Avaliações'
+        ordering = ['-data']
+
+    def __str__(self):
+        return f"{self.usuario} - Nota: {self.nota}"
+
+
 
