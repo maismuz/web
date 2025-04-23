@@ -1,7 +1,6 @@
 name: Reportar nova Issue
 description: Preencha este formulário para relatar uma nova tarefa, bug ou melhoria.
-title: "[TIPO] Título descritivo e objetivo"
-labels: [‘pendente’]
+title: "Título descritivo e objetivo"
 body:
   - type: input
     id: contexto
@@ -33,14 +32,3 @@ body:
         - Documentação
     validations:
       required: true
-
-  - type: textarea
-    id: criterios
-    attributes:
-      label: Critérios de Aceitação
-      description: Liste os critérios para considerar essa issue como concluída.
-      placeholder: |
-        - [ ] O botão deve ser exibido corretamente
-        - [ ] A funcionalidade deve ser testada
-    validations:
-      required: false
