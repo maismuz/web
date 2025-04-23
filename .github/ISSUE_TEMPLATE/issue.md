@@ -1,0 +1,46 @@
+name: Reportar nova Issue
+description: Preencha este formulário para relatar uma nova tarefa, bug ou melhoria.
+title: "[TIPO] Título descritivo e objetivo"
+labels: [‘pendente’]
+body:
+  - type: input
+    id: contexto
+    attributes:
+      label: Contexto
+      description: Descreva brevemente o contexto da tarefa ou problema.
+      placeholder: Ex: Tela de login não responde ao clicar em "Entrar".
+    validations:
+      required: true
+
+  - type: textarea
+    id: descricao
+    attributes:
+      label: Descrição Detalhada
+      description: Informe de forma objetiva o que precisa ser feito ou corrigido.
+      placeholder: Explique o comportamento esperado, comportamento atual, passos para reproduzir (se aplicável), e qualquer informação adicional.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo de Issue
+      options:
+        - Bug
+        - Feature
+        - Melhoria
+        - Refatoração
+        - Documentação
+    validations:
+      required: true
+
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Critérios de Aceitação
+      description: Liste os critérios para considerar essa issue como concluída.
+      placeholder: |
+        - [ ] O botão deve ser exibido corretamente
+        - [ ] A funcionalidade deve ser testada
+    validations:
+      required: false
