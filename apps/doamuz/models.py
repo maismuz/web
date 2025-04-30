@@ -22,3 +22,17 @@ class Doacao(models.Model):
         class Meta:
             verbose_name = "Doação"
             verbose_name_plural = "Doações"
+
+class Feedback(models.Model):
+        tipo_doação = models.CharField(max_length=100, verbose_name="Qual foi a categoria da doação?")
+        mensagem = models.TextField()
+        data_do_comentario = models.DateTimeField(auto_now_add=True)
+        AVALIACAO_CHOICES = [(1, 'Positivo'),(2, 'Negativo'),]
+        avaliacao = models.IntegerField(choices=AVALIACAO_CHOICES, default=2, verbose_name="Avaliação")
+
+        def __str__(self):
+            return f"{self.nome}"
+
+        class Meta:
+            verbose_name = "Feedback"
+            verbose_name_plural = "Feedbacks"
