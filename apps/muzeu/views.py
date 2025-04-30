@@ -9,5 +9,16 @@ from django.utils.decorators import method_decorator
 class IndexView(View):
     def get(self, request):
         return render(request, 'index_muzeu.html')
+    
+class ItemAcervoView(View):
+    def get(self, request):
+        return render(request, 'item_acervo.html')
 
+class PatrimonioView(View):
+    def get(self, request):
+        return render(request, 'patrimonio.html')
+    
+class DocumentoHistoricoView(View):
+    def get(self, request):
+        return render(request, 'documento_historico.html')
 # Create your views here.
