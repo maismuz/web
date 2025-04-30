@@ -52,185 +52,177 @@ def validate_date_of_birth(value):
     if age > 120:
         raise ValidationError(_('Data de nascimento inválida.'))
 
-class Perfil(models.Model):
-    """
-    Modelo de perfil de usuário que estende o modelo de usuário padrão do Django,
-    acrescentando campos adicionais de alta relevância para o sistema.
-    """
-    
-    # Choices para estados brasileiros
-    ESTADOS_CHOICES = [
-        ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'), ('AM', 'Amazonas'),
-        ('BA', 'Bahia'), ('CE', 'Ceará'), ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'),
-        ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'), ('MS', 'Mato Grosso do Sul'),
-        ('MG', 'Minas Gerais'), ('PA', 'Pará'), ('PB', 'Paraíba'), ('PR', 'Paraná'),
-        ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'), ('RN', 'Rio Grande do Norte'),
-        ('RS', 'Rio Grande do Sul'), ('RO', 'Rondônia'), ('RR', 'Roraima'), ('SC', 'Santa Catarina'),
-        ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins'),
-    ]
-    
-    # Validators personalizados
-    telefone_validator = RegexValidator(
-        regex=r'^\(\d{2}\) \d{5}-\d{4}$',
-        message=_('Formato de telefone inválido. Use o formato: (XX) XXXXX-XXXX.')
+# Choices para estados brasileiros
+ESTADOS_CHOICES = [
+    ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'), ('AM', 'Amazonas'),
+    ('BA', 'Bahia'), ('CE', 'Ceará'), ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'),
+    ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'), ('MS', 'Mato Grosso do Sul'),
+    ('MG', 'Minas Gerais'), ('PA', 'Pará'), ('PB', 'Paraíba'), ('PR', 'Paraná'),
+    ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'), ('RN', 'Rio Grande do Norte'),
+    ('RS', 'Rio Grande do Sul'), ('RO', 'Rondônia'), ('RR', 'Roraima'), ('SC', 'Santa Catarina'),
+    ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins'),
+]
+
+# Validators personalizados
+telefone_validator = RegexValidator(
+    regex=r'^\(\d{2}\) \d{5}-\d{4}$',
+    message=_('Formato de telefone inválido. Use o formato: (XX) XXXXX-XXXX.')
+)
+
+cep_validator = RegexValidator(
+    regex=r'^\d{5}-\d{3}$',
+    message=_('Formato de CEP inválido. Use o formato: XXXXX-XXX.')
+)
+
+class Endereco(models.Model):
+    logradouro = models.CharField(
+        max_length=255,
+        verbose_name=_('Logradouro'),
+        help_text=_('Nome da rua, avenida, etc.')
     )
-    
-    cep_validator = RegexValidator(
-        regex=r'^\d{5}-\d{3}$',
-        message=_('Formato de CEP inválido. Use o formato: XXXXX-XXX.')
+    numero = models.CharField(
+        max_length=20,
+        verbose_name=_('Número'),
+        help_text=_('Número do endereço')
     )
-    
-    usuario = models.OneToOneField(
-        User, 
-        on_delete=models.CASCADE, 
-        related_name='perfil',
-        verbose_name=_('Usuário'),
-        help_text=_('Usuário vinculado a este perfil.')
-    )
-    
-    foto = models.ImageField(
-        upload_to='perfis/', 
-        blank=True, 
-        null=True,
-        verbose_name=_('Foto de Perfil'),
-        help_text=_('Foto de perfil do usuário.')
-    )
-    
-    telefone = models.CharField(
-        max_length=20, 
-        blank=True, 
-        null=True,
-        validators=[telefone_validator],
-        verbose_name=_('Telefone'),
-        help_text=_('Número de telefone no formato (XX) XXXXX-XXXX.')
-    )
-    
-    data_nascimento = models.DateField(
-        blank=True, 
-        null=True,
-        validators=[validate_date_of_birth],
-        verbose_name=_('Data de Nascimento'),
-        help_text=_('Data de nascimento do usuário.')
-    )
-    
-    cpf = models.CharField(
-        max_length=14, 
-        blank=True, 
-        null=True, 
-        unique=True,
-        validators=[validate_cpf],
-        verbose_name=_('CPF'),
-        help_text=_('CPF no formato XXX.XXX.XXX-XX.')
-    )
-    
-    rg = models.CharField(
-        max_length=20, 
-        blank=True, 
-        null=True,
-        verbose_name=_('RG'),
-        help_text=_('Número do RG.')
-    )
-    
-    endereco = models.CharField(
-        max_length=255, 
-        blank=True, 
-        null=True,
-        verbose_name=_('Endereço'),
-        help_text=_('Endereço completo.')
-    )
-    
     complemento = models.CharField(
-        max_length=255, 
-        blank=True, 
+        max_length=255,
+        blank=True,
         null=True,
         verbose_name=_('Complemento'),
         help_text=_('Complemento do endereço.')
     )
-    
     bairro = models.CharField(
-        max_length=100, 
-        blank=True, 
-        null=True,
+        max_length=100,
         verbose_name=_('Bairro'),
         help_text=_('Bairro do endereço.')
     )
-    
     cidade = models.CharField(
-        max_length=100, 
-        blank=True, 
-        null=True,
+        max_length=100,
         verbose_name=_('Cidade'),
         help_text=_('Cidade do endereço.')
     )
-    
     estado = models.CharField(
-        max_length=2, 
-        blank=True, 
-        null=True,
+        max_length=2,
         choices=ESTADOS_CHOICES,
         verbose_name=_('Estado'),
         help_text=_('Estado do endereço.')
     )
-    
     cep = models.CharField(
-        max_length=10, 
-        blank=True, 
-        null=True,
+        max_length=10,
         validators=[cep_validator],
         verbose_name=_('CEP'),
         help_text=_('CEP no formato XXXXX-XXX.')
     )
-    
-    bio = models.TextField(
-        blank=True, 
-        null=True,
-        verbose_name=_('Biografia'),
-        help_text=_('Breve descrição sobre o usuário.')
-    )
-    
+
+    def clean(self):
+        if self.cep:
+            cep_numeros = re.sub(r'[^0-9]', '', self.cep)
+            if len(cep_numeros) == 8:
+                self.cep = f"{cep_numeros[:5]}-{cep_numeros[5:]}"
+
+    class Meta:
+        verbose_name = _('Endereço')
+        verbose_name_plural = _('Endereços')
+
+class InformacaoProfissional(models.Model):
     profissao = models.CharField(
-        max_length=100, 
-        blank=True, 
-        null=True,
+        max_length=100,
         verbose_name=_('Profissão'),
-        help_text=_('Profissão do usuário.')
+        help_text=_('Profissão atual.')
     )
-    
-    genero = models.CharField(
-        max_length=1,
-        choices=[('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro'), ('N', 'Prefiro não informar')],
+    bio = models.TextField(
         blank=True,
         null=True,
-        verbose_name=_('Gênero'),
-        help_text=_('Gênero do usuário.')
+        verbose_name=_('Biografia'),
+        help_text=_('Breve descrição profissional.')
     )
-    
+
+    class Meta:
+        verbose_name = _('Informação Profissional')
+        verbose_name_plural = _('Informações Profissionais')
+
+class RedeSocial(models.Model):
     linkedin = models.URLField(
         blank=True,
         null=True,
         verbose_name=_('LinkedIn'),
         help_text=_('URL do perfil no LinkedIn.')
     )
-    
     website = models.URLField(
         blank=True,
         null=True,
         verbose_name=_('Website'),
         help_text=_('URL do website pessoal ou profissional.')
     )
-    
-    data_atualizacao = models.DateTimeField(
-        auto_now=True,
-        verbose_name=_('Data de Atualização'),
-        help_text=_('Data da última atualização do perfil.')
+
+    class Meta:
+        verbose_name = _('Rede Social')
+        verbose_name_plural = _('Redes Sociais')
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='perfil',
+        verbose_name=_('Usuário')
+    )
+    foto = models.ImageField(
+        upload_to='perfis/',
+        blank=True,
+        null=True,
+        verbose_name=_('Foto de Perfil')
+    )
+    telefone = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        validators=[telefone_validator],
+        verbose_name=_('Telefone')
+    )
+    data_nascimento = models.DateField(
+        validators=[validate_date_of_birth],
+        verbose_name=_('Data de Nascimento')
+    )
+    cpf = models.CharField(
+        max_length=14,
+        unique=True,
+        validators=[validate_cpf],
+        verbose_name=_('CPF')
+    )
+    rg = models.CharField(
+        max_length=20,
+        verbose_name=_('RG')
+    )
+    genero = models.CharField(
+        max_length=1,
+        choices=[('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro'), ('N', 'Prefiro não informar')],
+        verbose_name=_('Gênero')
     )
     
-    data_criacao = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name=_('Data de Criação'),
-        help_text=_('Data de criação do perfil.')
+    # Relacionamentos
+    endereco = models.OneToOneField(
+        Endereco,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='perfil'
+    )
+    informacao_profissional = models.OneToOneField(
+        InformacaoProfissional,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='perfil'
+    )
+    rede_social = models.OneToOneField(
+        RedeSocial,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='perfil'
     )
     
+    data_atualizacao = models.DateTimeField(auto_now=True)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.usuario.get_full_name() or self.usuario.username
     
@@ -259,12 +251,6 @@ class Perfil(models.Model):
             telefone_numeros = re.sub(r'[^0-9]', '', self.telefone)
             if len(telefone_numeros) == 11:
                 self.telefone = f"({telefone_numeros[:2]}) {telefone_numeros[2:7]}-{telefone_numeros[7:]}"
-        
-        # Normaliza o CEP
-        if self.cep:
-            cep_numeros = re.sub(r'[^0-9]', '', self.cep)
-            if len(cep_numeros) == 8:
-                self.cep = f"{cep_numeros[:5]}-{cep_numeros[5:]}"
     
     def save(self, *args, **kwargs):
         self.clean()

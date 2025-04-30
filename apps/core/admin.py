@@ -7,7 +7,22 @@ from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from import_export.fields import Field
 
-from .models import Perfil
+from .models import Perfil, Endereco, InformacaoProfissional, RedeSocial
+
+class EnderecoResource(resources.ModelResource):
+    class Meta:
+        model = Endereco
+        fields = ('id', 'logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep')
+
+class InformacaoProfissionalResource(resources.ModelResource):
+    class Meta:
+        model = InformacaoProfissional
+        fields = ('id', 'profissao', 'bio')
+
+class RedeSocialResource(resources.ModelResource):
+    class Meta:
+        model = RedeSocial
+        fields = ('id', 'linkedin', 'website')
 
 class PerfilResource(resources.ModelResource):
     """
@@ -27,8 +42,26 @@ class PerfilResource(resources.ModelResource):
     class Meta:
         model = Perfil
         fields = ('id', 'nome_usuario', 'email', 'nome_completo', 'telefone', 'cpf', 
-                  'data_nascimento', 'idade', 'cidade', 'estado', 'profissao')
+                  'data_nascimento', 'idade', 'endereco', 'informacao_profissional', 'rede_social')
         export_order = fields
+
+@admin.register(Endereco)
+class EnderecoAdmin(ImportExportModelAdmin):
+    resource_class = EnderecoResource
+    list_display = ('logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep')
+    search_fields = ('logradouro', 'bairro', 'cidade', 'cep')
+    list_filter = ('estado', 'cidade')
+
+@admin.register(InformacaoProfissional)
+class InformacaoProfissionalAdmin(ImportExportModelAdmin):
+    resource_class = InformacaoProfissionalResource
+    list_display = ('profissao',)
+    search_fields = ('profissao', 'bio')
+
+@admin.register(RedeSocial)
+class RedeSocialAdmin(ImportExportModelAdmin):
+    resource_class = RedeSocialResource
+    list_display = ('linkedin', 'website')
 
 class PerfilAdmin(ImportExportModelAdmin):
     """
@@ -38,28 +71,28 @@ class PerfilAdmin(ImportExportModelAdmin):
     
     # Campos exibidos na listagem
     list_display = ('foto_preview', 'nome_completo', 'email_usuario', 'telefone', 
-                   'idade_usuario', 'cidade_estado', 'profissao', 'data_atualizacao')
+                   'idade_usuario', 'get_cidade_estado', 'get_profissao')
     
     # Filtros laterais
-    list_filter = ('genero', 'estado', 'data_criacao', 'profissao')
+    list_filter = ('genero', 'endereco__estado', 'data_criacao')
     
     # Campos de pesquisa
     search_fields = ('usuario__username', 'usuario__email', 'usuario__first_name', 
-                    'usuario__last_name', 'cpf', 'telefone', 'cidade', 'bairro')
+                    'usuario__last_name', 'cpf', 'telefone', 'endereco__cidade')
     
     # Agrupamento de campos em fieldsets
     fieldsets = (
         (_('Informações do Usuário'), {
-            'fields': ('usuario', 'foto', 'foto_preview', 'bio', 'profissao', 'genero')
+            'fields': ('usuario', 'foto', 'foto_preview', 'genero')
         }),
         (_('Informações de Contato'), {
-            'fields': ('telefone', 'email_usuario', 'linkedin', 'website')
+            'fields': ('telefone',)
         }),
         (_('Documentos'), {
             'fields': ('cpf', 'rg')
         }),
-        (_('Endereço'), {
-            'fields': ('endereco', 'complemento', 'bairro', 'cidade', 'estado', 'cep')
+        (_('Relacionamentos'), {
+            'fields': ('endereco', 'informacao_profissional', 'rede_social')
         }),
         (_('Datas'), {
             'fields': ('data_nascimento', 'data_criacao', 'data_atualizacao')
@@ -67,7 +100,7 @@ class PerfilAdmin(ImportExportModelAdmin):
     )
     
     # Campos somente leitura
-    readonly_fields = ('foto_preview', 'email_usuario', 'data_criacao', 'data_atualizacao')
+    readonly_fields = ('foto_preview', 'data_criacao', 'data_atualizacao')
     
     # Ordenações disponíveis
     ordering = ('-data_atualizacao',)
@@ -104,21 +137,24 @@ class PerfilAdmin(ImportExportModelAdmin):
         return '-'
     idade_usuario.short_description = _('Idade')
     
-    def cidade_estado(self, obj):
+    def get_cidade_estado(self, obj):
         """Exibe a cidade e o estado juntos."""
-        if obj.cidade and obj.estado:
-            return f"{obj.cidade}/{obj.estado}"
-        elif obj.cidade:
-            return obj.cidade
-        elif obj.estado:
-            return obj.estado
+        if obj.endereco:
+            return f"{obj.endereco.cidade}/{obj.endereco.estado}"
         return '-'
-    cidade_estado.short_description = _('Localização')
+    get_cidade_estado.short_description = _('Localização')
+    
+    def get_profissao(self, obj):
+        """Exibe a profissão do usuário."""
+        if obj.informacao_profissional:
+            return obj.informacao_profissional.profissao
+        return '-'
+    get_profissao.short_description = _('Profissão')
 
     def get_queryset(self, request):
         """Otimiza a consulta para reduzir o número de queries SQL."""
         queryset = super().get_queryset(request)
-        return queryset.select_related('usuario')
+        return queryset.select_related('usuario', 'endereco', 'informacao_profissional', 'rede_social')
 
 # Extendendo a visualização padrão do User para mostrar link para o Perfil
 class CustomUserAdmin(UserAdmin):
@@ -139,7 +175,5 @@ class CustomUserAdmin(UserAdmin):
 
 # Registrando os modelos no admin
 admin.site.register(Perfil, PerfilAdmin)
-
-# Substituindo o admin padrão de User pelo customizado
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
