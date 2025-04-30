@@ -44,4 +44,14 @@ class Candidatura(models.Model):
     data_candidatura = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.candidato.username} -> {self.vaga.titulo}"
+        return f"{self.candidato.nome} -> {self.vaga.titulo}"
+    
+class Avaliacao(models.Model):
+    serviço = models.ForeignKey(Servico, on_delete=models.CASCADE, related_name='avaliacoes')
+    avaliador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='avaliacoes_feitas')
+    nota = models.IntegerField()
+    comentario = models.TextField(blank=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Avaliação de {self.avaliador.nome} para {self.serviço.titulo}"

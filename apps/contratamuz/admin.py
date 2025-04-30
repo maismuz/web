@@ -20,7 +20,15 @@ class CandidaturaAdmin(admin.ModelAdmin):
     list_display = ('candidato', 'vaga', 'data_candidatura')
     search_fields = ('candidato__nome', 'vaga__titulo')
 
+class AvaliacaoAdmin(admin.ModelAdmin):
+    list_display = ('serviço', 'avaliador', 'nota', 'criado_em')
+    list_filter = ('nota',)
+    search_fields = ('serviço__titulo', 'avaliador__nome')
+
+
+
 admin.site.register(Usuario)
 admin.site.register(Servico)
 admin.site.register(VagaEmprego)
 admin.site.register(Candidatura) 
+admin.site.register(Avaliacao)
