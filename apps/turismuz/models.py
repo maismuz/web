@@ -1,5 +1,13 @@
 from django.db import models
 
+class TipoUsuario(models.model):
+    tipo = models.TextChoices(
+        "Admin", 
+        "Autor", 
+        "Comum"
+    )
+    # usuario = models.ForeignKey()
+    # perfil = models.ForeignKey()
 
 class Categorias(models.Model):
     """
@@ -19,7 +27,7 @@ class Categorias(models.Model):
     def __str__(self):
         return self.nome
 
-class Estabelecimentos(models.Model):
+class Estabelecimento(models.Model):
     """
     Modelo para controle de estabelecimentos.
     """
@@ -71,7 +79,7 @@ class Estabelecimentos(models.Model):
     def __str__(self):
         return self.nome
 
-class GuiasTurismo(models.Model):
+class GuiaTuristico(models.Model):
     """
     Modelo para controle de guias de turismo.
     """
@@ -80,20 +88,9 @@ class GuiasTurismo(models.Model):
         help_text='Nome do guia de turismo',
         max_length=100
     )
-    nome_tour = models.CharField(
-        verbose_name='Nome do Tour',
-        help_text='Nome do tour',
-        max_length=150
-    )
     descricao = models.TextField(
         verbose_name='Descrição do Guia',
         help_text='Descrição do guia de turismo',
-        blank=True,
-        null=True
-    )
-    descricao_tour = models.TextField(
-        verbose_name='Descrição do Tour',
-        help_text='Descrição do tour',
         blank=True,
         null=True
     )
@@ -103,12 +100,12 @@ class GuiasTurismo(models.Model):
         blank=True,
         null=True
     )
-    pontos_parada = models.TextField(
-        verbose_name='Pontos de Parada',
-        help_text='Lista dos pontos de parada do tour (um por linha)',
-        blank=True,
-        null=True
-    )
+    # pontos_parada = models.TextField(
+    #     verbose_name='Pontos de Parada',
+    #     help_text='Lista dos pontos de parada do tour (um por linha)',
+    #     blank=True,
+    #     null=True
+    # )
     nivel_dificuldade = models.CharField(
         verbose_name='Nível de Dificuldade',
         help_text='Nível de dificuldade do tour',
@@ -124,17 +121,17 @@ class GuiasTurismo(models.Model):
         blank=True,
         null=True
     )
-    entidades_responsaveis = models.CharField(
-        verbose_name='Entidades Responsáveis',
-        help_text='Entidades responsáveis pelo tour',
+    entidade_responsavel = models.CharField(
+        verbose_name='Entidade Responsável',
+        help_text='Entidade responsável pelo tour',
         max_length=200,
         blank=True,
         null=True
     )
 
     class Meta:
-        verbose_name = 'Guia de Turismo'
-        verbose_name_plural = 'Guias de Turismo'
+        verbose_name = 'Guia Turistico'
+        verbose_name_plural = 'Guias Turisticos'
         ordering = ['nome']
 
     def __str__(self):
