@@ -13,6 +13,10 @@ class Usuario(models.Model):
     def __str__(self):
         return self.nome
     
+    class meta:
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
+    
 class Servico(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='servicos')
     titulo = models.CharField(max_length=100)
@@ -23,6 +27,10 @@ class Servico(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+    class meta:
+        verbose_name = 'Serviço'
+        verbose_name_plural = 'Serviços'
     
 class VagaEmprego(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='vagas')
@@ -37,6 +45,10 @@ class VagaEmprego(models.Model):
     def __str__(self):
         return self.titulo
     
+    class meta:
+        verbose_name = 'Vaga de Emprego'
+        verbose_name_plural = 'Vagas de Emprego'
+    
 class Candidatura(models.Model):
     candidato = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='candidaturas')
     vaga = models.ForeignKey(VagaEmprego, on_delete=models.CASCADE, related_name='candidaturas')
@@ -45,6 +57,10 @@ class Candidatura(models.Model):
 
     def __str__(self):
         return f"{self.candidato.nome} -> {self.vaga.titulo}"
+    
+    class meta:
+        verbose_name = 'Candidatura'
+        verbose_name_plural = 'Candidaturas'
     
 class Avaliacao(models.Model):
     serviço = models.ForeignKey(Servico, on_delete=models.CASCADE, related_name='avaliacoes')
@@ -55,3 +71,7 @@ class Avaliacao(models.Model):
 
     def __str__(self):
         return f"Avaliação de {self.avaliador.nome} para {self.serviço.titulo}"
+    
+    class Meta:
+        verbose_name = 'Avaliação'
+        verbose_name_plural = 'Avaliações'
