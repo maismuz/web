@@ -12,7 +12,7 @@ class Modalidade(models.Model):
         verbose_name_plural = 'Modalidades'
 
     id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
-    nome = models.CharField(max_length=255, verbose_name='Nome')
+    nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
 
     def __str__(self):
         return self.nome
@@ -27,7 +27,7 @@ class TipoCampeonato(models.Model):
         verbose_name_plural = 'Tipos de Campeonato'
 
     id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
-    nome = models.CharField(max_length=255, verbose_name='Nome')
+    nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
 
     def __str__(self):
         return self.nome
