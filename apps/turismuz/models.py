@@ -1,13 +1,17 @@
 from django.db import models
 
-class TipoUsuario(models.model):
-    tipo = models.TextChoices(
-        "Admin", 
-        "Autor", 
-        "Comum"
+class Usuario(models.Model):
+    TIPO_CHOICES = [
+        ("ADMIN", "Admin"),
+        ("AUTOR", "Autor"),
+        ("COMUM", "Comum"),
+    ]
+
+    tipo = models.CharField(
+        max_length=5,              # cabe “ADMIN”
+        choices=TIPO_CHOICES,
+        default="COMUM",
     )
-    # usuario = models.ForeignKey()
-    # perfil = models.ForeignKey()
 
 class Categorias(models.Model):
     """
@@ -129,11 +133,14 @@ class GuiaTuristico(models.Model):
         null=True
     )
 
+<<<<<<< HEAD
     class Meta:
         verbose_name = 'Guia de Turismo'
         verbose_name_plural = 'Guias de Turismo'
         ordering = ['nome']
 
+=======
+>>>>>>> 298f619 (feat : erro caruzo)
     def __str__(self):
         return f"{self.nome} - {self.nome_tour}"
 
