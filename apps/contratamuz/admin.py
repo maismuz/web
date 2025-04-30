@@ -23,4 +23,4 @@ class CandidaturaAdmin(admin.ModelAdmin):
 admin.site.register(Usuario)
 admin.site.register(Servico)
 admin.site.register(VagaEmprego)
-admin.site.register(Candidatura)
+admin.site.register(Candidatura) 
