@@ -34,3 +34,12 @@ class VagaEmprego(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+class Candidatura(models.Model):
+    candidato = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='candidaturas')
+    vaga = models.ForeignKey(VagaEmprego, on_delete=models.CASCADE, related_name='candidaturas')
+    mensagem = models.TextField(blank=True)
+    data_candidatura = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.candidato.username} -> {self.vaga.titulo}"
