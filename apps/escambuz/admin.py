@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (Categoria, Objeto)
+from .models import *
 # Register your models here.
 
 class CategoriaAdmin(admin.ModelAdmin):
@@ -14,3 +14,10 @@ class ObjetoAdmin(admin.ModelAdmin):
     list_filter = ['tipo', 'categoria', 'estado']
 
 admin.site.register(Objeto, ObjetoAdmin)
+
+class HistoricoTransacaoAdmin(admin.ModelAdmin):
+    list_display = ['objeto_oferecido', 'objeto_recebido', 'usuario', 'data', 'status']
+    search_fields = ['usuario__username']
+    list_filter = ['data', 'status']
+
+admin.site.register(HistoricoTransacao, HistoricoTransacaoAdmin)

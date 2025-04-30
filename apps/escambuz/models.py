@@ -22,3 +22,13 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nome
+
+class HistoricoTransacao(models.Model):
+    objeto_oferecido = models.ForeignKey(Objeto, on_delete=models.SET_NULL, null=True, related_name='ofertas')
+    objeto_recebido = models.ForeignKey(Objeto, on_delete=models.SET_NULL, null=True, related_name='recebidos')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    data = models.DateField(auto_now_add=True)
+    status = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.status} em {self.data}"
