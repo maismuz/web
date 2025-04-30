@@ -50,3 +50,19 @@ class Campeonato(models.Model):
 
     def __str__(self):
         return self.nome
+    
+class Equipe(models.Model):
+    """
+    Representa uma equipe que participa de um campeonato.
+    """
+
+    class Meta:
+        verbose_name = 'Equipe'
+        verbose_name_plural = 'Equipes'
+
+    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    nome = models.CharField(max_length=255, verbose_name='Nome')
+    campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='equipes', verbose_name='Campeonato')
+
+    def __str__(self):
+        return self.nome
