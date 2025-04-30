@@ -1,16 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 
 # Criação de modelos de contratos e curriculos para serviços autonomos ou contratação de empreasas;
 
 class Usuario(models.Model):
+    nome = models.CharField(max_length=100)
     eh_empresa = models.BooleanField(default=False)
     eh_prestador = models.BooleanField(default=False)
     telefone = models.CharField(max_length=15, blank=True)
     biografia = models.TextField(blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.nome
+    
 class Servico(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='servicos')
     titulo = models.CharField(max_length=100)
