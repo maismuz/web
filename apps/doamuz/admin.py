@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(Categoria)
 admin.site.register(Doacao)
+admin.site.register(Feedback)
