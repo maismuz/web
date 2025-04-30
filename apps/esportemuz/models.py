@@ -44,7 +44,7 @@ class Campeonato(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, verbose_name='Nome')
     modalidade = models.ForeignKey(Modalidade, on_delete=models.CASCADE, verbose_name='Modalidade')
-    tipo_campeonato = models.ForeignKey(TipoCampeonato, on_delete=models.CASCADE, verbose_name='Tipo de Campeonato')
+    tipo_campeonato = models.ForeignKey(TipoCampeonato, on_delete=models.CASCADE, related_name='campeonatos', verbose_name='Tipo de Campeonato')
     data_inicio = models.DateField(verbose_name='Data de Início')
     data_fim = models.DateField(verbose_name='Data de Fim')
 
