@@ -173,4 +173,5 @@ cython_debug/
 # Arquivo de configuração do PyPI
 .pypirc
 
-veiculos/
+# Arquivos de mídia
+media/
