@@ -64,3 +64,13 @@ class ViagemAdmin(admin.ModelAdmin):
     list_filter = ('data_chegada', 'data_saida')
     ordering = ('-data_saida',)
     list_per_page = 20
+
+from django.contrib import admin
+from .models import Passageiro
+
+@admin.register(Passageiro)
+class PassageiroAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'documento', 'viagem')
+    search_fields = ('nome', 'documento', 'viagem__origem__nome', 'viagem__destino__nome') 
+    list_filter = ('viagem',)
+    ordering = ('nome',)
