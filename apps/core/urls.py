@@ -1,9 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include
+from .views import *
 
 urlpatterns = [
     # Rota para o painel administrativo
     path("admin/", admin.site.urls),
+
+    # Rotas do core
+    path("", homepage, name="index"),
+    path("forms/", base_forms, name="base_forms"),
 
     # Rota para as demais aplicações
     path("adotamuz/", include("apps.adotamuz.urls")),
