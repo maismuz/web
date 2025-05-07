@@ -43,3 +43,4 @@ class Raca(models.Model):
         self.nome = self.nome.strip().capitalize()
         self.full_clean()
         super().save(*args, **kwargs)
+        
