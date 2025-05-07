@@ -88,3 +88,17 @@ class Viagem(models.Model):
 
     def __str__(self):
         return f"{self.origem} → {self.destino} ({self.data_saida.strftime('%d/%m/%Y')})"
+    
+class Passageiro(models.Model):
+    viagem = models.ForeignKey(Viagem, on_delete=models.CASCADE, related_name='passageiros')
+    nome = models.CharField("Nome do passageiro", max_length=100)
+    documento = models.CharField("Documento de identificação", max_length=50, blank=True, null=True)
+    observacao = models.TextField("Observação", blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Passageiro"
+        verbose_name_plural = "Passageiros"
+        db_table = 'passageiro'
+
+    def __str__(self):
+        return f"{self.nome} ({self.viagem})"
