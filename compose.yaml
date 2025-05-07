@@ -18,7 +18,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entryPoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=root@vps58279.publiccloud.com.br"
+      - "--certificatesresolvers.myresolver.acme.email=caio.tomaz@alunos.ifsuldeminas.edu.br"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
@@ -31,12 +31,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   web:
-    image: ghcr.io/caiomaz/djchat/app:latest
+    image: ghcr.io/maismuz/web:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.djchat.rule=Host(`vps58279.publiccloud.com.br`)"
-      - "traefik.http.routers.djchat.entrypoints=websecure"
-      - "traefik.http.routers.djchat.tls.certresolver=myresolver"
+      - "traefik.http.routers.web.rule=Host(`caiomaz.me`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "com.centurylinklabs.watchtower.enable=true"
     env_file:
       - .env
@@ -76,7 +76,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.vps58279.publiccloud.com.br`)"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.caiomaz.me`)"
       - "traefik.http.routers.portainer.entrypoints=websecure"
       - "traefik.http.routers.portainer.tls.certresolver=myresolver"
 
@@ -84,4 +84,3 @@ volumes:
   data:
   letsencrypt:
   portainer_data:
-  
