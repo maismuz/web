@@ -51,4 +51,15 @@ class VeiculoAdmin(admin.ModelAdmin):
     
     foto_preview.allow_tags = True
     foto_preview.short_description = "Prévia da Foto"
+<<<<<<< HEAD
 >>>>>>> d7ec35e (Adcionando models e admin)
+=======
+   
+@admin.register(Motorista)
+class MotoristaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'cpf', 'telefone', 'email', 'cnh_numero', 'data_nascimento', 'ativo')
+    search_fields = ('nome', 'cpf', 'cnh_numero')
+    list_filter = ('ativo', 'cnh_numero')
+    ordering = ('nome',)
+    list_per_page = 20
+>>>>>>> f40509e ([Fix] Corrigir problemas na aplicação MoveMuz (#217))
