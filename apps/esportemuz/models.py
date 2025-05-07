@@ -67,22 +67,22 @@ class Equipe(models.Model):
     def __str__(self):
         return self.nome
     
-class Grupo(models.Model):
-    """
-    Representa um grupo dentro de um campeonato, onde as equipes competem entre si.
-    """
+# class Grupo(models.Model):
+#     """
+#     Representa um grupo dentro de um campeonato, onde as equipes competem entre si.
+#     """
 
-    class Meta:
-        verbose_name = 'Grupo'
-        verbose_name_plural = 'Grupos'
+#     class Meta:
+#         verbose_name = 'Grupo'
+#         verbose_name_plural = 'Grupos'
 
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
-    nome = models.CharField(max_length=255, verbose_name='Nome')
-    campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='grupos', verbose_name='Campeonato')
-    equipes = models.ManyToManyField(Equipe, related_name='grupos', blank=True, verbose_name='Equipes')
+#     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
+#     nome = models.CharField(max_length=255, verbose_name='Nome')
+#     campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='grupos', verbose_name='Campeonato')
+#     equipes = models.ManyToManyField(Equipe, related_name='grupos', blank=True, verbose_name='Equipes')
 
-    def __str__(self):
-        return self.nome
+#     def __str__(self):
+#         return self.nome
     
 class StatusPartida(models.Model):
     """
@@ -110,7 +110,7 @@ class Partida(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     campeonato = models.ForeignKey(Campeonato, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Campeonato')
-    grupo = models.ForeignKey(Grupo, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Grupo')
+    # grupo = models.ForeignKey(Grupo, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Grupo')
     equipe_mandante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_mandante', null=True, blank=True, verbose_name='Equipe Mandante')
     equipe_visitante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_visitante', null=True, blank=True, verbose_name='Equipe Visitante')
     data_hora = models.DateTimeField(verbose_name='Data e Hora')

@@ -22,8 +22,8 @@ class CampeonatoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Campeonato.
     """
-    modalidade = serializers.StringRelatedField()
-    tipo_campeonato = serializers.StringRelatedField()
+    # modalidade = serializers.StringRelatedField()
+    # tipo_campeonato = serializers.StringRelatedField()
     # equipes = serializers.StringRelatedField(many=True)
 
     class Meta:
@@ -39,18 +39,18 @@ class EquipeSerializer(serializers.ModelSerializer):
         model = Equipe
         fields = ['url', 'id', 'nome']
 
-class GrupoSerializer(serializers.ModelSerializer):
-    """
-    Serializador para o modelo Grupo.
-    """
+# class GrupoSerializer(serializers.ModelSerializer):
+#     """
+#     Serializador para o modelo Grupo.
+#     """
 
-    nome = serializers.StringRelatedField()
-    campeonato = serializers.StringRelatedField()
-    equipes = serializers.StringRelatedField(many=True)
+#     # nome = serializers.StringRelatedField()
+#     # campeonato = serializers.StringRelatedField()
+#     # equipes = serializers.StringRelatedField(many=True)
 
-    class Meta:
-        model = Grupo
-        fields = '__all__'
+#     class Meta:
+#         model = Grupo
+#         fields = ['url', 'id', 'nome', 'campeonato', 'equipes']
 
 class StatusPartidaSerializer(serializers.ModelSerializer):
     """

@@ -34,12 +34,12 @@ class EquipeViewSet(viewsets.ModelViewSet):
     queryset = Equipe.objects.all()
     serializer_class = EquipeSerializer
 
-class GrupoViewSet(viewsets.ModelViewSet):
-    """
-    Um conjunto de visualizações para lidar com operações CRUD no modelo Grupo.
-    """
-    queryset = Grupo.objects.all()
-    serializer_class = GrupoSerializer
+# class GrupoViewSet(viewsets.ModelViewSet):
+#     """
+#     Um conjunto de visualizações para lidar com operações CRUD no modelo Grupo.
+#     """
+#     queryset = Grupo.objects.all()
+#     serializer_class = GrupoSerializer
 
 class StatusPartidaViewSet(viewsets.ModelViewSet):
     """
