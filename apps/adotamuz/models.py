@@ -153,11 +153,6 @@ class Raca(models.Model):
     def __str__(self):
         return f'{self.nome} ({self.especie})'
 
-    def clean(self):
-        if not self.nome:
-            raise ValidationError({'nome': 'O nome é obrigatório.'})
-        validar_nome(self.nome)
-
     def save(self, *args, **kwargs):
         self.nome = self.nome.strip().capitalize()
         self.full_clean()
