@@ -34,9 +34,16 @@ DB_CREDENTIALS = {
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Hosts permitidos e origens CSRF confiáveis
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'vps58279.publiccloud.com.br',
+]
 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='localhost').split(',')
+CSRF_TRUSTED_ORIGINS = [
+    'https://*',
+    'http://*'
+]
 
 # Configurações de banco de dados
 DATABASES = {
