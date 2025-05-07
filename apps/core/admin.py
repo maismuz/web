@@ -45,23 +45,11 @@ class PerfilResource(resources.ModelResource):
                   'data_nascimento', 'idade', 'endereco', 'informacao_profissional', 'rede_social')
         export_order = fields
 
-@admin.register(Endereco)
-class EnderecoAdmin(ImportExportModelAdmin):
-    resource_class = EnderecoResource
-    list_display = ('logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep')
-    search_fields = ('logradouro', 'bairro', 'cidade', 'cep')
-    list_filter = ('estado', 'cidade')
-
-@admin.register(InformacaoProfissional)
-class InformacaoProfissionalAdmin(ImportExportModelAdmin):
-    resource_class = InformacaoProfissionalResource
-    list_display = ('profissao',)
-    search_fields = ('profissao', 'bio')
-
-@admin.register(RedeSocial)
-class RedeSocialAdmin(ImportExportModelAdmin):
-    resource_class = RedeSocialResource
-    list_display = ('linkedin', 'website')
+class EnderecoInline(admin.TabularInline):
+    model = Endereco
+    extra = 1
+    verbose_name = _('Endereço')
+    verbose_name_plural = _('Endereços')
 
 class PerfilAdmin(ImportExportModelAdmin):
     """
@@ -74,7 +62,7 @@ class PerfilAdmin(ImportExportModelAdmin):
                    'idade_usuario', 'get_cidade_estado', 'get_profissao')
     
     # Filtros laterais
-    list_filter = ('genero', 'endereco__estado', 'data_criacao')
+    list_filter = ('genero', 'data_criacao')
     
     # Campos de pesquisa
     search_fields = ('usuario__username', 'usuario__email', 'usuario__first_name', 
@@ -91,8 +79,11 @@ class PerfilAdmin(ImportExportModelAdmin):
         (_('Documentos'), {
             'fields': ('cpf', 'rg')
         }),
-        (_('Relacionamentos'), {
-            'fields': ('endereco', 'informacao_profissional', 'rede_social')
+        (_('Redes Sociais'), {
+            'fields': ('linkedin', 'website')
+        }),
+        (_('Informações Profissionais'), {
+            'fields': ('profissao', 'bio')
         }),
         (_('Datas'), {
             'fields': ('data_nascimento', 'data_criacao', 'data_atualizacao')
@@ -107,6 +98,8 @@ class PerfilAdmin(ImportExportModelAdmin):
     
     # Número de itens por página
     list_per_page = 25
+    
+    inlines = [EnderecoInline]
     
     def foto_preview(self, obj):
         """Exibe uma miniatura da foto do perfil na lista e em detalhes."""

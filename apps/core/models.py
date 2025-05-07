@@ -125,41 +125,6 @@ class Endereco(models.Model):
         verbose_name = _('Endereço')
         verbose_name_plural = _('Endereços')
 
-class InformacaoProfissional(models.Model):
-    profissao = models.CharField(
-        max_length=100,
-        verbose_name=_('Profissão'),
-        help_text=_('Profissão atual.')
-    )
-    bio = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name=_('Biografia'),
-        help_text=_('Breve descrição profissional.')
-    )
-
-    class Meta:
-        verbose_name = _('Informação Profissional')
-        verbose_name_plural = _('Informações Profissionais')
-
-class RedeSocial(models.Model):
-    linkedin = models.URLField(
-        blank=True,
-        null=True,
-        verbose_name=_('LinkedIn'),
-        help_text=_('URL do perfil no LinkedIn.')
-    )
-    website = models.URLField(
-        blank=True,
-        null=True,
-        verbose_name=_('Website'),
-        help_text=_('URL do website pessoal ou profissional.')
-    )
-
-    class Meta:
-        verbose_name = _('Rede Social')
-        verbose_name_plural = _('Redes Sociais')
-
 class Perfil(models.Model):
     usuario = models.OneToOneField(
         User,
@@ -199,27 +164,38 @@ class Perfil(models.Model):
         choices=[('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro'), ('N', 'Prefiro não informar')],
         verbose_name=_('Gênero')
     )
-    
-    # Relacionamentos
-    endereco = models.OneToOneField(
+    endereco = models.ForeignKey(
         Endereco,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='perfil'
+        related_name='perfis',
+        verbose_name=_('Endereço')
     )
-    informacao_profissional = models.OneToOneField(
-        InformacaoProfissional,
-        on_delete=models.SET_NULL,
+    linkedin = models.URLField(
+        blank=True,
         null=True,
-        related_name='perfil'
+        verbose_name=_('LinkedIn'),
+        help_text=_('URL do perfil no LinkedIn.')
     )
-    rede_social = models.OneToOneField(
-        RedeSocial,
-        on_delete=models.SET_NULL,
+    website = models.URLField(
+        blank=True,
         null=True,
-        related_name='perfil'
+        verbose_name=_('Website'),
+        help_text=_('URL do website pessoal ou profissional.')
     )
-    
+    profissao = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        verbose_name=_('Profissão'),
+        help_text=_('Profissão atual.')
+    )
+    bio = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name=_('Biografia'),
+        help_text=_('Breve descrição profissional.')
+    )
     data_atualizacao = models.DateTimeField(auto_now=True)
     data_criacao = models.DateTimeField(auto_now_add=True)
 
