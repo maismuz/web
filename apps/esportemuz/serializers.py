@@ -8,7 +8,7 @@ class ModalidadeSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Modalidade
-        fields = '__all__'
+        fields = ['url', 'id', 'nome']
 
 class TipoCampeonatoSerializer(serializers.ModelSerializer):
     """
@@ -16,28 +16,37 @@ class TipoCampeonatoSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = TipoCampeonato
-        fields = '__all__'
+        fields = ['url', 'id', 'nome']
 
 class CampeonatoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Campeonato.
     """
+    modalidade = serializers.StringRelatedField()
+    tipo_campeonato = serializers.StringRelatedField()
+    # equipes = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Campeonato
-        fields = '__all__'
+        fields = ['url', 'id', 'nome', 'modalidade', 'tipo_campeonato', 'data_inicio', 'data_fim', 'equipes']
 
 class EquipeSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Equipe.
     """
+
     class Meta:
         model = Equipe
-        fields = '__all__'
+        fields = ['url', 'id', 'nome']
 
 class GrupoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Grupo.
     """
+
+    nome = serializers.StringRelatedField()
+    campeonato = serializers.StringRelatedField()
+    equipes = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Grupo

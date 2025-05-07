@@ -47,6 +47,7 @@ class Campeonato(models.Model):
     tipo_campeonato = models.ForeignKey(TipoCampeonato, on_delete=models.CASCADE, verbose_name='Tipo de Campeonato')
     data_inicio = models.DateField(verbose_name='Data de Início')
     data_fim = models.DateField(verbose_name='Data de Fim')
+    equipes = models.ManyToManyField('Equipe', blank=True, verbose_name='Equipes')
 
     def __str__(self):
         return self.nome
@@ -62,7 +63,6 @@ class Equipe(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, verbose_name='Nome')
-    campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='equipes', verbose_name='Campeonato')
 
     def __str__(self):
         return self.nome
