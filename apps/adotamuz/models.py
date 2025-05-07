@@ -9,17 +9,10 @@ def validar_nome(value):
 
 class Raca(models.Model):
     
-<<<<<<< HEAD
     PORTE_CHOICES = [('pequeno', 'Pequeno'), ('medio', 'Médio'), ('grande', 'Grande')]
     ESPECIE_CHOICES = [('cachorro', 'Cachorro'), ('gato', 'Gato')]
 
     nome = models.CharField(max_length=100, unique=True, verbose_name='Nome')
-=======
-    PORTE_CHOICES = [('pequeno', 'Pequeno'), ('medio', 'Medio'), ('grande', 'Grande')]
-    ESPECIE_CHOICES = [('cachorro', 'Cachorro'), ('gato', 'Gato')]
-
-    nome = models.CharField(max_length=100, verbose_name='Nome')
->>>>>>> 19e0f56 (criando gerenciar racas)
     descricao = models.TextField(blank=True, null=True, verbose_name='Descrição')
     porte = models.CharField(max_length=10, choices=PORTE_CHOICES, default='medio', verbose_name='Porte')
     especie = models.CharField(max_length=10, choices=ESPECIE_CHOICES, default='cachorro', verbose_name='Espécie')
