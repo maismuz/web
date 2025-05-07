@@ -35,11 +35,30 @@ class PerfilResource(resources.ModelResource):
                   'data_nascimento', 'idade', 'linkedin', 'website', 'profissao', 'bio')
         export_order = fields
 
-class EnderecoInline(admin.TabularInline):
+class EnderecoInline(admin.StackedInline):
     model = Endereco
     extra = 1
     verbose_name = _('Endereço')
     verbose_name_plural = _('Endereços')
+    fieldsets = (
+        (None, {
+            'fields': ('logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado', 'cep')
+        }),
+    )
+
+@admin.register(Endereco)
+class EnderecoAdmin(admin.ModelAdmin):
+    """
+    Admin personalizado para a tabela de Endereços.
+    """
+    list_display = ('logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep', 'perfil_associado')
+    search_fields = ('logradouro', 'bairro', 'cidade', 'cep')
+    list_filter = ('estado', 'cidade')
+
+    def perfil_associado(self, obj):
+        """Exibe o nome do perfil associado ao endereço."""
+        return obj.perfil.usuario.get_full_name() or obj.perfil.usuario.username
+    perfil_associado.short_description = _('Perfil Associado')
 
 class PerfilAdmin(ImportExportModelAdmin):
     """
@@ -122,7 +141,7 @@ class PerfilAdmin(ImportExportModelAdmin):
     
     def get_cidade_estado(self, obj):
         """Exibe a cidade e o estado do primeiro endereço associado."""
-        endereco = obj.enderecos.first()  # Usar o related_name 'enderecos'
+        endereco = obj.enderecos.first()
         if endereco:
             return f"{endereco.cidade}/{endereco.estado}"
         return '-'
