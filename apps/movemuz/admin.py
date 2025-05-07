@@ -1,6 +1,10 @@
 from django.contrib import admin
 <<<<<<< HEAD
+<<<<<<< HEAD
 from .models import Motorista
+=======
+from .models import Motorista, Local, Viagem
+>>>>>>> 4b0fddc ([Feature] Gerenciar viagens (#188))
 
 @admin.register(Motorista)
 class MotoristaAdmin(admin.ModelAdmin):
@@ -62,4 +66,21 @@ class MotoristaAdmin(admin.ModelAdmin):
     list_filter = ('ativo', 'cnh_numero')
     ordering = ('nome',)
     list_per_page = 20
+<<<<<<< HEAD
 >>>>>>> f40509e ([Fix] Corrigir problemas na aplicação MoveMuz (#217))
+=======
+
+@admin.register(Local)
+class LocalAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'cidade', 'estado')
+    search_fields = ('nome', 'cidade', 'estado')
+    ordering = ('nome',)
+
+@admin.register(Viagem)
+class ViagemAdmin(admin.ModelAdmin):
+    list_display = ('motorista', 'origem', 'destino', 'data_saida', 'data_chegada')
+    search_fields = ('origem', 'destino', 'motorista__nome')
+    list_filter = ('data_chegada', 'data_saida')
+    ordering = ('-data_saida',)
+    list_per_page = 20
+>>>>>>> 4b0fddc ([Feature] Gerenciar viagens (#188))
