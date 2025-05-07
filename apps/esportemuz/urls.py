@@ -4,13 +4,13 @@ from esportemuz.views import *
 
 router = DefaultRouter()
 
-router.register(r'modalidades', ModalidadeViewSet)
-router.register(r'tipos', TipoCampeonatoViewSet)
-router.register(r'campeonatos', CampeonatoViewSet)
-router.register(r'equipes', EquipeViewSet)
-router.register(r'grupos', GrupoViewSet)
-router.register(r'status', StatusPartidaViewSet)
-router.register(r'partidas', PartidaViewSet)
+router.register(r'modalidades', ModalidadeViewSet, 'modalidade')
+router.register(r'tipos-de-campeonatos', TipoCampeonatoViewSet, 'tipo-campeonato')
+# router.register(r'campeonatos', CampeonatoViewSet)
+# router.register(r'equipes', EquipeViewSet)
+# router.register(r'grupos', GrupoViewSet)
+# router.register(r'status', StatusPartidaViewSet)
+# router.register(r'partidas', PartidaViewSet)
 # router.register(r'classificacoes', ClassificacaoViewSet)
 
 urlpatterns = [

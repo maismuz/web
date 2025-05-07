@@ -1,109 +1,70 @@
 from esportemuz.models import *
+from rest_framework.response import Response
+from rest_framework import status
 
-def gerar_partidas_automaticamente(campeonato):
-    """
-    Gera partidas automaticamente para um determinado campeonato.
+def organizar_pontos_corridos(self, campeonato):
+        equipes = campeonato.equipes.all()
+        for equipe in equipes:
+            Classificacao.objects.create(campeonato=campeonato, equipe=equipe)
+        
+        # Ordenação alfabética para pontos corridos (sem grupos)
+        equipes_sorted = sorted(equipes, key=lambda e: e.nome)
+        # Classificar em ordem alfabética, você pode ajustar isso dependendo da lógica real.
+        for idx, equipe in enumerate(equipes_sorted):
+            classificacao = Classificacao.objects.get(campeonato=campeonato, equipe=equipe)
+            classificacao.posicao = idx + 1
+            classificacao.save()
 
-    Args:
-        campeonato (Championship): O campeonato para o qual serão geradas as partidas.
+def organizar_fase_grupos(self, campeonato):
+        num_grupos = int(self.request.data.get('num_grupos'))
+        equipes = campeonato.equipes.all()
 
-    Retorna:
-        None
-    """
+        # Em fase de grupos, vamos dividir as equipes em grupos aleatórios
+        import random
+        random.shuffle(equipes)
 
-    equipes = list(campeonato.equipes.all())
-    partidas = []
+        grupos = []
+        for i in range(num_grupos):
+            grupo = Grupo.objects.create(nome=f'Grupo {i+1}', campeonato=campeonato)
+            grupos.append(grupo)
 
-    if campeonato.tipo_campeonato.name == 'Pontos corridos':
-        for i in range(len(equipes)):
-            for j in range(i + 1, len(equipes)):
-                partidas.append(Partida(
-                    campeonato=campeonato,
-                    equipe_mandante=equipes[i],
-                    equipe_visitante=equipes[j],
-                    data_hora=None,
-                    local=None,
-                    status=StatusPartida.objects.get_or_create(nome='Agendada')[0]
-                ))
-    elif campeonato.tipo_campeonato.name == 'Fase de grupos':
-        for grupo in campeonato.grupos.all():
-            equipes_grupo = list(grupo.equipes.all())
+        for idx, equipe in enumerate(equipes):
+            grupo_idx = idx % num_grupos
+            grupo = grupos[grupo_idx]
+            grupo.equipes.add(equipe)
+            grupo.save()
 
+        # Gerar partidas para cada grupo
+        for grupo in grupos:
+            equipes_grupo = grupo.equipes.all()
             for i in range(len(equipes_grupo)):
-                for j in range(i + 1, len(equipes_grupo)):
-                    partidas.append(Partida(
+                for j in range(i+1, len(equipes_grupo)):
+                    # Criar partidas para o grupo
+                    Partida.objects.create(
                         campeonato=campeonato,
                         grupo=grupo,
                         equipe_mandante=equipes_grupo[i],
                         equipe_visitante=equipes_grupo[j],
-                        data_hora=None,
-                        local=None,
-                        status=StatusPartida.objects.get_or_create(nome='Agendada')[0]
-                    ))
+                        data_hora=campeonato.data_inicio,  # Você pode personalizar isso
+                        local="Local Exemplo",  # Também pode ser personalizado
+                        status=StatusPartida.objects.first()  # Exemplo de status
+                    )
 
-    Partida.objects.bulk_create(partidas)
+def organizar_mata_mata(self, campeonato):
+        equipes = campeonato.equipes.all()
+        num_equipes = len(equipes)
 
-def atualizar_classificacao(campeonato):
-    """
-    Atualiza a classificação de um campeonato com base nas partidas jogadas.
+        # Verifica se o número de equipes é válido para mata-mata
+        if num_equipes < 2 or (num_equipes & (num_equipes - 1)) != 0:
+            return Response({'detail': 'Número inválido de equipes para mata-mata.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    Args:
-        campeonato (Championship): O campeonato cuja classificação será atualizada.
-
-    Retorna:
-        None
-    """
-
-    Classificacao.objects.filter(campeonato=campeonato).delete()
-
-    dados = {}
-
-    for equipe in campeonato.equipes.all():
-        dados[equipe.id] = {
-            'equipe': equipe,
-            'pontos': 0,
-            'vitorias': 0,
-            'empates': 0,
-            'derrotas': 0,
-            'gols_pro': 0,
-            'gols_contra': 0,
-            'saldo_gols': 0,
-        }
-
-    for partida in Partida.objects.filter(campeonato=campeonato, status=StatusPartida.objects.get_or_create('Finalizada')):
-        equipe_mandante = partida.equipe_mandante
-        equipe_visitante = partida.equipe_visitante
-        gols_mandante = partida.gols_mandante
-        gols_visitante = partida.gols_visitante
-
-        dados[equipe_mandante.id]['gols_pro'] += gols_mandante
-        dados[equipe_visitante.id]['gols_contra'] += gols_mandante
-        dados[equipe_visitante.id]['gols_pro'] += gols_visitante
-        dados[equipe_mandante.id]['gols_contra'] += gols_visitante
-
-        if gols_mandante > gols_visitante:
-            dados[equipe_mandante.id]['pontos'] += 3
-            dados[equipe_mandante.id]['vitorias'] += 1
-            dados[equipe_visitante.id]['derrotas'] += 1
-        elif gols_mandante < gols_visitante:
-            dados[equipe_visitante.id]['pontos'] += 3
-            dados[equipe_visitante.id]['vitorias'] += 1
-            dados[equipe_mandante.id]['derrotas'] += 1
-        else:
-            dados[equipe_mandante.id]['pontos'] += 1
-            dados[equipe_visitante.id]['pontos'] += 1
-            dados[equipe_mandante.id]['empates'] += 1
-            dados[equipe_visitante.id]['empates'] += 1
-
-    for dado in dados.values():
-        Classificacao.objects.create(
-            campeonato=campeonato,
-            equipe=dado['equipe'],
-            pontos=dado['pontos'],
-            vitorias=dado['vitorias'],
-            empates=dado['empates'],
-            derrotas=dado['derrotas'],
-            gols_pro=dado['gols_pro'],
-            gols_contra=dado['gols_contra'],
-            saldo_gols=dado['gols_pro'] - dado['gols_contra']
-        )
+        # Criar partidas de mata-mata
+        for i in range(0, num_equipes, 2):
+            Partida.objects.create(
+                campeonato=campeonato,
+                equipe_mandante=equipes[i],
+                equipe_visitante=equipes[i + 1],
+                data_hora=campeonato.data_inicio,  # Você pode personalizar isso
+                local="Local Exemplo",  # Também pode ser personalizado
+                status=StatusPartida.objects.first()  # Exemplo de status
+            )

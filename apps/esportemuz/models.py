@@ -1,5 +1,5 @@
 from django.db import models
-from uuid import uuid5
+from uuid import uuid4
 
 # Create your models here.
 class Modalidade(models.Model):
@@ -11,7 +11,7 @@ class Modalidade(models.Model):
         verbose_name = 'Modalidade'
         verbose_name_plural = 'Modalidades'
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
 
     def __str__(self):
@@ -26,7 +26,7 @@ class TipoCampeonato(models.Model):
         verbose_name = 'Tipo de Campeonato'
         verbose_name_plural = 'Tipos de Campeonato'
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
 
     def __str__(self):
@@ -41,7 +41,7 @@ class Campeonato(models.Model):
         verbose_name = 'Campeonato'
         verbose_name_plural = 'Campeonatos'
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, verbose_name='Nome')
     modalidade = models.ForeignKey(Modalidade, on_delete=models.CASCADE, verbose_name='Modalidade')
     tipo_campeonato = models.ForeignKey(TipoCampeonato, on_delete=models.CASCADE, verbose_name='Tipo de Campeonato')
@@ -60,7 +60,7 @@ class Equipe(models.Model):
         verbose_name = 'Equipe'
         verbose_name_plural = 'Equipes'
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, verbose_name='Nome')
     campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='equipes', verbose_name='Campeonato')
 
@@ -76,7 +76,7 @@ class Grupo(models.Model):
         verbose_name = 'Grupo'
         verbose_name_plural = 'Grupos'
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, verbose_name='Nome')
     campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='grupos', verbose_name='Campeonato')
     equipes = models.ManyToManyField(Equipe, related_name='grupos', blank=True, verbose_name='Equipes')
@@ -93,7 +93,7 @@ class StatusPartida(models.Model):
         verbose_name = 'Status da Partida'
         verbose_name_plural = 'Status das Partidas'
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
 
     def __str__(self):
@@ -108,7 +108,7 @@ class Partida(models.Model):
         verbose_name = 'Partida'
         verbose_name_plural = 'Partidas'
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     campeonato = models.ForeignKey(Campeonato, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Campeonato')
     grupo = models.ForeignKey(Grupo, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Grupo')
     equipe_mandante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_mandante', null=True, blank=True, verbose_name='Equipe Mandante')
@@ -133,7 +133,7 @@ class Classificacao(models.Model):
         ordering = ['-pontos', '-vitorias', '-saldo_gols', '-gols_pro']
         unique_together = ('campeonato', 'equipe')
 
-    id = models.UUIDField(primary_key=True, default=uuid5, editable=False, verbose_name='ID')
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='classificacoes', verbose_name='Campeonato')
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE, related_name='classificacoes', verbose_name='Equipe')
     pontos = models.PositiveIntegerField(default=0, verbose_name='Pontos')
