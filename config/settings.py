@@ -126,9 +126,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATE_DIRS = [
     os.path.join(BASE_DIR, f"apps/{app}/templates/")
     for app in [
-        'adotamuz', 'contratamuz', 'core', 'covamuz', 'doamuz',
-        'escambuz', 'esportemuz', 'eventuz', 'movemuz', 'muzeu',
-        'muzsaude', 'reclamemuz', 'teste', 'turismuz',
+        'core'
     ]
 ]
 
