@@ -36,7 +36,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 # Hosts permitidos e origens CSRF confiáveis
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'localhost'
+    'localhost',
+    'vps58279.publiccloud.com.br',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -114,7 +115,7 @@ PROJECT_MIDDLEWARES = [
 ]
 
 THIRD_PARTY_MIDDLEWARES = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 MIDDLEWARE = DJANGO_MIDDLEWARES + PROJECT_MIDDLEWARES + THIRD_PARTY_MIDDLEWARES
