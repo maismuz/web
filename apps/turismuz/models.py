@@ -134,7 +134,7 @@ class GuiaTuristico(models.Model):
     )
 
     def __str__(self):
-        return f"{self.nome} - {self.nome_tour}"
+        return f"{self.nome} "
 
 class Publicacao(models.Model):
 

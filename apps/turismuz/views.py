@@ -4,7 +4,6 @@ from django.views.generic import *
 from .models import *
 
 
-
 def hometur(request):
     return render(request, 'hometur.html')
 
@@ -15,7 +14,9 @@ def estabelecimentos(request):
     return render(request, 'estabelecimentos.html')
 
 def guias(request):
-    return render(request, 'guias.html')
+   
+    guias = GuiaTuristico.objects.all()
+    return render(request, 'guias.html', {'guias': guias})
 
 def publicacoes(request):
     publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')
