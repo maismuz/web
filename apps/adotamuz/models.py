@@ -1,3 +1,105 @@
 from django.db import models
 
 # Create your models here.
+from django.db import models
+
+# Create your models here.
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+
+class Animal(models.Model):
+    nome = models.CharField(
+        max_length=100,
+        verbose_name='Nome do animal',
+        help_text='Nome ou apelido do animal (se houver)'
+    )
+    porte = models.CharField(
+        max_length=15,
+        verbose_name='Porte',
+        help_text='Porte físico do animal (pequeno, médio, grande)'
+    )
+    raca = models.CharField(
+        max_length=50, 
+        verbose_name='Raça',
+        help_text='Raça do animal (opcional).',
+        blank=True,
+        null=True
+    )
+    cor = models.CharField(
+        max_length=30,
+        verbose_name='Cor',
+        help_text='Cor predominante do animal'
+    )
+    localizacao = models.CharField(
+        max_length=150,
+        verbose_name='Localização',
+        help_text='Local onde o animal se encontra.'
+    )
+    foto = models.ImageField(
+        upload_to='animais/fotos',
+        verbose_name='Foto do Animal',
+        help_text='Foto principal do animal'
+    )
+    descricao = models.TextField(
+        verbose_name='Descrição',
+        help_text='Descrição detalhada do animal',
+        blank=True
+    )
+
+    class Meta:
+        verbose_name = 'Animal'
+        verbose_name_plural = 'Animais'
+        ordering = ['nome']
+
+    def __str__(self):
+        return f"{self.nome} ({self.porte})"
+
+    def save(self, *args, **kwargs):
+        self.nome = self.nome.capitalize()
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+
+class Adocao(models.Model):
+    nome_animal = models.CharField(
+        max_length=100,
+        verbose_name='Nome do Animal',
+        help_text='Nome ou apelido do animal.'
+    )
+    descricao = models.TextField(
+        verbose_name='Descrição',
+        help_text='Informações sobre o animal, comportamento, cuidados, etc.'
+    )
+    foto = models.ImageField(
+        upload_to='adocoes/fotos/',
+        verbose_name='Foto do Animal',
+        help_text='Imagem do animal disponível para adoção.'
+    )
+    contato = models.CharField(
+        max_length=20,
+        verbose_name='Telefone ou WhatsApp',
+        help_text='Número para contato com quem está doando.',
+        validators=[
+            RegexValidator(
+                regex=r'^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$',
+                message='Digite um número de telefone válido.'
+            )
+        ]
+    )
+    data_cadastro = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Data de Cadastro'
+    )
+    disponivel = models.BooleanField(
+        default=True,
+        verbose_name='Disponível para Adoção',
+        help_text='Marque como falso quando o animal for adotado.'
+    )
+
+    class Meta:
+        verbose_name = 'Anúncio de Adoção'
+        verbose_name_plural = 'Anúncios de Adoção'
+        ordering = ['-data_cadastro']
+
+    def __str__(self):
+        return f"{self.nome_animal} - {'Disponível' if self.disponivel else 'Adotado'}"
