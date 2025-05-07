@@ -104,21 +104,9 @@ class Adocao(models.Model):
     def __str__(self):
         return f"{self.nome_animal} - {'Disponível' if self.disponivel else 'Adotado'}"
 
-
-
-class Procedimento(models.Model):
+class TipoProcedimento(models.Model):
     nome = models.CharField(max_length=100, unique=True)
-
-    class Meta:
-        verbose_name = "Procedimento"
-        verbose_name_plural = "Procedimentos"
-    
-    def __str__(self):
-        return self.nome
-    
-    class TipoProcedimento(models.Model):
-        procedimento = models.ForeignKey(Procedimento, on_delete=models.CASCADE, related_name='tipos')
-    animal = models.ForeignKey('adotamuz.Animal', on_delete=models.CASCADE, related_name='tipos_procedimentos')
+    animal = models.ForeignKey('adotamuz.Animal', on_delete=models.CASCADE, related_name='tipos_de_procedimentos')
     instituicao_responsavel = models.CharField(max_length=150)
     data = models.DateField()
     observacoes = models.TextField(blank=True, null=True)
@@ -128,4 +116,14 @@ class Procedimento(models.Model):
         verbose_name_plural = "Tipos de Procedimentos"
 
     def __str__(self):
-        return f"{self.procedimento.nome} - {self.animal.nome} - {self.data}"
+        return f"{self.nome} - {self.animal.nome} - {self.data}"
+
+class Procedimento(models.Model):
+    tipo = models.ForeignKey(TipoProcedimento, on_delete=models.CASCADE, related_name='procedimentos')
+
+    class Meta:
+        verbose_name = "Procedimento"
+        verbose_name_plural = "Procedimentos"
+
+    def __str__(self):
+        return f"{self.tipo.nome} ({self.tipo.animal.nome})"
