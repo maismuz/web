@@ -1,10 +1,17 @@
 from django.db import models
 
-class TipoUsuario(models.model):
-    tipo = models.TextChoices(
-        "Admin", 
-        "Autor", 
-        "Comum"
+
+class Permissao(models.Model):
+    TIPO_CHOICES = [
+        ("ADMIN", "Admin"),
+        ("AUTOR", "Autor"),
+        ("COMUM", "Comum"),
+    ]
+
+    tipo = models.CharField(
+        max_length=5,              # cabe “ADMIN”
+        choices=TIPO_CHOICES,
+        default="COMUM",
     )
     # usuario = models.ForeignKey()
     # perfil = models.ForeignKey()
@@ -129,6 +136,7 @@ class GuiaTuristico(models.Model):
         null=True
     )
 
+    class Meta:
         verbose_name='Guia de Turismo'
         verbose_name_plural='Guias de Turismo'
         ordering=['nome']
@@ -136,8 +144,8 @@ class GuiaTuristico(models.Model):
     def __str__(self):
         return f"{self.nome} - {self.nome_tour}"
 
-class Publicacao(models.Model):
 
+class Publicacao(models.Model):
     
     titulo = models.CharField(
         max_length=255, 
