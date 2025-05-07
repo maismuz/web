@@ -6,8 +6,9 @@ urlpatterns = [
     # Rota para o painel administrativo
     path("admin/", admin.site.urls),
 
-    # Rota inicial para o site
-    path("", index, name="index"),
+    # Rotas do core
+    path("", homepage, name="index"),
+    path("forms/", base_forms, name="base_forms"),
 
     # Rota para as demais aplicações
     path("adotamuz/", include("apps.adotamuz.urls")),
