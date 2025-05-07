@@ -65,3 +65,35 @@ class Ongs(models.Model):
         class Meta:
             verbose_name = "Ong"
             verbose_name_plural = "Ongs"
+class Pessoa(models.Model):
+        nome = models.CharField(max_length=200)
+        categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
+        prazo =models.TextField(help_text="",null=True, blank=True)
+        titulo = models.TextField(help_text="")
+        descricao = models.TextField(help_text="")
+        imagem = models.ImageField(upload_to='pessoas/', null=True, blank=True, verbose_name="Imagem")  
+        contato = models.IntegerField()
+        def __str__(self):
+            if self.mostrar_nome:
+                return f"{self.nome}"
+            return "Anônimo"
+
+        class Meta:
+            verbose_name = "PessoaOng"
+            verbose_name_plural = "PessoasOngs"
+
+class Solicitacao(models.Model):
+        nome = models.CharField(max_length=200)
+        categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
+        prazo =models.TextField(help_text="",null=True, blank=True)
+        titulo = models.TextField(help_text="")
+        descricao = models.TextField(help_text="")
+        imagem = models.ImageField(upload_to='pessoas/', null=True, blank=True, verbose_name="Imagem")  
+        def __str__(self):
+            if self.mostrar_nome:
+                return f"{self.nome}"
+            return "Anônimo"
+
+        class Meta:
+            verbose_name = "Solicitacao"
+            verbose_name_plural = "Solicitacoes"
