@@ -43,7 +43,7 @@ class VeiculoAdmin(admin.ModelAdmin):
     foto_preview.allow_tags = True
     foto_preview.short_description = "Prévia da Foto"
    
-  @admin.register(Motorista)
+@admin.register(Motorista)
 class MotoristaAdmin(admin.ModelAdmin):
     list_display = ('nome', 'cpf', 'telefone', 'email', 'cnh_numero', 'data_nascimento', 'ativo')
     search_fields = ('nome', 'cpf', 'cnh_numero')

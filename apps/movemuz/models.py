@@ -41,7 +41,7 @@ class Veiculo(models.Model):
         verbose_name_plural = 'Veículos'
         db_table = 'veiculo'
         
-   class Motorista(models.Model):
+class Motorista(models.Model):
     nome = models.CharField("Nome completo", max_length=100)
     cpf = models.CharField("CPF", max_length=14, unique=True)
     telefone = models.CharField("Telefone", max_length=15, blank=True, null=True)
