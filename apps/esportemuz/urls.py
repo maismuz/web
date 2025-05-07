@@ -6,7 +6,7 @@ router = DefaultRouter()
 
 router.register(r'modalidades', ModalidadeViewSet, 'modalidade')
 router.register(r'tipos-de-campeonatos', TipoCampeonatoViewSet, 'tipo-campeonato')
-# router.register(r'campeonatos', CampeonatoViewSet)
+router.register(r'campeonatos', CampeonatoViewSet)
 # router.register(r'equipes', EquipeViewSet)
 # router.register(r'grupos', GrupoViewSet)
 # router.register(r'status', StatusPartidaViewSet)
