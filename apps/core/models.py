@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import re
 from datetime import date
 
@@ -153,6 +155,8 @@ class Perfil(models.Model):
         verbose_name=_('Telefone')
     )
     data_nascimento = models.DateField(
+        blank=True,
+        null=True,
         validators=[validate_date_of_birth],
         verbose_name=_('Data de Nascimento')
     )
@@ -240,6 +244,14 @@ class Perfil(models.Model):
             models.Index(fields=['cpf']),  # Índice para buscas por CPF
             models.Index(fields=['usuario']),  # Índice para buscas por usuário
         ]
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """
+    Cria automaticamente um perfil para cada usuário criado.
+    """
+    if created:
+        Perfil.objects.create(usuario=instance)
 
 
 
