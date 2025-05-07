@@ -15,7 +15,7 @@ class Animal(models.Model):
     nome = models.CharField(
         max_length=100,
         verbose_name='Nome do animal',
-        help_text='Nome ou apelido do animal (se houver)'
+        help_text='Nome ou apelido do animal.'
     )
     porte = models.CharField(
         max_length=15,
