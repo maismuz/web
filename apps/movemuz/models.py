@@ -17,9 +17,6 @@ class Motorista(models.Model):
     def __str__(self):
         return self.nome
 
-from django.db import models
-from .models import Motorista
-
 class Local(models.Model):
     nome = models.CharField("Nome do local", max_length=100, unique=True)
     endereco = models.CharField("Endereço", max_length=200, blank=True, null=True)
@@ -35,7 +32,7 @@ class Local(models.Model):
         return self.nome
 
 class Viagem(models.Model):
-    motorista = models.ForeignKey(Motorista, verbose_name="Motorista", on_delete=models.CASCADE)
+    motorista = models.ForeignKey(Motorista, verbose_name="motorista", on_delete=models.CASCADE)
     origem = models.ForeignKey(Local, verbose_name="Origem", on_delete=models.CASCADE, related_name='viagens_origem')
     destino = models.ForeignKey(Local, verbose_name="Destino", on_delete=models.CASCADE, related_name='viagens_destino')
     data_saida = models.DateTimeField("Data e hora de saída")

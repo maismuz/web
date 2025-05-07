@@ -114,7 +114,7 @@ PROJECT_MIDDLEWARES = [
 ]
 
 THIRD_PARTY_MIDDLEWARES = [
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 MIDDLEWARE = DJANGO_MIDDLEWARES + PROJECT_MIDDLEWARES + THIRD_PARTY_MIDDLEWARES
