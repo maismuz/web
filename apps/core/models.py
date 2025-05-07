@@ -114,6 +114,13 @@ class Endereco(models.Model):
         verbose_name=_('CEP'),
         help_text=_('CEP no formato XXXXX-XXX.')
     )
+    perfil = models.ForeignKey(
+        'Perfil',
+        on_delete=models.CASCADE,
+        related_name='enderecos',
+        verbose_name=_('Perfil'),
+        help_text=_('Perfil associado a este endereço.')
+    )
 
     def clean(self):
         if self.cep:
@@ -163,13 +170,6 @@ class Perfil(models.Model):
         max_length=1,
         choices=[('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro'), ('N', 'Prefiro não informar')],
         verbose_name=_('Gênero')
-    )
-    endereco = models.ForeignKey(
-        Endereco,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='perfis',
-        verbose_name=_('Endereço')
     )
     linkedin = models.URLField(
         blank=True,
