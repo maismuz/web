@@ -6,6 +6,7 @@ class ModalidadeSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Modalidade.
     """
+
     class Meta:
         model = Modalidade
         fields = ['url', 'id', 'nome']
@@ -14,6 +15,7 @@ class TipoCampeonatoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo TipoCampeonato.
     """
+
     class Meta:
         model = TipoCampeonato
         fields = ['url', 'id', 'nome']
@@ -22,9 +24,6 @@ class CampeonatoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Campeonato.
     """
-    # modalidade = serializers.StringRelatedField()
-    # tipo_campeonato = serializers.StringRelatedField()
-    # equipes = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Campeonato
@@ -39,26 +38,23 @@ class EquipeSerializer(serializers.ModelSerializer):
         model = Equipe
         fields = ['url', 'id', 'nome']
 
-# class GrupoSerializer(serializers.ModelSerializer):
-#     """
-#     Serializador para o modelo Grupo.
-#     """
+class LocalPartidaSerializer(serializers.ModelSerializer):
+    """
+    Serializador para o modelo LocalPartida.
+    """
 
-#     # nome = serializers.StringRelatedField()
-#     # campeonato = serializers.StringRelatedField()
-#     # equipes = serializers.StringRelatedField(many=True)
-
-#     class Meta:
-#         model = Grupo
-#         fields = ['url', 'id', 'nome', 'campeonato', 'equipes']
+    class Meta:
+        model = LocalPartida
+        fields = ['url', 'id', 'nome']
 
 class StatusPartidaSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo StatusPartida.
     """
+
     class Meta:
         model = StatusPartida
-        fields = '__all__'
+        fields = ['url', 'id', 'nome']
 
 class PartidaSerializer(serializers.ModelSerializer):
     """
@@ -67,12 +63,13 @@ class PartidaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Partida
-        fields = '__all__'
+        fields = ['url', 'id', 'campeonato', 'equipe_mandante', 'equipe_visitante', 'data_hora', 'local', 'gols_mandante', 'gols_visitante', 'status']
 
 class ClassificacaoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Classificacao.
     """
+    
     class Meta:
         model = Classificacao
-        fields = '__all__'
+        fields = ['url', 'id', 'campeonato', 'equipe', 'pontos', 'vitorias', 'empates', 'derrotas', 'gols_pro', 'gols_contra', 'saldo_gols']

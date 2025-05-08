@@ -14,6 +14,31 @@ class Modalidade(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
 
+    def save(self, *args, **kwargs):
+        self.nome = '_'.join(self.nome.strip().lower().split())
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.nome
+    
+class Equipe(models.Model):
+    """
+    Representa uma equipe que participa de um campeonato.
+    """
+
+    class Meta:
+        verbose_name = 'Equipe'
+        verbose_name_plural = 'Equipes'
+
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
+    nome = models.CharField(max_length=255, verbose_name='Nome')
+
+    def save(self, *args, **kwargs):
+        self.nome = '_'.join(self.nome.strip().lower().split())
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.nome
     
@@ -28,6 +53,11 @@ class TipoCampeonato(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
+
+    def save(self, *args, **kwargs):
+        self.nome = '_'.join(self.nome.strip().lower().split())
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.nome
@@ -49,40 +79,33 @@ class Campeonato(models.Model):
     data_fim = models.DateField(verbose_name='Data de Fim')
     equipes = models.ManyToManyField('Equipe', blank=True, verbose_name='Equipes')
 
+    def save(self, *args, **kwargs):
+        self.nome = '_'.join(self.nome.strip().lower().split())
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.nome
-    
-class Equipe(models.Model):
+
+class LocalPartida(models.Model):
     """
-    Representa uma equipe que participa de um campeonato.
+    Representa o local de uma partida.
     """
 
     class Meta:
-        verbose_name = 'Equipe'
-        verbose_name_plural = 'Equipes'
+        verbose_name = 'Local da Partida'
+        verbose_name_plural = 'Locais das Partidas'
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
-    nome = models.CharField(max_length=255, verbose_name='Nome')
+    nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
+
+    def save(self, *args, **kwargs):
+        self.nome = '_'.join(self.nome.strip().lower().split())
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.nome
-    
-# class Grupo(models.Model):
-#     """
-#     Representa um grupo dentro de um campeonato, onde as equipes competem entre si.
-#     """
-
-#     class Meta:
-#         verbose_name = 'Grupo'
-#         verbose_name_plural = 'Grupos'
-
-#     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
-#     nome = models.CharField(max_length=255, verbose_name='Nome')
-#     campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='grupos', verbose_name='Campeonato')
-#     equipes = models.ManyToManyField(Equipe, related_name='grupos', blank=True, verbose_name='Equipes')
-
-#     def __str__(self):
-#         return self.nome
     
 class StatusPartida(models.Model):
     """
@@ -95,6 +118,11 @@ class StatusPartida(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
+
+    def save(self, *args, **kwargs):
+        self.nome = '_'.join(self.nome.strip().lower().split())
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.nome
@@ -110,7 +138,6 @@ class Partida(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     campeonato = models.ForeignKey(Campeonato, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Campeonato')
-    # grupo = models.ForeignKey(Grupo, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Grupo')
     equipe_mandante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_mandante', null=True, blank=True, verbose_name='Equipe Mandante')
     equipe_visitante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_visitante', null=True, blank=True, verbose_name='Equipe Visitante')
     data_hora = models.DateTimeField(verbose_name='Data e Hora')

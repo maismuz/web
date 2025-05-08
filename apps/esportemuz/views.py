@@ -10,6 +10,7 @@ class ModalidadeViewSet(viewsets.ModelViewSet):
     """
     Um conjunto de visualizações para lidar com operações CRUD no modelo Modalidade.
     """
+
     queryset = Modalidade.objects.all()
     serializer_class = ModalidadeSerializer
 
@@ -17,6 +18,7 @@ class TipoCampeonatoViewSet(viewsets.ModelViewSet):
     """
     Um conjunto de visualizações para lidar com operações CRUD no modelo TipoCampeonato.
     """
+
     queryset = TipoCampeonato.objects.all()
     serializer_class = TipoCampeonatoSerializer
 
@@ -24,6 +26,7 @@ class CampeonatoViewSet(viewsets.ModelViewSet):
     """
     Um conjunto de visualizações para lidar com operações CRUD no modelo Campeonato.
     """
+
     queryset = Campeonato.objects.all()
     serializer_class = CampeonatoSerializer
 
@@ -31,20 +34,15 @@ class EquipeViewSet(viewsets.ModelViewSet):
     """
     Um conjunto de visualizações para lidar com operações CRUD no modelo Equipe.
     """
+
     queryset = Equipe.objects.all()
     serializer_class = EquipeSerializer
-
-# class GrupoViewSet(viewsets.ModelViewSet):
-#     """
-#     Um conjunto de visualizações para lidar com operações CRUD no modelo Grupo.
-#     """
-#     queryset = Grupo.objects.all()
-#     serializer_class = GrupoSerializer
 
 class StatusPartidaViewSet(viewsets.ModelViewSet):
     """
     Um conjunto de visualizações para lidar com operações CRUD no modelo StatusPartida.
     """
+
     queryset = StatusPartida.objects.all()
     serializer_class = StatusPartidaSerializer
 
@@ -52,6 +50,7 @@ class PartidaViewSet(viewsets.ModelViewSet):
     """
     Um conjunto de visualizações para lidar com operações CRUD no modelo Partida.
     """
+
     queryset = Partida.objects.all()
     serializer_class = PartidaSerializer
 
@@ -59,5 +58,6 @@ class ClassificacaoViewSet(viewsets.ModelViewSet):
     """
     Um conjunto de visualizações para lidar com operações CRUD no modelo Classificacao.
     """
+    
     queryset = Classificacao.objects.all()
     serializer_class = ClassificacaoSerializer
