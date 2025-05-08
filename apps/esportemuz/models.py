@@ -141,10 +141,16 @@ class Partida(models.Model):
     equipe_mandante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_mandante', null=True, blank=True, verbose_name='Equipe Mandante')
     equipe_visitante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_visitante', null=True, blank=True, verbose_name='Equipe Visitante')
     data_hora = models.DateTimeField(verbose_name='Data e Hora')
-    local = models.CharField(max_length=255, verbose_name='Local')
+    local = models.ForeignKey(LocalPartida, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Local')
     gols_mandante = models.PositiveIntegerField(default=0, verbose_name='Gols Mandante')
     gols_visitante = models.PositiveIntegerField(default=0, verbose_name='Gols Visitante')
     status = models.ForeignKey(StatusPartida, on_delete=models.PROTECT, related_name='partidas', verbose_name='Status')
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.status = StatusPartida.objects.get_or_create(nome=f'agendada')[0]
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.equipe_mandante} vs {self.equipe_visitante} - {self.data_hora.strftime("%d/%m/%Y %H:%M")}'
@@ -170,6 +176,11 @@ class Classificacao(models.Model):
     gols_pro = models.PositiveIntegerField(default=0, verbose_name='Gols Pró')
     gols_contra = models.PositiveIntegerField(default=0, verbose_name='Gols Contra')
     saldo_gols = models.IntegerField(default=0, verbose_name='Saldo de Gols')
+
+    def save(self, *args, **kwargs):
+        self.saldo_gols = self.gols_pro - self.gols_contra
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.equipe} - {self.pontos} pontos'

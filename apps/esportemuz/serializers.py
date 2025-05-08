@@ -11,6 +11,15 @@ class ModalidadeSerializer(serializers.ModelSerializer):
         model = Modalidade
         fields = ['url', 'id', 'nome']
 
+class EquipeSerializer(serializers.ModelSerializer):
+    """
+    Serializador para o modelo Equipe.
+    """
+
+    class Meta:
+        model = Equipe
+        fields = ['url', 'id', 'nome']
+
 class TipoCampeonatoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo TipoCampeonato.
@@ -28,15 +37,6 @@ class CampeonatoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campeonato
         fields = ['url', 'id', 'nome', 'modalidade', 'tipo_campeonato', 'data_inicio', 'data_fim', 'equipes']
-
-class EquipeSerializer(serializers.ModelSerializer):
-    """
-    Serializador para o modelo Equipe.
-    """
-
-    class Meta:
-        model = Equipe
-        fields = ['url', 'id', 'nome']
 
 class LocalPartidaSerializer(serializers.ModelSerializer):
     """
