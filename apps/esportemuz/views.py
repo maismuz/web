@@ -1,9 +1,7 @@
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import viewsets, status
 from esportemuz.models import *
 from esportemuz.serializers import *
 from esportemuz.utils import *
+from rest_framework import viewsets
 
 # Create your views here.
 class ModalidadeViewSet(viewsets.ModelViewSet):
@@ -37,6 +35,14 @@ class EquipeViewSet(viewsets.ModelViewSet):
 
     queryset = Equipe.objects.all()
     serializer_class = EquipeSerializer
+
+class LocalPartidaViewSet(viewsets.ModelViewSet):
+    """
+    Um conjunto de visualizações para lidar com operações CRUD no modelo LocalPartida.
+    """
+
+    queryset = LocalPartida.objects.all()
+    serializer_class = LocalPartidaSerializer
 
 class StatusPartidaViewSet(viewsets.ModelViewSet):
     """
