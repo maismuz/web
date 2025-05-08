@@ -3,6 +3,7 @@ from esportemuz.serializers import *
 from esportemuz.utils import *
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 # Create your views here.
 class ModalidadeViewSet(viewsets.ModelViewSet):
@@ -95,3 +96,18 @@ class ClassificacaoViewSet(viewsets.ModelViewSet):
     
     queryset = Classificacao.objects.all().order_by('id')
     serializer_class = ClassificacaoSerializer
+
+    @action(detail=False, methods=['get'], url_path='tabela/(?P<campeonato_id>[^/.]+)')
+    def tabela_campeonato(self, request, campeonato_id=None):
+        """
+        Exibir a tabela de classificação de um campeonato específico.
+        """
+
+        classificacoes = Classificacao.objects.filter(campeonato__id=campeonato_id).order_by(
+            '-pontos',
+            '-saldo_gols',
+            '-vitorias',
+            '-gols_pro'
+        )
+        serializer = self.get_serializer(classificacoes, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
