@@ -146,12 +146,6 @@ class Partida(models.Model):
     gols_visitante = models.PositiveIntegerField(default=0, verbose_name='Gols Visitante')
     status = models.ForeignKey(StatusPartida, on_delete=models.PROTECT, related_name='partidas', verbose_name='Status')
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.status = StatusPartida.objects.get_or_create(nome=f'agendada')[0]
-
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return f'{self.equipe_mandante} vs {self.equipe_visitante} - {self.data_hora.strftime("%d/%m/%Y %H:%M")}'
     
