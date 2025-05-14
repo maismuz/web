@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 
+
 @admin.register(Mensagem)
 class MensagemAdmin(admin.ModelAdmin):
     list_display = ('id', 'remetente', 'destinatario', 'mensagem_resumida', 'data_envio', 'status')
@@ -12,6 +13,15 @@ class MensagemAdmin(admin.ModelAdmin):
     def mensagem_resumida(self, obj):
         return (obj.mensagem[:40] + '...') if len(obj.mensagem) > 40 else obj.mensagem
     mensagem_resumida.short_description = 'Mensagem'
+
+ 
+class AvaliacaoUsuarioAdmin(admin.ModelAdmin):
+    list_display = ['usuario', 'nota', 'comentario', 'data_avaliacao']
+    search_fields = ['usuario__username', 'comentario']
+    list_filter = ['nota', 'data_avaliacao']  
+    ordering = ['-data_avaliacao']  
+admin.site.register(AvaliacaoUsuario, AvaliacaoUsuarioAdmin)
+
 
 @admin.register(Oferta)
 class OfertaAdmin(admin.ModelAdmin):

@@ -67,4 +67,3 @@ class InstituicaoParceiraAdmin(admin.ModelAdmin):
             'fields': ('nome', 'cnpj', 'endereco', 'telefone', 'servicos_ofertados')
         }),
     )
-
