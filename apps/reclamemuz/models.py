@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+#Gerenciar denúncias urbanas
 class Denuncia(models.Model):
     STATUS_CHOICES = [
         ('pendente', 'Pendente'),
@@ -28,3 +29,14 @@ class Denuncia(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.get_status_display()}"
+
+#Gerenciar comentários nas denúncias
+
+class Comentario(models.Model):
+    texto = models.TextField()
+    data_hora = models.DateTimeField(auto_now_add=True)
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_denuncia = models.ForeignKey(Denuncia, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Comentário de {self.id_usuario.username} em {self.data_hora.strftime('%d/%m/%Y %H:%M')}"
