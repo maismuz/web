@@ -1,13 +1,18 @@
 from django.contrib import admin
-from .models import Oferta, DenunciaIrregular
+from .models import *
 
+class AvaliacaoUsuarioAdmin(admin.ModelAdmin):
+    list_display = ['usuario', 'nota', 'comentario', 'data_avaliacao']
+    search_fields = ['usuario__username', 'comentario']
+    list_filter = ['nota', 'data_avaliacao']  
+    ordering = ['-data_avaliacao']  
+admin.site.register(AvaliacaoUsuario, AvaliacaoUsuarioAdmin)
 
 @admin.register(Oferta)
 class OfertaAdmin(admin.ModelAdmin):
     list_display = ['titulo', 'preco', 'data_criacao']
     search_fields = ['titulo']
     list_filter = ['data_criacao']
-
 
 @admin.register(DenunciaIrregular)
 class DenunciaIrregularAdmin(admin.ModelAdmin):
