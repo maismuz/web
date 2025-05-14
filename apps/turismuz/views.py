@@ -15,8 +15,10 @@ def estabelecimentos(request):
     return render(request, 'estabelecimentos.html', {'estabelecimentos': estabelecimentos})
 
 def guias(request):
-    guias = GuiaTuristico.objects.all()
-    return render(request, 'guias.html', {'guias': guias})
+    guias = list(GuiaTuristico.objects.all())
+    # Agrupa de 3 em 3
+    grupos = [guias[i:i+3] for i in range(0, len(guias), 3)]
+    return render(request, 'guias.html', {'grupos': grupos})
 
 def publicacoes(request):
     publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')
