@@ -2,7 +2,7 @@ from django.shortcuts import *
 from django.urls import reverse_lazy
 from django.views.generic import *
 from .models import *
-
+from django.shortcuts import render, get_object_or_404
 
 def hometur(request):
     return render(request, 'hometur.html')
@@ -26,3 +26,7 @@ def publicacao_detail(request, pk):
     from .models import Publicacao
     publicacao = Publicacao.objects.get(pk=pk)
     return render(request, 'publicacao_detail.html', {'publicacao': publicacao})
+
+def guia_detail(request, pk):
+    guia = get_object_or_404(GuiaTuristico, pk=pk)
+    return render(request, 'guia_detail.html', {'guia': guia})
