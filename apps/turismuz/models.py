@@ -1,6 +1,7 @@
 from django.db import models
 
-class Usuario(models.Model):
+
+class Permissao(models.Model):
     TIPO_CHOICES = [
         ("ADMIN", "Admin"),
         ("AUTOR", "Autor"),
@@ -12,6 +13,8 @@ class Usuario(models.Model):
         choices=TIPO_CHOICES,
         default="COMUM",
     )
+    # usuario = models.ForeignKey()
+    # perfil = models.ForeignKey()
 
 class Categorias(models.Model):
     """
@@ -151,6 +154,7 @@ class GuiaTuristico(models.Model):
     )
 
     class Meta:
+
         verbose_name = 'Guia de Turismo'
         verbose_name_plural = 'Guias de Turismo'
         ordering = ['nome']
@@ -164,25 +168,10 @@ class GuiaTuristico(models.Model):
     )
 
     def __str__(self):
-        return f"{self.nome} "
+        return f"{self.nome} - {self.nome_tour}"
+
 
 class Publicacao(models.Model):
-    titulo = models.CharField(max_length=255, verbose_name='Título da Publicação', help_text='Título que aparecerá no card de sua publicação.')
-    texto_da_noticia = models.TextField(verbose_name = 'Texto da Publicação', help_text = 'Texto que aparecerá no corpo de sua publicação')
-    data_de_publicacao = models.DateTimeField(auto_now_add = True, verbose_name='Data de Publicação')
-
-
-    TIPO_CHOICES = [
-        ("EM_ANALISE", "Em_analise"),
-        ("RECUSADO", "Recusado"),
-        ("ACEITO", "Aceito"),
-    ]
-
-    estado = models.CharField(
-        max_length=10,
-        choices=TIPO_CHOICES,
-        default="COMUM",
-    )
     
     titulo = models.CharField(
         max_length=255, 
