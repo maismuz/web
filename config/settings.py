@@ -198,3 +198,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LOGIN_URL = '/'
 # URL de logout
 # LOGOUT_URL = '/logout/'
+
+# Configuração do Django Rest Framework
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATE_FORMAT': "%d/%m/%Y",
+    'DATETIME_FORMAT': "%d/%m/%Y às %H:%M",
+    'DATETIME_INPUT_FORMATS': [
+        "%d/%m/%Y %H:%M:%S",
+        "%d/%m/%Y %H:%M",
+        "%d/%m/%Y",
+    ],
+    'DATE_INPUT_FORMATS': [
+        "%d/%m/%Y",
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+}

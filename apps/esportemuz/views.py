@@ -1,7 +1,7 @@
 from django.db.models import Sum
-from esportemuz.models import *
-from esportemuz.serializers import *
-from esportemuz.utils import *
+from .models import *
+from .serializers import *
+from .utils import *
 from itertools import combinations
 from rest_framework import viewsets, status
 from rest_framework.decorators import action

@@ -1,5 +1,5 @@
-from esportemuz.models import *
-from esportemuz.utils import atualizar_classificacao
+from .models import *
+from .utils import atualizar_classificacao
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
