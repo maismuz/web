@@ -1,5 +1,6 @@
 :root {
   --verde-principal: #28a745;
+  --hover-components: #1f7e35;
   --background-color: #e8fccf;
 }
 
@@ -122,15 +123,38 @@ form h2{
   color: var(--verde-principal);
 }
 
-#submit{
+.btn-verde-principal {
   background-color: var(--verde-principal);
   border-color: var(--verde-principal);
+  color: #fff; /* se quiser garantir contraste */
 }
+
+.btn-verde-principal:hover {
+  background-color: var(--hover-components); /* ajuste o tom conforme necessário */
+  border-color: var(--hover-components);
+  color: #fff; /* se quiser garantir contraste */
+}
+
+.table-container{
+  width: 80%;
+  margin: auto;
+}
+
+
 /* Select e input com foco */
 .form-select:focus{
   outline: none !important;;
   border-color: white !important;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.acoes{
+  display: flex;
+  justify-content: center;
+}
+
+.acoes-th{
+  width: 15%;
 }
 
 @media (max-width: 768px) {
