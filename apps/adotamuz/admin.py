@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
-from .models import Animal, Raca, Adocao, TipoProcedimento, Procedimento, TipoDenuncia, Denuncia
+from .models import Animal, Raca, Adocao, TipoProcedimento, Procedimento, TipoDenuncia, Denuncia, InstituicaoParceira
 
 class AnimalResource(resources.ModelResource):
     class Meta:
@@ -55,3 +55,16 @@ class DenunciaAdmin(admin.ModelAdmin):
     list_display = ('tipo', 'data', 'localizacao')
     list_filter = ('tipo', 'data')
     search_fields = ('descricao', 'localizacao')
+
+
+@admin.register(InstituicaoParceira)
+class InstituicaoParceiraAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'cnpj', 'telefone')
+    search_fields = ('nome', 'cnpj', 'telefone', 'servicos_ofertados')
+    list_filter = ('nome',)
+    fieldsets = (
+        ('Informações da Instituição', {
+            'fields': ('nome', 'cnpj', 'endereco', 'telefone', 'servicos_ofertados')
+        }),
+    )
+

@@ -177,3 +177,27 @@ class Denuncia(models.Model):
 
     def __str__(self):
         return f"{self.tipo.nome} - {self.data}"
+
+class InstituicaoParceira(models.Model):
+    nome = models.CharField(max_length=150, unique=True, verbose_name='Nome da Instituição')
+    cnpj = models.CharField(
+        max_length=18,
+        unique=True,
+        validators=[RegexValidator(regex=r'^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$', message='CNPJ deve estar no formato 00.000.000/0000-00')],
+        verbose_name='CNPJ'
+    )
+    endereco = models.CharField(max_length=255, verbose_name='Endereço')
+    servicos_ofertados = models.TextField(verbose_name='Serviços Ofertados')
+    telefone = models.CharField(
+        max_length=20,
+        validators=[RegexValidator(regex=r'^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$', message='Digite um número de telefone válido')],
+        verbose_name='Telefone'
+    )
+
+    class Meta:
+        verbose_name = "Instituição Parceira"
+        verbose_name_plural = "Instituições Parceiras"
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
