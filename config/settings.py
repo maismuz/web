@@ -221,6 +221,7 @@ REST_FRAMEWORK = {
     ],
     'DATE_INPUT_FORMATS': [
         "%d/%m/%Y",
+        "%Y-%m-%d",
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
