@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-# models.py
-# Criação de modelos de contratos e curriculos para serviços autonomos ou contratação de empreasas;
 
+# Criação de modelos de contratos e curriculos para serviços autonomos ou contratação de empreasas;
 class Usuario(models.Model):
     nome = models.CharField(max_length=100)
     eh_empresa = models.BooleanField(default=False)
