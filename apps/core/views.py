@@ -11,3 +11,9 @@ def base_forms(request):
     Função de view para renderizar a página de formulários base.
     """
     return render(request, "base_forms.html")
+
+def base_tabela(request):
+    """
+    Função de view para renderizar a página de formulários base.
+    """
+    return render(request, "base_tabela.html")
