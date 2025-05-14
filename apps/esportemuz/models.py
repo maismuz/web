@@ -36,7 +36,7 @@ class Equipe(models.Model):
         return gerar_nome_arquivo(instance, 'esportemuz/equipes/escudos', filename)
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
-    nome = models.CharField(max_length=255, verbose_name='Nome')
+    nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
     escudo = models.ImageField(upload_to=get_path_escudo, blank=True, null=True, verbose_name='Escudo')
 
     def save(self, *args, **kwargs):
@@ -77,7 +77,7 @@ class Campeonato(models.Model):
         verbose_name_plural = 'Campeonatos'
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
-    nome = models.CharField(max_length=255, verbose_name='Nome')
+    nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
     modalidade = models.ForeignKey(Modalidade, on_delete=models.CASCADE, verbose_name='Modalidade')
     tipo_campeonato = models.ForeignKey(TipoCampeonato, on_delete=models.CASCADE, verbose_name='Tipo de Campeonato')
     data_inicio = models.DateField(verbose_name='Data de Início')
