@@ -4,8 +4,8 @@ from .models import *
 # Register your models here.
 
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('usuario', 'nome', 'telefone', 'endereco', 'data_nascimento')
-    search_fields = ('usuario__username', 'nome')
+    list_display = ('nome', 'telefone', 'endereco', 'data_nascimento')
+    search_fields = ('nome')
 
 class ServicoAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'usuario', 'categoria', 'criado_em')

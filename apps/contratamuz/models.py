@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 # models.py
 
 class Usuario(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usuario')
     nome = models.CharField(max_length=100)
     telefone = models.CharField(max_length=15, blank=True)
     endereco = models.CharField(max_length=255, blank=True)
