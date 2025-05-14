@@ -157,6 +157,55 @@ form h2{
   width: 15%;
 }
 
+.titulo{
+  color: var(--verde-principal);
+}
+
+.subtitulo{
+  color: var(--hover-components);
+}
+
+.list-group-item {
+  background-color: transparent !important;
+}
+
+.navbar-custom {
+  background-color: #f8f9fa; /* tom claro (você pode trocar por branco puro: #ffffff) */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* leve sombra moderna */
+}
+
+.navbar-custom a {
+  color: #333;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 18px;
+}
+
+.navbar-custom a.nav-link {
+  color: #333;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 15px;
+}
+
+.navbar-custom a.nav-link:hover {
+  color: var(--hover-components); /* azul Bootstrap */
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+footer{
+  background-color: #0000001c;
+}
+
+
 @media (max-width: 768px) {
   form {
   width: 100%;
