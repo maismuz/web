@@ -7,6 +7,11 @@ class ModalidadeAdmin(admin.ModelAdmin):
     list_display = ['id', 'nome']
     list_per_page = 10
 
+@admin.register(Equipe)
+class EquipeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'nome', 'escudo']
+    list_per_page = 10
+
 @admin.register(TipoCampeonato)
 class TipoCampeonatoAdmin(admin.ModelAdmin):
     list_display = ['id', 'nome']
@@ -16,20 +21,12 @@ class TipoCampeonatoAdmin(admin.ModelAdmin):
 class CampeonatoAdmin(admin.ModelAdmin):
     list_display = ['id', 'nome', 'modalidade', 'tipo_campeonato', 'data_inicio', 'data_fim']
     list_per_page = 10
-    search_fields = ['nome']
-    list_filter = ['modalidade', 'tipo_campeonato']
-
-@admin.register(Equipe)
-class EquipeAdmin(admin.ModelAdmin):
-    list_display = ['id', 'nome', 'escudo']
-    list_per_page = 10
-    search_fields = ['nome']
+    filter_horizontal = ['equipes']
 
 @admin.register(LocalPartida)
 class LocalPartidaAdmin(admin.ModelAdmin):
     list_display = ['id', 'nome']
     list_per_page = 10
-    search_fields = ['nome']
 
 @admin.register(Partida)
 class PartidaAdmin(admin.ModelAdmin):
@@ -42,5 +39,3 @@ class PartidaAdmin(admin.ModelAdmin):
 class ClassificacaoAdmin(admin.ModelAdmin):
     list_display = ['id', 'campeonato', 'equipe', 'pontos', 'vitorias', 'empates', 'derrotas', 'gols_pro', 'gols_contra','saldo_gols']
     list_per_page = 10
-    search_fields = ['campeonato__nome', 'equipe__nome']
-    list_filter = ['campeonato']
