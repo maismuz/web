@@ -1,5 +1,17 @@
 from django.db import models
 
+class Usuario(models.Model):
+    TIPO_CHOICES = [
+        ("ADMIN", "Admin"),
+        ("AUTOR", "Autor"),
+        ("COMUM", "Comum"),
+    ]
+
+    tipo = models.CharField(
+        max_length=5,              # cabe “ADMIN”
+        choices=TIPO_CHOICES,
+        default="COMUM",
+    )
 
 class Categorias(models.Model):
     """
@@ -19,10 +31,21 @@ class Categorias(models.Model):
     def __str__(self):
         return self.nome
 
-class Estabelecimentos(models.Model):
-    """
-    Modelo para controle de estabelecimentos.
-    """
+class Estabelecimento(models.Model):
+
+    TIPO_CHOICES = [
+        ("EM_ANALISE", "Em_analise"),
+        ("RECUSADO", "Recusado"),
+        ("ACEITO", "Aceito"),
+    ]
+
+    estado = models.CharField(
+        max_length=10,
+        choices=TIPO_CHOICES,
+        default="COMUM",
+    )
+
+
     nome = models.CharField(
         verbose_name='Nome',
         help_text='Nome do estabelecimento',
@@ -71,7 +94,7 @@ class Estabelecimentos(models.Model):
     def __str__(self):
         return self.nome
 
-class GuiasTurismo(models.Model):
+class GuiaTuristico(models.Model):
     """
     Modelo para controle de guias de turismo.
     """
@@ -80,20 +103,9 @@ class GuiasTurismo(models.Model):
         help_text='Nome do guia de turismo',
         max_length=100
     )
-    nome_tour = models.CharField(
-        verbose_name='Nome do Tour',
-        help_text='Nome do tour',
-        max_length=150
-    )
     descricao = models.TextField(
         verbose_name='Descrição do Guia',
         help_text='Descrição do guia de turismo',
-        blank=True,
-        null=True
-    )
-    descricao_tour = models.TextField(
-        verbose_name='Descrição do Tour',
-        help_text='Descrição do tour',
         blank=True,
         null=True
     )
@@ -103,12 +115,12 @@ class GuiasTurismo(models.Model):
         blank=True,
         null=True
     )
-    pontos_parada = models.TextField(
-        verbose_name='Pontos de Parada',
-        help_text='Lista dos pontos de parada do tour (um por linha)',
-        blank=True,
-        null=True
-    )
+    # pontos_parada = models.TextField(
+    #     verbose_name='Pontos de Parada',
+    #     help_text='Lista dos pontos de parada do tour (um por linha)',
+    #     blank=True,
+    #     null=True
+    # )
     nivel_dificuldade = models.CharField(
         verbose_name='Nível de Dificuldade',
         help_text='Nível de dificuldade do tour',
@@ -124,26 +136,56 @@ class GuiasTurismo(models.Model):
         blank=True,
         null=True
     )
-    entidades_responsaveis = models.CharField(
-        verbose_name='Entidades Responsáveis',
-        help_text='Entidades responsáveis pelo tour',
+    entidade_responsavel = models.CharField(
+        verbose_name='Entidade Responsável',
+        help_text='Entidade responsável pelo tour',
         max_length=200,
         blank=True,
         null=True
     )
 
-    class Meta:
-        verbose_name = 'Guia de Turismo'
-        verbose_name_plural = 'Guias de Turismo'
-        ordering = ['nome']
-
     def __str__(self):
         return f"{self.nome} - {self.nome_tour}"
 
 class Publicacao(models.Model):
-    titulo = models.CharField(max_length=255, verbose_name='Título da Publicação', help_text='Título que aparecerá no card de sua publicação.')
-    texto_da_noticia = models.TextField(verbose_name = 'Texto da Publicação', help_text = 'Texto que aparecerá no corpo de sua publicação')
-    data_de_publicacao = models.DateTimeField(auto_now_add = True, verbose_name='Data de Publicação')
+
+    
+    titulo = models.CharField(
+        max_length=255, 
+        verbose_name='Título da Publicação', 
+        help_text='Título que aparecerá no card de sua publicação.'
+    )
+    texto_da_noticia=models.TextField(
+        verbose_name='Texto da Publicação', 
+        help_text='Texto que aparecerá no corpo de sua publicação'
+    )
+    data_de_publicacao=models.DateTimeField(
+        auto_now_add=True, 
+        verbose_name='Data de Publicação'
+    )
+
+    def __str__(self):
+        return self.titulo
+
+class ImagemPublicacao(models.Model):
+    noticia = models.ForeignKey(
+        Publicacao,
+        on_delete=models.PROTECT,
+        verbose_name='Publicação da imagem',
+        help_text='Publicação em que a imagem está vinculada',
+    )
+    imagem = models.ImageField(
+        'Fotos',
+        upload_to='imagens_publicacoes'
+    )
+    legenda = models.CharField(
+        max_length=255,
+        verbose_name='Legenda da imagem',
+        help_text='Descreva a imagem para funções de acessibilidade',
+    )
+    def __str__(self):
+        return self.legenda
+
 
 class Avaliacao(models.Model):
     nota = models.PositiveSmallIntegerField(
@@ -173,6 +215,5 @@ class Avaliacao(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - Nota: {self.nota}"
-
 
 
