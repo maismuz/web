@@ -58,6 +58,9 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # API
+    'rest_framework',
 ]
 
 PROJECT_APPS = [
