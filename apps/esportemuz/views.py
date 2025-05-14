@@ -217,7 +217,7 @@ class CampeonatoViewSet(viewsets.ModelViewSet):
         """
 
         campeonato = self.get_object()
-        partidas = campeonato.partidas.select_related('equipe_mandante', 'equipe_visitante', 'local').order_by('data_hora')
+        partidas = campeonato.partidas.select_related('equipe_mandante', 'equipe_visitante', 'local').filter(encerrada=False).order_by('data_hora')
         data = [
             {
                 'id': partida.id,
