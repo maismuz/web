@@ -3,16 +3,16 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
+
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.nome
-
+    
 class Objeto(models.Model):
-    TIPO_CHOICES = (('venda', 'Venda'), ('troca', 'Troca'), ('doacao', 'Doação'))
-
+    TIPO_CHOICES = (('venda', 'Venda'), ('troca', 'Troca'), ('doacao', 'Doação'), )
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
     preco = models.DecimalField(max_digits=10, decimal_places=2)
@@ -74,9 +74,6 @@ class Mensagem(models.Model):
         ordering = ['-data_envio']
         db_table = 'mensagens_usuarios'
 
-from django.contrib.auth.models import User  
-from django.utils import timezone
-
 class AvaliacaoUsuario(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     nota = models.DecimalField(max_digits=3, decimal_places=1)
@@ -85,7 +82,6 @@ class AvaliacaoUsuario(models.Model):
 
     def __str__(self):
         return f"Avaliação para {self.usuario.username} - Nota: {self.nota}"
-
 
 class Oferta(models.Model):
     titulo = models.CharField(max_length=255)
@@ -99,7 +95,6 @@ class Oferta(models.Model):
     class Meta:
         verbose_name = "Oferta"
         verbose_name_plural = "Ofertas"
-
 
 class DenunciaIrregular(models.Model):
     MOTIVO_CHOICES = [
