@@ -34,16 +34,9 @@ DB_CREDENTIALS = {
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Hosts permitidos e origens CSRF confiáveis
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'vps58279.publiccloud.com.br',
-]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://*',
-    'http://*'
-]
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost').split(',')
 
 # Configurações de banco de dados
 DATABASES = {
@@ -127,9 +120,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATE_DIRS = [
     os.path.join(BASE_DIR, f"apps/{app}/templates/")
     for app in [
-        'adotamuz', 'contratamuz', 'core', 'covamuz', 'doamuz',
-        'escambuz', 'esportemuz', 'eventuz', 'movemuz', 'muzeu',
-        'muzsaude', 'reclamemuz', 'teste', 'turismuz',
+        'core'
     ]
 ]
 
