@@ -136,7 +136,9 @@ TEMPLATE_DIRS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': TEMPLATE_DIRS,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'apps/doamuz/templates'),  # Certifique-se de que o caminho está correto
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

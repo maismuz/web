@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'homedoa' %}">
+        <img src="https://cdn-icons-png.flaticon.com/512/4743/4743238.png" alt="Logo" width="32" height="32" class="me-2">
+        DoaMuz
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'homedoa' %}">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doacao' %}">Doação</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'doador' %}">Doador</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ongs' %}">Ongs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'instrucoes' %}">Instruções</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
