@@ -12,7 +12,7 @@ class Cemiterio(models.Model):
 
 class AreaCemiterio(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do área")
-    Cemiterio = models.ForeignKey(Cemiterio)
+    Cemiterio = models.ForeignKey(Cemiterio, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.nome}"
