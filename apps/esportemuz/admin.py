@@ -1,5 +1,5 @@
+from apps.esportemuz.models import *
 from django.contrib import admin
-.models import *
 
 # Register your models here.
 @admin.register(Modalidade)

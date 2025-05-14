@@ -1,5 +1,5 @@
+from apps.esportemuz.models import *
 from django.utils.timezone import now
-from .models import *
 from hashlib import sha256
 import os
 
