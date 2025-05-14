@@ -9,7 +9,6 @@ router.register(r'equipes', EquipeViewSet)
 router.register(r'tipos', TipoCampeonatoViewSet)
 router.register(r'campeonatos', CampeonatoViewSet)
 router.register(r'locais', LocalPartidaViewSet)
-router.register(r'status', StatusPartidaViewSet)
 router.register(r'partidas', PartidaViewSet)
 router.register(r'classificacoes', ClassificacaoViewSet)
 

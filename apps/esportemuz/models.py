@@ -1,4 +1,5 @@
 from django.db import models
+from esportemuz.utils import gerar_nome_arquivo
 from uuid import uuid4
 
 # Create your models here.
@@ -31,8 +32,12 @@ class Equipe(models.Model):
         verbose_name = 'Equipe'
         verbose_name_plural = 'Equipes'
 
+    def get_path_escudo(instance, filename):
+        return gerar_nome_arquivo(instance, 'esportemuz/equipes/escudos', filename)
+
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
     nome = models.CharField(max_length=255, verbose_name='Nome')
+    escudo = models.ImageField(upload_to=get_path_escudo, blank=True, null=True, verbose_name='Escudo')
 
     def save(self, *args, **kwargs):
         self.nome = '_'.join(self.nome.strip().lower().split())
@@ -77,7 +82,7 @@ class Campeonato(models.Model):
     tipo_campeonato = models.ForeignKey(TipoCampeonato, on_delete=models.CASCADE, verbose_name='Tipo de Campeonato')
     data_inicio = models.DateField(verbose_name='Data de Início')
     data_fim = models.DateField(verbose_name='Data de Fim')
-    equipes = models.ManyToManyField('Equipe', blank=True, verbose_name='Equipes')
+    equipes = models.ManyToManyField(Equipe, through='Classificacao', verbose_name='Equipes')
 
     def save(self, *args, **kwargs):
         self.nome = '_'.join(self.nome.strip().lower().split())
@@ -107,26 +112,6 @@ class LocalPartida(models.Model):
     def __str__(self):
         return self.nome
     
-class StatusPartida(models.Model):
-    """
-    Representa o status de uma partida, como agendada, em andamento ou finalizada.
-    """
-
-    class Meta:
-        verbose_name = 'Status da Partida'
-        verbose_name_plural = 'Status das Partidas'
-
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name='ID')
-    nome = models.CharField(max_length=255, unique=True, verbose_name='Nome')
-
-    def save(self, *args, **kwargs):
-        self.nome = '_'.join(self.nome.strip().lower().split())
-
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.nome
-    
 class Partida(models.Model):
     """
     Representa uma partida entre duas equipes em um campeonato.
@@ -144,7 +129,7 @@ class Partida(models.Model):
     local = models.ForeignKey(LocalPartida, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Local')
     gols_mandante = models.PositiveIntegerField(default=0, verbose_name='Gols Mandante')
     gols_visitante = models.PositiveIntegerField(default=0, verbose_name='Gols Visitante')
-    status = models.ForeignKey(StatusPartida, on_delete=models.PROTECT, related_name='partidas', verbose_name='Status')
+    encerrada = models.BooleanField(default=False, verbose_name='Encerrada')
 
     def __str__(self):
         return f'{self.equipe_mandante} vs {self.equipe_visitante} - {self.data_hora.strftime("%d/%m/%Y %H:%M")}'
