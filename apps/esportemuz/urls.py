@@ -1,6 +1,6 @@
 from django.urls import include, path
-from esportemuz.views import *
 from rest_framework.routers import DefaultRouter
+from apps.esportemuz.views import *
 
 router = DefaultRouter()
 

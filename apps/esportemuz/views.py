@@ -1,7 +1,7 @@
+from apps.esportemuz.models import *
+from apps.esportemuz.serializers import *
+from apps.esportemuz.utils import *
 from django.db.models import Sum
-from esportemuz.models import *
-from esportemuz.serializers import *
-from esportemuz.utils import *
 from itertools import combinations
 from rest_framework import viewsets, status
 from rest_framework.decorators import action

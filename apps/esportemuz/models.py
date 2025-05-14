@@ -1,5 +1,5 @@
 from django.db import models
-from esportemuz.utils import gerar_nome_arquivo
+from apps.esportemuz.utils import gerar_nome_arquivo
 from uuid import uuid4
 
 # Create your models here.

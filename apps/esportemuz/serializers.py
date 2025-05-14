@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from esportemuz.models import *
+from apps.esportemuz.models import *
 
 # Create your serializers here.
 class ModalidadeSerializer(serializers.ModelSerializer):
