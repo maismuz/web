@@ -2,24 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 # models.py
 # Criação de modelos de contratos e curriculos para serviços autonomos ou contratação de empreasas;
-
-class Usuario(models.Model):
-    nome = models.CharField(max_length=100)
-    eh_empresa = models.BooleanField(default=False)
-    eh_prestador = models.BooleanField(default=False)
-    telefone = models.CharField(max_length=15, blank=True)
-    biografia = models.TextField(blank=True)
-    imagem = models.ImageField(upload_to='usuarios/', blank=True, null=True)
-
-    def __str__(self):
-        return self.nome
-    
-    class Meta:
-        verbose_name = 'Usuário'
-        verbose_name_plural = 'Usuários'
     
 class Servico(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='servicos')
     titulo = models.CharField(max_length=100)
     descricao = models.TextField()
     categoria = models.CharField(max_length=100)
@@ -42,7 +26,6 @@ class Servico(models.Model):
         verbose_name_plural = 'Serviços'
     
 class VagaEmprego(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='vagas')
     titulo = models.CharField(max_length=100)
     descricao = models.TextField()
     salario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -65,8 +48,6 @@ class Candidatura(models.Model):
         ('aceita', 'Aceita'),
         ('rejeitada', 'Rejeitada'),
     ]
-
-    candidato = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='candidaturas')
     vaga = models.ForeignKey(VagaEmprego, on_delete=models.CASCADE, related_name='candidaturas')
     mensagem = models.TextField(blank=True)
     data_candidatura = models.DateTimeField(auto_now_add=True)
@@ -82,7 +63,6 @@ class Candidatura(models.Model):
     
 class Avaliacao(models.Model):
     serviço = models.ForeignKey(Servico, on_delete=models.CASCADE, related_name='avaliacoes')
-    avaliador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='avaliacoes_feitas')
     nota = models.IntegerField()
     comentario = models.TextField(blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
