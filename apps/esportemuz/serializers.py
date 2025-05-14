@@ -34,6 +34,11 @@ class CampeonatoSerializer(serializers.ModelSerializer):
     Serializador para o modelo Campeonato.
     """
 
+    equipes = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Equipe.objects.all()
+    )
+
     class Meta:
         model = Campeonato
         fields = ['url', 'id', 'nome', 'modalidade', 'tipo_campeonato', 'data_inicio', 'data_fim', 'equipes']
