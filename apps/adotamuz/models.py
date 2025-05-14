@@ -154,3 +154,26 @@ class Procedimento(models.Model):
         return f"{self.tipo.nome} ({self.tipo.animal.nome})"
 
 
+class TipoDenuncia(models.Model):
+    nome = models.CharField(max_length=100, unique=True, help_text='Coloque o tipo de denúncia exemplo: abandono, violência, etc')
+
+    class Meta:
+        verbose_name = "Tipo de Denúncia"
+        verbose_name_plural = "Tipos de Denúncia"
+
+    def __str__(self):
+        return self.nome
+
+class Denuncia(models.Model):
+    tipo = models.ForeignKey(TipoDenuncia, on_delete=models.CASCADE, related_name='denuncias')
+    data = models.DateField()
+    localizacao = models.CharField(max_length=255)
+    foto = models.ImageField(upload_to='denuncias_fotos/', blank=True, null=True)
+    descricao = models.TextField()
+
+    class Meta:
+        verbose_name = "Denúncia"
+        verbose_name_plural = "Denúncias"
+
+    def __str__(self):
+        return f"{self.tipo.nome} - {self.data}"
