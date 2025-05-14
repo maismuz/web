@@ -1,0 +1,8 @@
+<h1>Vagas de Emprego</h1>
+<ul>
+  {% for vaga in vagas %}
+    <li><strong>{{ vaga.titulo }}</strong> - {{ vaga.localizacao }}</li>
+  {% empty %}
+    <li>Nenhuma vaga disponível no momento.</li>
+  {% endfor %}
+</ul>
