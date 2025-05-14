@@ -32,9 +32,20 @@ class Categorias(models.Model):
         return self.nome
 
 class Estabelecimento(models.Model):
-    """
-    Modelo para controle de estabelecimentos.
-    """
+
+    TIPO_CHOICES = [
+        ("EM_ANALISE", "Em_analise"),
+        ("RECUSADO", "Recusado"),
+        ("ACEITO", "Aceito"),
+    ]
+
+    estado = models.CharField(
+        max_length=10,
+        choices=TIPO_CHOICES,
+        default="COMUM",
+    )
+
+
     nome = models.CharField(
         verbose_name='Nome',
         help_text='Nome do estabelecimento',
