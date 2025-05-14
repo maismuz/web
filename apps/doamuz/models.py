@@ -7,7 +7,7 @@ class Categoria(models.Model):
             return f"{self.tipo_doação}"
         class Meta:
             verbose_name = "Categoria"
-            verbose_name_plural = "Categorias"
+            verbose_name_plural = "Categoria"
             
 class Doacao(models.Model):
         titulo = models.CharField(max_length=200)

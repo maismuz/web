@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'homeDoa' %}">
+        <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Logo" width="32" height="32" class="me-2">
+        Turismuz
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'homeDoa' %}">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'estabelecimentos' %}">Estabelecimentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'guias' %}">Guias</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'publicacoes' %}">Publicações</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

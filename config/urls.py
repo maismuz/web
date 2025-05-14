@@ -14,6 +14,7 @@ urlpatterns = [
 
     path("", include("apps.core.urls")),
     path("turismuz/", include("apps.turismuz.urls")),
+    path("doamuz/", include("apps.doamuz.urls")),
 
 ]
 # Configuração de arquivos de mídia
