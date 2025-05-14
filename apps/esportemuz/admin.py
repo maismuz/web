@@ -21,7 +21,6 @@ class TipoCampeonatoAdmin(admin.ModelAdmin):
 class CampeonatoAdmin(admin.ModelAdmin):
     list_display = ['id', 'nome', 'modalidade', 'tipo_campeonato', 'data_inicio', 'data_fim']
     list_per_page = 10
-    filter_horizontal = ['equipes']
 
 @admin.register(LocalPartida)
 class LocalPartidaAdmin(admin.ModelAdmin):
