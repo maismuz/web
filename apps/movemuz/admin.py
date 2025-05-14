@@ -1,9 +1,14 @@
 from django.contrib import admin
+from .models import *
 from django.utils.safestring import mark_safe
-from .models import (
-    Combustivel, TipoVeiculo, Veiculo, Local,
-    Viagem, Passageiro, Motorista, HorarioTransporte
-)
+
+@admin.register(Motorista)
+class MotoristaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'cpf', 'telefone', 'email', 'cnh_numero', 'data_nascimento', 'ativo')
+    search_fields = ('nome', 'cpf', 'cnh_numero')
+    list_filter = ('ativo', 'cnh_numero')
+    ordering = ('nome',)
+    list_per_page = 20
 
 @admin.register(Combustivel)
 class CombustivelAdmin(admin.ModelAdmin):
@@ -41,8 +46,17 @@ class VeiculoAdmin(admin.ModelAdmin):
             return mark_safe(f'<img src="{obj.foto.url}" width="128" height="128" />')
         return "Sem imagem"
 
-    foto_preview.short_description = "Prévia da foto"
+    foto_preview.allow_tags = True
+    foto_preview.short_description = "Prévia da Foto"
 
+   
+@admin.register(Motorista)
+class MotoristaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'cpf', 'telefone', 'email', 'cnh_numero', 'data_nascimento', 'ativo')
+    search_fields = ('nome', 'cpf', 'cnh_numero')
+    list_filter = ('ativo', 'cnh_numero')
+    ordering = ('nome',)
+    list_per_page = 20
 
 @admin.register(Local)
 class LocalAdmin(admin.ModelAdmin):
@@ -81,3 +95,4 @@ class HorarioTransporteAdmin(admin.ModelAdmin):
     list_display = ('veiculo', 'origem', 'destino', 'horario_partida', 'dias_semana')
     search_fields = ('origem__nome', 'destino__nome', 'dias_semana')
     list_filter = ('dias_semana',)
+

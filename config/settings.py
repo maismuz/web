@@ -42,11 +42,11 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_CREDENTIALS['NAME'],
-        'USER': DB_CREDENTIALS['USER'],
-        'PASSWORD': DB_CREDENTIALS['PASSWORD'],
-        'HOST': DB_CREDENTIALS['HOST'],
-        'PORT': DB_CREDENTIALS['PORT'],
+        'NAME': 'AdotaMuz',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

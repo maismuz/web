@@ -1,5 +1,26 @@
 from django.db import models
 
+
+class Motorista(models.Model):
+    nome = models.CharField("Nome completo", max_length=100)
+    cpf = models.CharField("CPF", max_length=14, unique=True)
+    telefone = models.CharField("Telefone", max_length=15, blank=True, null=True)
+    email = models.EmailField("E-mail", blank=True, null=True)
+    cnh_numero = models.CharField("Número da CNH", max_length=20, unique=True)
+    data_nascimento = models.DateField("Data de nascimento")
+    ativo = models.BooleanField("Ativo", default=True)
+
+    class Meta:
+        verbose_name = "Motorista"
+        verbose_name_plural = "Motoristas"
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
+
+class Combustivel(models.Model):
+    nome = models.CharField(max_length=100)
+
 ESTADOS_BRASIL = [
     ("AC", "Acre"),
     ("AL", "Alagoas"),
@@ -83,7 +104,6 @@ class Veiculo(models.Model):
         verbose_name_plural = 'Veículos'
         db_table = 'veiculo'
 
-
 class Local(models.Model):
     nome = models.CharField("Nome do local", max_length=100, unique=True)
     endereco = models.CharField("Endereço", max_length=200, blank=True, null=True)
@@ -137,7 +157,6 @@ class HorarioTransporte(models.Model):
         db_table = 'horario_transporte'
         ordering = ['-horario_partida']
 
-
 class Motorista(models.Model):
     nome = models.CharField("Nome completo", max_length=100)
     cpf = models.CharField("CPF", max_length=14, unique=True)
@@ -150,6 +169,20 @@ class Motorista(models.Model):
     class Meta:
         verbose_name = "Motorista"
         verbose_name_plural = "Motoristas"
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
+
+class Local(models.Model):
+    nome = models.CharField("Nome do local", max_length=100, unique=True)
+    endereco = models.CharField("Endereço", max_length=200, blank=True, null=True)
+    cidade = models.CharField("Cidade", max_length=100, blank=True, null=True)
+    estado = models.CharField("Estado", max_length=2, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Local"
+        verbose_name_plural = "Locais"
         ordering = ['nome']
 
     def __str__(self):

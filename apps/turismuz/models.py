@@ -154,9 +154,18 @@ class GuiaTuristico(models.Model):
     )
 
     class Meta:
-        verbose_name='Guia de Turismo'
-        verbose_name_plural='Guias de Turismo'
-        ordering=['nome']
+
+        verbose_name = 'Guia de Turismo'
+        verbose_name_plural = 'Guias de Turismo'
+        ordering = ['nome']
+
+    imagem = models.ImageField(
+        verbose_name='Imagem',
+        help_text='Imagem do guia',
+        upload_to='imagens_guias',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return f"{self.nome} - {self.nome_tour}"
@@ -206,7 +215,6 @@ class ImagemPublicacao(models.Model):
     )
     def __str__(self):
         return self.legenda
-
 
 class Avaliacao(models.Model):
     nota = models.PositiveSmallIntegerField(
