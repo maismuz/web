@@ -2,6 +2,25 @@ from django.db import models
 from django.contrib.auth.models import User
 # models.py
 # Criação de modelos de contratos e curriculos para serviços autonomos ou contratação de empreasas;
+
+
+# models.py
+
+class Usuario(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usuario')
+    nome = models.CharField(max_length=100)
+    telefone = models.CharField(max_length=15, blank=True)
+    endereco = models.CharField(max_length=255, blank=True)
+    data_nascimento = models.DateField(blank=True, null=True)
+    foto_perfil = models.ImageField(upload_to='perfil/', blank=True, null=True)
+
+    def __str__(self):
+        return self.nome
+    
+    class Meta:
+        verbose_name = 'Usuário'
+        verbose_name_plural = 'Usuários'
+
     
 class Servico(models.Model):
     titulo = models.CharField(max_length=100)

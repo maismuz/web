@@ -3,6 +3,10 @@ from .models import *
 
 # Register your models here.
 
+class UsuarioAdmin(admin.ModelAdmin):
+    list_display = ('usuario', 'nome', 'telefone', 'endereco', 'data_nascimento')
+    search_fields = ('usuario__username', 'nome')
+
 class ServicoAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'usuario', 'categoria', 'criado_em')
     list_filter = ('categoria',)
@@ -23,7 +27,7 @@ class AvaliacaoAdmin(admin.ModelAdmin):
     search_fields = ('serviço__titulo', 'avaliador__nome')
 
 
-
+admin.site.register(Usuario)
 admin.site.register(Servico)
 admin.site.register(VagaEmprego)
 admin.site.register(Candidatura) 
