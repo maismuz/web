@@ -7,4 +7,4 @@ class EsportemuzConfig(AppConfig):
     verbose_name_plural = 'EsporteMuz'
 
     # def ready(self):
-    #     import esportemuz.signals
+    #     import apps.esportemuz.signals
