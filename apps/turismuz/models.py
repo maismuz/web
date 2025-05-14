@@ -149,6 +149,17 @@ class GuiaTuristico(models.Model):
 
 class Publicacao(models.Model):
 
+    TIPO_CHOICES = [
+        ("EM_ANALISE", "Em_analise"),
+        ("RECUSADO", "Recusado"),
+        ("ACEITO", "Aceito"),
+    ]
+
+    estado = models.CharField(
+        max_length=10,
+        choices=TIPO_CHOICES,
+        default="COMUM",
+    )
     
     titulo = models.CharField(
         max_length=255, 
