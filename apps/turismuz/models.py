@@ -1,6 +1,7 @@
 from django.db import models
 
-class Usuario(models.Model):
+
+class Permissao(models.Model):
     TIPO_CHOICES = [
         ("ADMIN", "Admin"),
         ("AUTOR", "Autor"),
@@ -12,6 +13,8 @@ class Usuario(models.Model):
         choices=TIPO_CHOICES,
         default="COMUM",
     )
+    # usuario = models.ForeignKey()
+    # perfil = models.ForeignKey()
 
 class Categorias(models.Model):
     """
@@ -32,9 +35,20 @@ class Categorias(models.Model):
         return self.nome
 
 class Estabelecimento(models.Model):
-    """
-    Modelo para controle de estabelecimentos.
-    """
+
+    TIPO_CHOICES = [
+        ("EM_ANALISE", "Em_analise"),
+        ("RECUSADO", "Recusado"),
+        ("ACEITO", "Aceito"),
+    ]
+
+    estado = models.CharField(
+        max_length=10,
+        choices=TIPO_CHOICES,
+        default="COMUM",
+    )
+
+
     nome = models.CharField(
         verbose_name='Nome',
         help_text='Nome do estabelecimento',
@@ -73,7 +87,13 @@ class Estabelecimento(models.Model):
         blank=True,
         null=True
     )
-   
+    imagem = models.ImageField(
+        verbose_name='Imagem',
+        help_text='Imagem do estabelecimento',
+        upload_to='imagens_estabelecimentos',
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = 'Estabelecimento'
@@ -133,11 +153,16 @@ class GuiaTuristico(models.Model):
         null=True
     )
 
+    class Meta:
+        verbose_name='Guia de Turismo'
+        verbose_name_plural='Guias de Turismo'
+        ordering=['nome']
+
     def __str__(self):
         return f"{self.nome} - {self.nome_tour}"
 
-class Publicacao(models.Model):
 
+class Publicacao(models.Model):
     
     titulo = models.CharField(
         max_length=255, 
@@ -151,6 +176,13 @@ class Publicacao(models.Model):
     data_de_publicacao=models.DateTimeField(
         auto_now_add=True, 
         verbose_name='Data de Publicação'
+    )
+    imagem = models.ImageField(
+        verbose_name='Imagem',
+        help_text='Imagem da publicação',
+        upload_to='imagens_publicacoes',
+        blank=True,
+        null=True
     )
 
     def __str__(self):

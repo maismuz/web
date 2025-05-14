@@ -1,11 +1,36 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
-
-# Create your models here.
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
+
+def validar_nome(value):
+    if not value.replace(' ', '').isalpha():
+        raise ValidationError('O nome deve conter apenas letras e espaços.')
+    
+
+class Raca(models.Model):
+    
+    PORTE_CHOICES = [('pequeno', 'Pequeno'), ('medio', 'Médio'), ('grande', 'Grande')]
+    ESPECIE_CHOICES = [('cachorro', 'Cachorro'), ('gato', 'Gato')]
+
+    nome = models.CharField(max_length=100, unique=True, verbose_name='Nome')
+    descricao = models.TextField(blank=True, null=True, verbose_name='Descrição')
+    porte = models.CharField(max_length=10, choices=PORTE_CHOICES, default='medio', verbose_name='Porte')
+    especie = models.CharField(max_length=10, choices=ESPECIE_CHOICES, default='cachorro', verbose_name='Espécie')
+    data_cadastro = models.DateTimeField(auto_now_add=True, verbose_name='Data de Cadastro')
+
+    class Meta:
+        verbose_name = 'Raça'
+        verbose_name_plural = 'Raças'
+        ordering = ['nome']
+        unique_together = ('nome', 'especie')
+
+    def __str__(self):
+        return f'{self.nome} ({self.especie})'
+
+    def save(self, *args, **kwargs):
+        self.nome = self.nome.strip().capitalize()
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 class Animal(models.Model):
     nome = models.CharField(
@@ -103,3 +128,76 @@ class Adocao(models.Model):
 
     def __str__(self):
         return f"{self.nome_animal} - {'Disponível' if self.disponivel else 'Adotado'}"
+
+class TipoProcedimento(models.Model):
+    nome = models.CharField(max_length=100, unique=True)
+    animal = models.ForeignKey('adotamuz.Animal', on_delete=models.CASCADE, related_name='tipos_de_procedimentos')
+    instituicao_responsavel = models.CharField(max_length=150)
+    data = models.DateField()
+    observacoes = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Tipo de Procedimento"
+        verbose_name_plural = "Tipos de Procedimentos"
+
+    def __str__(self):
+        return f"{self.nome} - {self.animal.nome} - {self.data}"
+
+class Procedimento(models.Model):
+    tipo = models.ForeignKey(TipoProcedimento, on_delete=models.CASCADE, related_name='procedimentos')
+
+    class Meta:
+        verbose_name = "Procedimento"
+        verbose_name_plural = "Procedimentos"
+
+    def __str__(self):
+        return f"{self.tipo.nome} ({self.tipo.animal.nome})"
+
+
+class TipoDenuncia(models.Model):
+    nome = models.CharField(max_length=100, unique=True, help_text='Coloque o tipo de denúncia exemplo: abandono, violência, etc')
+
+    class Meta:
+        verbose_name = "Tipo de Denúncia"
+        verbose_name_plural = "Tipos de Denúncia"
+
+    def __str__(self):
+        return self.nome
+
+class Denuncia(models.Model):
+    tipo = models.ForeignKey(TipoDenuncia, on_delete=models.CASCADE, related_name='denuncias')
+    data = models.DateField()
+    localizacao = models.CharField(max_length=255)
+    foto = models.ImageField(upload_to='denuncias_fotos/', blank=True, null=True)
+    descricao = models.TextField()
+
+    class Meta:
+        verbose_name = "Denúncia"
+        verbose_name_plural = "Denúncias"
+
+    def __str__(self):
+        return f"{self.tipo.nome} - {self.data}"
+
+class InstituicaoParceira(models.Model):
+    nome = models.CharField(max_length=150, unique=True, verbose_name='Nome da Instituição')
+    cnpj = models.CharField(
+        max_length=18,
+        unique=True,
+        validators=[RegexValidator(regex=r'^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$', message='CNPJ deve estar no formato 00.000.000/0000-00')],
+        verbose_name='CNPJ'
+    )
+    endereco = models.CharField(max_length=255, verbose_name='Endereço')
+    servicos_ofertados = models.TextField(verbose_name='Serviços Ofertados')
+    telefone = models.CharField(
+        max_length=20,
+        validators=[RegexValidator(regex=r'^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$', message='Digite um número de telefone válido')],
+        verbose_name='Telefone'
+    )
+
+    class Meta:
+        verbose_name = "Instituição Parceira"
+        verbose_name_plural = "Instituições Parceiras"
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
