@@ -41,7 +41,7 @@ class CampeonatoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Campeonato
-        fields = ['url', 'id', 'nome', 'modalidade', 'tipo_campeonato', 'data_inicio', 'data_fim', 'equipes']
+        fields = ['url', 'id', 'nome', 'modalidade', 'tipo_campeonato', 'data_inicio', 'data_fim', 'equipes', 'encerrado']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -74,7 +74,7 @@ class PartidaSerializer(serializers.ModelSerializer):
         representation['campeonato'] = instance.campeonato.nome
         representation['equipe_mandante'] = instance.equipe_mandante.nome
         representation['equipe_visitante'] = instance.equipe_visitante.nome
-        representation['local'] = instance.local.nome
+        representation['local'] = instance.local.nome if instance.local else None
 
         return representation
 
@@ -85,7 +85,7 @@ class ClassificacaoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Classificacao
-        fields = ['url', 'id', 'campeonato', 'equipe', 'pontos', 'vitorias', 'empates', 'derrotas', 'gols_pro', 'gols_contra', 'saldo_gols']
+        fields = ['url', 'id', 'campeonato', 'equipe', 'pontos', 'partidas_jogadas', 'vitorias', 'empates', 'derrotas', 'gols_pro', 'gols_contra', 'saldo_gols']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
