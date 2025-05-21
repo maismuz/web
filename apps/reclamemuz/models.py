@@ -56,6 +56,14 @@ class BuscaDenuncia(models.Model):
 
     def __str__(self):
         return f"Busca por '{self.termo}' em {self.data_busca.strftime('%d/%m/%Y %H:%M')}"
+    
+class Categoria(models.Model):
+    id_categoria = models.AutoField(primary_key=True)
+    nome = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.nome
+
 
 class Midia(models.Model):
     TIPO_CHOICES = [
