@@ -72,3 +72,5 @@ class InstituicaoParceiraAdmin(admin.ModelAdmin):
 class EspecieAdmin(admin.ModelAdmin):
     list_display = ('nome',)
     search_fields = ('nome',)
+
+    
