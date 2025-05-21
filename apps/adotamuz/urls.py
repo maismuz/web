@@ -1,10 +1,9 @@
 
-from django.contrib import admin
+from apps.adotamuz import views
 from django.urls import path
 from . import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.lista_racas, name='lista_racas'),
 ]

@@ -37,9 +37,32 @@
     <div class="main-content">
       <div class="container mt-5">
         <h1>Guias</h1>
+<<<<<<< HEAD
         <p>Página de guias funcionando!</p>
       </div>
       <!-- Você pode adicionar mais conteúdo aqui -->
+=======
+        <div class="row justify-content-center">
+          {% for guia in guias %}
+            <div class="col-md-8 mb-3">
+              <a href="{% url 'guia_detail' guia.pk %}" style="text-decoration: none; color: inherit;">
+                <div class="card shadow-sm flex-row align-items-center" style="min-height:120px;">
+                  {% if guia.imagem %}
+                    <img src="{{ guia.imagem.url }}" alt="{{ guia.nome }}" class="img-fluid rounded-start" style="width: 120px; height: 90px; object-fit: cover;">
+                  {% endif %}
+                  <div class="card-body py-2 px-3">
+                    <h6 class="card-title mb-0">{{ guia.nome }}</h6>
+                    <p class="mb-0">{{ guia.descricao|truncatewords:15 }}</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% empty %}
+            <p>Nenhum guia encontrado.</p>
+          {% endfor %}
+        </div>
+      </div>
+>>>>>>> origin/develop
     </div>
 
     <!-- Bootstrap JS Bundle CDN -->
