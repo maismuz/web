@@ -185,6 +185,7 @@ requirements.txt
 
 # Arquivos relacionados ao docker
 compose.yaml
+compose.dev.yaml
 Dockerfile
 .dockerignore
 
