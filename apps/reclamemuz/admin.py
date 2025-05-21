@@ -3,7 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from .models import Denuncia, Comentario, BuscaDenuncia
 
-
+#Gerenciar denúncias urbanas
 class DenunciaResource(resources.ModelResource):
     class Meta:
         model = Denuncia
@@ -20,6 +20,7 @@ class DenunciaAdmin(ImportExportModelAdmin):
     list_filter = ('categoria', 'status', 'data_ocorrencia')
     search_fields = ('titulo', 'descricao', 'endereco', 'id_usuario__username')
 
+#Gerenciar comentários nas denúncias
 @admin.register(Comentario)
 class ComentarioAdmin(admin.ModelAdmin):
     list_display = ('id', 'id_usuario', 'id_denuncia', 'data_hora', 'resumo_texto')
@@ -34,6 +35,7 @@ class ComentarioAdmin(admin.ModelAdmin):
 
     from .models import Denuncia, Comentario, BuscaDenuncia
 
+#Gerenciar busca e filtros de denúncias
 @admin.register(BuscaDenuncia)
 class BuscaDenunciaAdmin(admin.ModelAdmin):
     list_display = ('id', 'usuario', 'termo', 'categoria', 'status', 'bairro', 'data_inicial', 'data_final', 'data_busca')
