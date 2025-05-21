@@ -10,7 +10,7 @@
 </div>
 
 <!-- Modal de cadastro de equipes -->
-{% include "esportemuz/partials/_modal.html" with modal_id="staticBackdrop" modal_title="Cadastrar Equipe" modal_form=form modal_action="#" %}
+{% include "esportemuz/partials/_modal.html" with modal_id="staticBackdrop" modal_aria_labelledby="staticBackdrop" modal_title="Cadastrar Equipe" modal_body=form form_action="" form_id="equipeForm" %}
 
 <div class="card">
     <div class="card-header">Equipes</div>
@@ -31,3 +31,72 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('equipeForm');
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => { data[key] = value });
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/esportemuz/api/equipes/", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken'), // se necessário
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'  // necessário para cookies de sessão/csrf
+                });
+
+                if (response.ok) {
+                    // Fechar o modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+                    modal.hide();
+
+                    // Resetar o formulário
+                    form.reset();
+
+                    // Atualizar a tabela, se quiser
+                    const result = await response.json();
+                    addEquipeToTable(result);
+
+                } else {
+                    const error = await response.json();
+                    alert("Erro ao cadastrar equipe: " + JSON.stringify(error));
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert("Erro de conexão ao cadastrar equipe.");
+            }
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function addEquipeToTable(equipe) {
+            const tbody = document.getElementById('equipes-table-body');
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${equipe.nome}</td>`;
+            tbody.appendChild(row);
+        }
+    });
+</script>
+{% endblock js %}
