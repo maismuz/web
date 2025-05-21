@@ -70,3 +70,13 @@ class Midia(models.Model):
 
     def __str__(self):
         return f"{self.tipo.title()} - {self.url_arquivo}"
+
+class Notificacao(models.Model):
+    id_notificacao = models.AutoField(primary_key=True)
+    mensagem = models.TextField()
+    data_hora = models.DateTimeField(auto_now_add=True)
+    id_usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_denuncia = models.ForeignKey(Denuncia, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Notificação para {self.id_usuario.username} - {self.data_hora.strftime('%d/%m/%Y %H:%M')}"

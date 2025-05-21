@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
-from .models import Denuncia, Comentario, BuscaDenuncia, Midia
+from .models import Denuncia, Comentario, BuscaDenuncia, Midia, Notificacao
 
 #Gerenciar denúncias urbanas
 class DenunciaResource(resources.ModelResource):
@@ -50,3 +50,11 @@ class MidiaAdmin(admin.ModelAdmin):
     list_display = ('id_midia', 'tipo', 'id_denuncia')
     list_filter = ('tipo',)
     search_fields = ('url_arquivo',)
+
+
+@admin.register(Notificacao)
+class NotificacaoAdmin(admin.ModelAdmin):
+    list_display = ('id_notificacao', 'id_usuario', 'id_denuncia', 'data_hora')
+    list_filter = ('data_hora', 'id_usuario')
+    search_fields = ('mensagem', 'id_usuario__username', 'id_denuncia__id')
+    date_hierarchy = 'data_hora'
