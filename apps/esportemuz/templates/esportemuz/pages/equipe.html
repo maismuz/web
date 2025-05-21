@@ -1,12 +1,16 @@
 {% extends "esportemuz/base.html" %}
 
 {% block content %}
+<!-- Botão para abrir modal de cadastro de equipes -->
 <div class="my-3 w-100 d-flex justify-content-end">
-    <a class="btn btn-primary" href="#" role="button">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         <i class="fa fa-plus me-1"></i>
         Criar equipe
-    </a>
+    </button>
 </div>
+
+<!-- Modal de cadastro de equipes -->
+{% include "esportemuz/partials/_modal.html" with modal_id="staticBackdrop" modal_title="Cadastrar Equipe" modal_form=form modal_action="#" %}
 
 <div class="card">
     <div class="card-header">Equipes</div>
