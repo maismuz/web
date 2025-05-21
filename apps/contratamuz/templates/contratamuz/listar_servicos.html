@@ -1,0 +1,8 @@
+<h1>Servicos e prestadores</h1>
+<ul>
+  {% for servico in servicos %}
+    <li><strong>{{ servico.titulo }}</strong> - {{ servico.usuario }} - {{ servico.contato }}</li>
+  {% empty %}
+    <li>Nenhum servico disponível no momento.</li>
+  {% endfor %}
+</ul>
