@@ -16,9 +16,11 @@ def estabelecimentos(request):
 
 def guias(request):
     guias = list(GuiaTuristico.objects.all())
-    # Agrupa de 3 em 3
     grupos = [guias[i:i+3] for i in range(0, len(guias), 3)]
-    return render(request, 'guias.html', {'grupos': grupos})
+    return render(request, 'guias.html', {
+        'grupos': grupos,
+        'guias': guias,     # adiciona variável esperada no template
+    })
 
 def publicacoes(request):
     publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')
