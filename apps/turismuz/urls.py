@@ -1,5 +1,5 @@
+from apps.turismuz import views
 from django.urls import path
-from . import views
 
 urlpatterns = [
     path('hometur/', views.hometur, name='hometur'),

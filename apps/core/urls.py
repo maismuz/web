@@ -1,6 +1,6 @@
+from apps.core.views import *
 from django.contrib import admin
 from django.urls import path, include
-from .views import *
 
 urlpatterns = [
     # Rota para o painel administrativo

@@ -23,6 +23,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # Credenciais de banco de dados a partir de variáveis de ambiente
 DB_CREDENTIALS = {
+    'ENGINE': config('DB_ENGINE'),
     'NAME': config('DB_NAME'),
     'USER': config('DB_USER'),
     'PASSWORD': config('DB_PASSWORD'),
@@ -34,19 +35,19 @@ DB_CREDENTIALS = {
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Hosts permitidos e origens CSRF confiáveis
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1').split(',')
 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost').split(',')
 
 # Configurações de banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'AdotaMuz',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': DB_CREDENTIALS['ENGINE'],
+        'NAME': DB_CREDENTIALS['NAME'],
+        'USER': DB_CREDENTIALS['USER'],
+        'PASSWORD': DB_CREDENTIALS['PASSWORD'],
+        'HOST': DB_CREDENTIALS['HOST'],
+        'PORT': DB_CREDENTIALS['PORT'],
     }
 }
 

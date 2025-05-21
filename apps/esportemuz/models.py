@@ -83,6 +83,7 @@ class Campeonato(models.Model):
     data_inicio = models.DateField(verbose_name='Data de Início')
     data_fim = models.DateField(verbose_name='Data de Fim')
     equipes = models.ManyToManyField(Equipe, through='Classificacao', verbose_name='Equipes')
+    encerrado = models.BooleanField(default=False, verbose_name='Encerrado')
 
     def save(self, *args, **kwargs):
         self.nome = '_'.join(self.nome.strip().lower().split())
@@ -125,14 +126,14 @@ class Partida(models.Model):
     campeonato = models.ForeignKey(Campeonato, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Campeonato')
     equipe_mandante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_mandante', null=True, blank=True, verbose_name='Equipe Mandante')
     equipe_visitante = models.ForeignKey(Equipe, on_delete=models.SET_NULL, related_name='partidas_visitante', null=True, blank=True, verbose_name='Equipe Visitante')
-    data_hora = models.DateTimeField(verbose_name='Data e Hora')
+    data_hora = models.DateTimeField(null=True, blank=True, verbose_name='Data e Hora')
     local = models.ForeignKey(LocalPartida, on_delete=models.SET_NULL, related_name='partidas', null=True, blank=True, verbose_name='Local')
     gols_mandante = models.PositiveIntegerField(default=0, verbose_name='Gols Mandante')
     gols_visitante = models.PositiveIntegerField(default=0, verbose_name='Gols Visitante')
     encerrada = models.BooleanField(default=False, verbose_name='Encerrada')
 
     def __str__(self):
-        return f'{self.equipe_mandante} vs {self.equipe_visitante} - {self.data_hora.strftime("%d/%m/%Y %H:%M")}'
+        return f'{self.equipe_mandante} vs {self.equipe_visitante} - {self.data_hora.strftime("%d/%m/%Y %H:%M") if self.data_hora else "Data não definida"} ({self.local if self.local else "Local não definido"})'
     
 class Classificacao(models.Model):
     """
@@ -149,6 +150,7 @@ class Classificacao(models.Model):
     campeonato = models.ForeignKey(Campeonato, on_delete=models.CASCADE, related_name='classificacoes', verbose_name='Campeonato')
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE, related_name='classificacoes', verbose_name='Equipe')
     pontos = models.PositiveIntegerField(default=0, verbose_name='Pontos')
+    partidas_jogadas = models.PositiveIntegerField(default=0, verbose_name='Partidas Jogadas')
     vitorias = models.PositiveIntegerField(default=0, verbose_name='Vitórias')
     empates = models.PositiveIntegerField(default=0, verbose_name='Empates')
     derrotas = models.PositiveIntegerField(default=0, verbose_name='Derrotas')
