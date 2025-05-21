@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
-from .models import Denuncia, Comentario, BuscaDenuncia, Midia, Notificacao
+from .models import Denuncia, Comentario, BuscaDenuncia, Midia, Notificacao, Categoria
 
 #Gerenciar denúncias urbanas
 class DenunciaResource(resources.ModelResource):
@@ -44,6 +44,10 @@ class BuscaDenunciaAdmin(admin.ModelAdmin):
     date_hierarchy = 'data_busca'
     ordering = ('-data_busca',)
 
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ('id_categoria', 'nome')
+    search_fields = ('nome',)
 
 @admin.register(Midia)
 class MidiaAdmin(admin.ModelAdmin):
