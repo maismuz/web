@@ -79,3 +79,15 @@ class HorarioTransporteAdmin(admin.ModelAdmin):
     search_fields = ('origem__nome', 'destino__nome', 'dias_semana')
     list_filter = ('dias_semana',)
 
+@admin.register(Ponto)
+class PontoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'localizacao')
+    search_fields = ('nome', 'localizacao')
+    ordering = ('nome',)
+
+@admin.register(Parada)
+class ParadaAdmin(admin.ModelAdmin):
+    list_display = ('horario_transporte', 'ponto', 'horario', 'passageiros_estimados')
+    list_filter = ('ponto', 'horario')
+    search_fields = ('ponto__nome', 'horario_transporte__veiculo__modelo')
+    ordering = ('horario_transporte', 'horario')
