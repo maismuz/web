@@ -202,3 +202,25 @@ class InstituicaoParceira(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Especie(models.Model):
+    nome = models.CharField(
+        max_length=50,
+        unique=True,
+        validators=[validar_nome],
+        verbose_name='Espécie',
+        help_text='Nome da espécie, como "Cachorro" ou "Gato".'
+    )
+
+    class Meta:
+        verbose_name = "Espécie"
+        verbose_name_plural = "Espécies"
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
+
+    def save(self, *args, **kwargs):
+        self.nome = self.nome.strip().capitalize()
+        self.full_clean()
+        super().save(*args, **kwargs)
