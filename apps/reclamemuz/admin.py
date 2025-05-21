@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
-from .models import Denuncia, Comentario, BuscaDenuncia
+from .models import Denuncia, Comentario, BuscaDenuncia, Midia
 
 
 class DenunciaResource(resources.ModelResource):
@@ -43,4 +43,8 @@ class BuscaDenunciaAdmin(admin.ModelAdmin):
     ordering = ('-data_busca',)
 
 
-    
+@admin.register(Midia)
+class MidiaAdmin(admin.ModelAdmin):
+    list_display = ('id_midia', 'tipo', 'id_denuncia')
+    list_filter = ('tipo',)
+    search_fields = ('url_arquivo',)
