@@ -135,6 +135,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env_sample
 
 # Configurações de projeto do Spyder
 .spyderproject
@@ -172,3 +173,24 @@ cython_debug/
 
 # Arquivo de configuração do PyPI
 .pypirc
+
+# Arquivos de mídia
+media/
+
+# Arquivos de configuração
+config/*
+
+# Requirements
+requirements.txt
+
+# Arquivos relacionados ao docker
+compose.yaml
+compose.dev.yaml
+Dockerfile
+.dockerignore
+
+# Arquivos relacionados ao github
+.github/*
+
+# Qualquer arquivo de migrations
+*/migrations/*
