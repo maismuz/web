@@ -2,11 +2,13 @@
 
 {% block content %}
 <div class="my-3 w-100 d-flex justify-content-end">
-    <a class="btn btn-primary" href="#" role="button">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         <i class="fa fa-plus me-1"></i>
         Criar campeonato
-    </a>
+    </button>
 </div>
+
+{% include "esportemuz/partials/_modal.html" with modal_id="staticBackdrop" modal_title="Cadastrar Campeonato" modal_form=form modal_action="#" %}
 
 <div class="card">
     <div class="card-header">Campeonatos</div>
