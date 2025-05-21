@@ -1,5 +1,49 @@
 {% extends "esportemuz/base.html" %}
 
 {% block content %}
-<h1>Campeonato</h1>
+<div class="my-3 w-100 d-flex justify-content-end">
+    <a class="btn btn-primary" href="#" role="button">
+        <i class="fa fa-plus me-1"></i>
+        Criar campeonato
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">Campeonatos</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered text-center align-middle mb-0" id="Campeonatos">
+                <caption class="pb-0">Lista de campeonatos</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Data Início</th>
+                        <th scope="col">Data Fim</th>
+                        <th scope="col">Encerrado</th>
+                    </tr>
+                </thead>
+                <tbody id="campeonatos-table-body">
+                    {% for campeonato in campeonatos %}
+                    <tr>
+                        <td>{{ campeonato.nome }}</td>
+                        <td>{{ campeonato.data_inicio|date:"d/m/Y" }}</td>
+                        <td>{{ campeonato.data_fim|date:"d/m/Y" }}</td>
+                        <td>
+                            {% if campeonato.encerrado %}
+                                <span class="text-danger">Sim</span>
+                            {% else %}
+                                <span class="text-success">Não</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Nenhum campeonato cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}
