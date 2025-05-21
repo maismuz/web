@@ -91,3 +91,10 @@ class ParadaAdmin(admin.ModelAdmin):
     list_filter = ('ponto', 'horario')
     search_fields = ('ponto__nome', 'horario_transporte__veiculo__modelo')
     ordering = ('horario_transporte', 'horario')
+
+@admin.register(OcupacaoVeiculo)
+class OcupacaoVeiculoAdmin(admin.ModelAdmin):
+    list_display = ('horario_transporte', 'data', 'passageiros_a_bordo', 'atualizado_em')
+    list_filter = ('data', 'horario_transporte__veiculo')
+    search_fields = ('horario_transporte__veiculo__modelo', 'horario_transporte__origem__nome', 'horario_transporte__destino__nome')
+    ordering = ('-data',)
