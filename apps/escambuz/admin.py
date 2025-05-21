@@ -1,18 +1,17 @@
 from django.contrib import admin
-from .models import Usuario, Mensagem
+from .models import *
 
 
-@admin.register(Usuario)
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nome')
-    search_fields = ('nome',)
-    ordering = ('nome',)
+@admin.register(Categoria1)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ['nome']
+    search_fields = ['nome']
 
 
-@admin.register(Mensagem)
-class MensagemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'remetente', 'destinatario', 'data', 'status')
-    list_filter = ('status', 'data')
-    search_fields = ('remetente__nome', 'destinatario__nome', 'mensagem')
-    ordering = ('-data',)
-    date_hierarchy = 'data'
+@admin.register(Transacao)
+class TransacaoAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'tipo', 'preco', 'usuario', 'estado', 'data_transacao']
+    list_filter = ['tipo', 'categoria', 'estado', 'data_transacao']
+    search_fields = ['nome', 'descricao', 'usuario__username']
+    autocomplete_fields = ['categoria', 'usuario']
+    ordering = ['-data_transacao']

@@ -1,32 +1,39 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
-class Usuario(models.Model):
+
+class Categoria1(models.Model):
     nome = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nome
 
     class Meta:
-        verbose_name = "Usuário"
-        verbose_name_plural = "Usuários"
+        verbose_name = "Categoria"
+        verbose_name_plural = "Categorias"
 
 
-class Mensagem(models.Model):
-    STATUS_CHOICES = [
-        ('lida', 'Lida'),
-        ('nao_lida', 'Não Lida'),
-        ('arquivada', 'Arquivada'),
+class Transacao(models.Model):
+    TIPO_CHOICES = [
+        ('venda', 'Venda'),
+        ('troca', 'Troca'),
+        ('doacao', 'Doação'),
+        ('outro', 'Outro'),
     ]
 
-    remetente = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='mensagens_enviadas')
-    destinatario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='mensagens_recebidas')
-    mensagem = models.TextField()
-    data = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='nao_lida')
+    nome = models.CharField(max_length=255)
+    descricao = models.TextField(blank=True)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default='outro')
+    preco = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    categoria = models.ForeignKey(Categoria1, on_delete=models.SET_NULL, null=True, blank=True, related_name='transacoes')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transacoes')
+    estado = models.CharField(max_length=100)
+    data_transacao = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return f"De {self.remetente} para {self.destinatario} em {self.data.strftime('%d/%m/%Y %H:%M')}"
+        return f'{self.nome} ({self.tipo})'
 
     class Meta:
-        verbose_name = "Mensagem"
-        verbose_name_plural = "Mensagens"
+        verbose_name = "Transação"
+        verbose_name_plural = "Transações"
