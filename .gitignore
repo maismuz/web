@@ -135,6 +135,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env_sample
 
 # Configurações de projeto do Spyder
 .spyderproject
@@ -175,3 +176,16 @@ cython_debug/
 
 # Arquivos de mídia
 media/
+
+# Arquivos de configuração
+config/*
+
+# Requirements
+requirements.txt
+
+# Arquivos relacionados ao docker
+compose.yaml
+Dockerfile
+
+# Arquivos relacionados ao github
+.github/*
