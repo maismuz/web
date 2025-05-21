@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import *
+from apps.contratamuz.models import *
 
 def inicial(request):
     return render(request, 'inicial.html')
