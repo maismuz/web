@@ -48,8 +48,12 @@ CSRF_TRUSTED_ORIGINS = [
 # Configurações de banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': DB_CREDENTIALS['ENGINE'],
+        'NAME': DB_CREDENTIALS['NAME'],
+        'USER': DB_CREDENTIALS['USER'],
+        'PASSWORD': DB_CREDENTIALS['PASSWORD'],
+        'HOST': DB_CREDENTIALS['HOST'],
+        'PORT': DB_CREDENTIALS['PORT'],
     }
 }
 

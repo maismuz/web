@@ -1,25 +1,142 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instruções de Doação</title>
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fae587;
+        color: #333;
+        margin: 0;
+        padding: 2rem;
+        line-height: 1.6;
+      }
+      
+      .navbar-brand {
+        font-weight: bold;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+      }
+      .nav-link {
+        font-size: 1.1rem;
+        margin-right: 10px;
+      }
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        padding: 2rem;
+      }
+      
+      
+      h1 {
+        text-align: center;
+        color: #eeba10;
+        margin-bottom: 1.5rem;
+      }
+      
+      
+      h2 {
+        color: #f4b400;
+        margin-top: 2rem;
+      }
+      
+      
+      h3 {
+        margin-top: 1.5rem;
+      }
+      
+      
+      ul {
+        padding-left: 1.2rem;
+      }
+      
+      
+      li {
+        margin-bottom: 0.8rem;
+      }
+      
+      
+      .emoji {
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+      }
+      
+      
+      .important {
+        background: #f8ebc1;
+        border-left: 5px solid #f4b400;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+      }
+      
+      
+      .imagem {
+        text-align: center;
+        margin: 2rem 0;
+        padding: 1rem;
+        background-color: #fff3cd;
+        border: 2px solid #f4b400;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      
+      
+      .imagem img {
+        max-width: 150px;
+        height: auto;
+      }
+      </style>
+  <title>Dicas de Doação Segura</title>
 </head>
 <body>
-  {% include 'components/navbar.html' %}
+    {% include 'components/navbar.html' %}
+  <div class="container">
+    <h1>Vai fazer ou receber uma doação? Confira as dicas!</h1>
+    <p>Sabemos que ajudar e receber ajuda é algo lindo — e queremos que esse momento seja tranquilo, seguro e cheio de respeito. Se você marcou um encontro para entregar ou pegar uma doação, dá uma olhadinha nessas dicas importantes:</p>
 
 
-    <div class="main-content">
-      <h1>Instruções para uma </h1>
-      <!-- Você pode adicionar mais conteúdo aqui -->
+    <div class="imagem">
+        <img src="https://cdn-icons-png.flaticon.com/512/9605/9605206.png" alt="icone">
     </div>
 
-    <!-- Bootstrap JS Bundle CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <h2></span>Para quem vai doar</h2>
+    <ul>
+      <li> <strong>Combine o local com cuidado:</strong> Prefira lugares públicos e movimentados, como praças, frente de comércios ou pontos conhecidos da cidade.</li>
+      <li> <strong>Não compartilhe informações pessoais demais:</strong> Como seu endereço completo, documentos ou dados bancários.</li>
+      <li> <strong>Se puder, vá com alguém:</strong> Uma companhia sempre ajuda a garantir mais segurança.</li>
+      <li> <strong>Confirme com quem você vai se encontrar:</strong> Combine um nome, ou até uma palavra-chave simples, só pra garantir.</li>
+      <li> <strong>Quer registrar o momento?</strong> Pode tirar uma foto da doação, mas só se a outra pessoa estiver de acordo, tá bom?</li>
+    </ul>
+
+
+    <h2></span>Para quem vai receber</h2>
+    <ul>
+      <li> <strong>Escolha bem o lugar do encontro:</strong> Lugares públicos e fáceis de achar são sempre melhores.</li>
+      <li> <strong>Seja claro e educado nas mensagens:</strong> Avise se for se atrasar e combine todos os detalhes antes.</li>
+      <li> <strong>Leve alguém de confiança, se puder:</strong> Especialmente se for a primeira vez que você encontra a pessoa.</li>
+      <li> <strong>Nada de pedir dinheiro no encontro:</strong> As doações combinadas devem ser respeitadas — qualquer nova necessidade pode ser cadastrada no site.</li>
+      <li> <strong>Leve algo pra carregar a doação:</strong> Uma sacola, mochila ou caixa pode ajudar bastante!</li>
+    </ul>
+
+
+    <div class="important">
+      <h3><span class="emoji">⚠️</span>Dicas importantes pra todo mundo</h3>
+      <ul>
+        <li> Não aceite entrar na casa de ninguém — e nem convide ninguém para sua.</li>
+        <li> Se algo parecer estranho, confie no seu instinto e cancele.</li>
+        <li> Nunca passe dados sensíveis, como senhas ou número de cartão.</li>
+      </ul>
+      <h2>Fazer o bem é incrível — e com cuidado, carinho e respeito, tudo fica ainda melhor.</h2>
+    </div>
+
+
+  </div>
 </body>
 </html>
 
