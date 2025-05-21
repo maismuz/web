@@ -171,6 +171,7 @@ class GuiaTuristico(models.Model):
         return f"{self.nome}"
 
 
+
 class Publicacao(models.Model):
     
     titulo = models.CharField(
