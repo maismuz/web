@@ -186,6 +186,7 @@ requirements.txt
 # Arquivos relacionados ao docker
 compose.yaml
 Dockerfile
+.dockerignore
 
 # Arquivos relacionados ao github
 .github/*
