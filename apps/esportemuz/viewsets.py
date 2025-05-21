@@ -190,7 +190,7 @@ class CampeonatoViewSet(viewsets.ModelViewSet):
         total_partidas = Partida.objects.filter(campeonato=campeonato).count()
         total_partidas_encerradas = Partida.objects.filter(campeonato=campeonato, encerrada=True).count()
         total_partidas_nao_encerradas = total_partidas - total_partidas_encerradas
-        total_gols = Partida.objects.filter(campeonato=campeonato).aggregate(Sum('gols_mandante'))['gols_mandante__sum'] + Partida.objects.filter(campeonato=campeonato).aggregate(Sum('gols_visitante'))['gols_visitante__sum']
+        total_gols = (Partida.objects.filter(campeonato=campeonato).aggregate(Sum('gols_mandante'))['gols_mandante__sum'] or 0) + (Partida.objects.filter(campeonato=campeonato).aggregate(Sum('gols_visitante'))['gols_visitante__sum'] or 0)
         media_gols_partida = round(total_gols / total_partidas, 2) if total_partidas > 0 else 0
         maior_pontuacao = max(c.pontos for c in classificacoes) if classificacoes else 0
         maior_goleada = max(
