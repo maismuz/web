@@ -10,6 +10,7 @@ urlpatterns = [
     path("", homepage, name="index"),
     path("forms/", base_forms, name="base_forms"),
     path("tabela/", base_tabela, name="base_tabela"),
+     path("pagina/", base_pagina, name="base_pagina"),
 
     # Rota para as demais aplicações
     path("adotamuz/", include("apps.adotamuz.urls")),
