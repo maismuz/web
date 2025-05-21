@@ -187,6 +187,7 @@ class InstituicaoParceira(models.Model):
         verbose_name='CNPJ'
     )
     endereco = models.CharField(max_length=255, verbose_name='Endereço')
+    
     servicos_ofertados = models.TextField(verbose_name='Serviços Ofertados')
     telefone = models.CharField(
         max_length=20,
