@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Criação de modelos de contratos e curriculos para serviços autonomos ou contratação de empreasas;
 
 
-# models.py
+# models.py 
 
 class Usuario(models.Model):
     nome = models.CharField(max_length=100)

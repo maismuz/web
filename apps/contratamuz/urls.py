@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from contratamuz import views
+from apps.contratamuz import views
 
 urlpatterns = [
     path('', views.inicial, name='inicial'),

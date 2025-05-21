@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from apps.contratamuz.models import *
 
 # Register your models here.
 
