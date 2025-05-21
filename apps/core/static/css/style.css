@@ -171,7 +171,6 @@ form h2{
 
 .navbar-custom {
   background-color: #f8f9fa; /* tom claro (você pode trocar por branco puro: #ffffff) */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* leve sombra moderna */
 }
 
 .navbar-custom a {
@@ -203,6 +202,15 @@ form h2{
 
 footer{
   background-color: #0000001c;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.link-pessoal:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.2s ease-in-out;
 }
 
 
