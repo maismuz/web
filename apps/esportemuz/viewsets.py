@@ -70,7 +70,7 @@ class EquipeViewSet(viewsets.ModelViewSet):
         derrotas = sum(c.derrotas for c in classificacoes)
         gols_pro = sum(c.gols_pro for c in classificacoes)
         gols_contra = sum(c.gols_contra for c in classificacoes)
-        media_gols_partida = gols_pro / total_partidas
+        media_gols_partida = gols_pro / total_partidas if total_partidas > 0 else 0
         saldo_gols = sum(c.saldo_gols for c in classificacoes)
 
         return Response(
