@@ -1,0 +1,35 @@
+{% extends 'eventuz/base.html' %}
+{% load static %}
+
+{% block title %}Histórico | Eventuz{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1 class="text-center mb-4">Histórico de Eventos</h1>
+
+        {% if eventos_passados %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for evento in eventos_passados %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ evento.nome }}</h5>
+                            <p class="card-text">
+                                <strong>Data:</strong> {{ evento.data }}<br>
+                                <strong>Local:</strong> {{ evento.local }}<br>
+                                <strong>Organizador:</strong> {{ evento.organizador }}<br>
+                                <strong>Contato:</strong> {{ evento.contato }}<br>
+                                <strong>Categoria:</strong> {{ evento.categoria.nome }}<br>
+                            </p>
+                            <p class="card-text">{{ evento.descricao }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">Nenhum evento anterior encontrado.</p>
+        {% endif %}
+    </div>
+{% endblock %}
