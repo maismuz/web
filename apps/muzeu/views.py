@@ -22,3 +22,4 @@ class DocumentoHistoricoView(View):
     def get(self, request):
         return render(request, 'documento_historico.html')
 # Create your views here.
+
