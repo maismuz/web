@@ -3,14 +3,14 @@
 {% block content %}
 <!-- Botão para abrir modal de cadastro de equipes -->
 <div class="my-3 w-100 d-flex justify-content-end">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#equipeModal">
         <i class="fa fa-plus me-1"></i>
         Criar equipe
     </button>
 </div>
 
 <!-- Modal de cadastro de equipes -->
-{% include "esportemuz/partials/_modal.html" with modal_id="staticBackdrop" modal_aria_labelledby="staticBackdrop" modal_title="Cadastrar Equipe" modal_body=form form_action="" form_id="equipeForm" %}
+{% include "esportemuz/partials/_modal.html" with modal_id="equipeModal" modal_aria_labelledby="equipeModal" modal_title="Cadastrar Equipe" modal_body=form form_action="" form_id="equipeForm" %}
 
 <div class="card">
     <div class="card-header">Equipes</div>
@@ -35,68 +35,40 @@
 {% block js %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('equipeForm');
-        form.addEventListener('submit', async function (e) {
-            e.preventDefault();
+        const endpoint = getTeamEndpoint();
 
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => { data[key] = value });
-
-            try {
-                const response = await fetch("http://127.0.0.1:8000/esportemuz/api/equipes/", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken'), // se necessário
-                    },
-                    body: JSON.stringify(data),
-                    credentials: 'include'  // necessário para cookies de sessão/csrf
-                });
-
-                if (response.ok) {
-                    // Fechar o modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
-                    modal.hide();
-
-                    // Resetar o formulário
-                    form.reset();
-
-                    // Atualizar a tabela, se quiser
-                    const result = await response.json();
-                    addEquipeToTable(result);
-
-                } else {
-                    const error = await response.json();
-                    alert("Erro ao cadastrar equipe: " + JSON.stringify(error));
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-                alert("Erro de conexão ao cadastrar equipe.");
-            }
+        renderTable({
+            endpoint: endpoint,
+            tableBodyId: 'equipes-table-body',
+            renderRow: renderEquipeRow
         });
 
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
+        setupModalForm({
+            formId: 'equipeForm',
+            modalId: 'equipeModal',
+            endpoint: endpoint,
+            onSuccess: function () {
+                renderTable({
+                    endpoint: endpoint,
+                    tableBodyId: 'equipes-table-body',
+                    renderRow: renderEquipeRow
+                });
             }
-            return cookieValue;
-        }
-
-        function addEquipeToTable(equipe) {
-            const tbody = document.getElementById('equipes-table-body');
-            const row = document.createElement('tr');
-            row.innerHTML = `<td>${equipe.nome}</td>`;
-            tbody.appendChild(row);
-        }
+        });
     });
+
+    // Função para retornar o endpoint da API
+    function getTeamEndpoint() {
+        return `${getApiBaseUrl()}equipes/`;
+    }
+
+    // Função para renderizar uma linha da tabela de equipes
+    function renderEquipeRow(equipe) {
+        const row = document.createElement("tr");
+        
+        row.innerHTML = `<td>${equipe.nome}</td>`;
+
+        return row;
+    }
 </script>
 {% endblock js %}

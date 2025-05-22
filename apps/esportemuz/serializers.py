@@ -1,4 +1,5 @@
 from apps.esportemuz.models import *
+from apps.esportemuz.utils import formatar_nome_legivel
 from rest_framework import serializers
 
 # Create your serializers here.
@@ -11,6 +12,12 @@ class ModalidadeSerializer(serializers.ModelSerializer):
         model = Modalidade
         fields = ['id', 'nome']
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['nome'] = formatar_nome_legivel(instance.nome)
+
+        return representation
+
 class EquipeSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Equipe.
@@ -19,6 +26,12 @@ class EquipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Equipe
         fields = ['id', 'nome']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['nome'] = formatar_nome_legivel(instance.nome)
+
+        return representation
 
 class TipoCampeonatoSerializer(serializers.ModelSerializer):
     """
@@ -45,9 +58,10 @@ class CampeonatoSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['modalidade'] = instance.modalidade.nome
-        representation['tipo_campeonato'] = instance.tipo_campeonato.nome
-        representation['equipes'] = [equipe.nome for equipe in instance.equipes.all()]
+        representation['nome'] = formatar_nome_legivel(instance.nome)
+        representation['modalidade'] = formatar_nome_legivel(instance.modalidade.nome)
+        representation['tipo_campeonato'] = formatar_nome_legivel(instance.tipo_campeonato.nome)
+        representation['equipes'] = [formatar_nome_legivel(equipe.nome) for equipe in instance.equipes.all()]
 
         return representation
 

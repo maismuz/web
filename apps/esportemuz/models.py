@@ -1,4 +1,4 @@
-from apps.esportemuz.utils import gerar_nome_arquivo
+from apps.esportemuz.utils import gerar_nome_arquivo, formatar_nome_legivel
 from django.db import models
 from uuid import uuid4
 
@@ -21,7 +21,7 @@ class Modalidade(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.nome
+        return formatar_nome_legivel(self.nome)
     
 class Equipe(models.Model):
     """
@@ -45,7 +45,7 @@ class Equipe(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.nome
+        return formatar_nome_legivel(self.nome)
     
 class TipoCampeonato(models.Model):
     """
@@ -65,7 +65,7 @@ class TipoCampeonato(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.nome
+        return formatar_nome_legivel(self.nome)
     
 class Campeonato(models.Model):
     """
@@ -91,7 +91,7 @@ class Campeonato(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.nome
+        return formatar_nome_legivel(self.nome)
 
 class LocalPartida(models.Model):
     """
@@ -111,7 +111,7 @@ class LocalPartida(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.nome
+        return formatar_nome_legivel(self.nome)
     
 class Partida(models.Model):
     """
