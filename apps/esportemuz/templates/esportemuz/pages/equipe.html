@@ -1,5 +1,74 @@
 {% extends "esportemuz/base.html" %}
 
 {% block content %}
-<h1>Equipe</h1>
+<!-- Botão para abrir modal de cadastro de equipes -->
+<div class="my-3 w-100 d-flex justify-content-end">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#equipeModal">
+        <i class="fa fa-plus me-1"></i>
+        Criar equipe
+    </button>
+</div>
+
+<!-- Modal de cadastro de equipes -->
+{% include "esportemuz/partials/_modal.html" with modal_id="equipeModal" modal_aria_labelledby="equipeModal" modal_title="Cadastrar Equipe" form_content=form form_action="" form_id="equipeForm" %}
+
+<div class="card">
+    <div class="card-header">Equipes</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered text-center align-middle mb-0" id="Equipes">
+                <caption class="pb-0">Lista de equipes</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                    </tr>
+                </thead>
+                <tbody id="equipes-table-body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const endpoint = getTeamEndpoint();
+
+        renderTable({
+            endpoint: endpoint,
+            tableBodyId: 'equipes-table-body',
+            renderRow: renderEquipeRow
+        });
+
+        setupModalForm({
+            formId: 'equipeForm',
+            modalId: 'equipeModal',
+            endpoint: endpoint,
+            onSuccess: function () {
+                renderTable({
+                    endpoint: endpoint,
+                    tableBodyId: 'equipes-table-body',
+                    renderRow: renderEquipeRow
+                });
+            }
+        });
+    });
+
+    // Função para retornar o endpoint da API
+    function getTeamEndpoint() {
+        return `${getApiBaseUrl()}equipes/`;
+    }
+
+    // Função para renderizar uma linha da tabela de equipes
+    function renderEquipeRow(equipe) {
+        const row = document.createElement("tr");
+        
+        row.innerHTML = `<td>${equipe.nome}</td>`;
+
+        return row;
+    }
+</script>
+{% endblock js %}
