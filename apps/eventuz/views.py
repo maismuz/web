@@ -35,3 +35,8 @@ class HistoricoView(View):
     def get(self, request):
         eventos_passados = Evento.objects.filter(aprovado=True, data_hora__lt=timezone.now()).order_by('-data_hora')
         return render(request, 'eventuz/historico.html', {'eventos_passados': eventos_passados})
+
+class DetalhesEventoView(View):
+    def get(self, request, pk):
+        evento = Evento.objects.get(pk=pk)
+        return render(request, 'eventuz/detalhes_evento.html', {'evento': evento})
