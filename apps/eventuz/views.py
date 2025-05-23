@@ -13,7 +13,7 @@ class IndexView(View):
 
 class EventosView(View):
     def get(self, request):
-        eventos = Evento.objects.filter(aprovado=True, data__gte=date.today()).order_by('data')
+        eventos = Evento.objects.filter(aprovado=True, data_hora__gte=date.today()).order_by('data_hora')
         return render(request, 'eventuz/eventos.html', {'eventos': eventos})
 
 
@@ -24,6 +24,7 @@ class CadastrarEventosView(View):
 
     def post(self, request):
         form = EventoForm(request.POST, request.FILES)
+        print(request.POST)
         if form.is_valid():
             form.save()
             return redirect('eventuz:eventos')
@@ -32,5 +33,5 @@ class CadastrarEventosView(View):
 
 class HistoricoView(View):
     def get(self, request):
-        eventos_passados = Evento.objects.filter(aprovado=True, data__lt=date.today()).order_by('-data')
+        eventos_passados = Evento.objects.filter(aprovado=True, data_hora__lt=timezone.now()).order_by('-data_hora')
         return render(request, 'eventuz/historico.html', {'eventos_passados': eventos_passados})

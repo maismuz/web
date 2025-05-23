@@ -9,11 +9,11 @@ class MidiaInline(admin.TabularInline):
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
     inlines = [MidiaInline]
-    list_display = ['nome', 'data', 'local', 'categoria', 'resumo_descricao', 'aprovado']
+    list_display = ['nome', 'data_hora', 'local', 'categoria', 'resumo_descricao', 'aprovado']
     list_display_links = ['nome']
     list_filter = ['categoria']
     list_editable = ['aprovado']
-    fields = ['nome', 'data', 'local', 'descricao', 'contato', 'categoria', ]
+    fields = ['nome', 'data_hora', 'local', 'descricao', 'contato', 'categoria', ]
 
     def resumo_descricao(self, obj):
         return format_html(f"<div style='max-width: 300px; white-space: normal;'>{obj.descricao[:100]}...</div>")

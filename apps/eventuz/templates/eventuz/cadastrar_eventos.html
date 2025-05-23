@@ -9,72 +9,10 @@
     <div class="container py-5">
         <h1 class="text-center mb-4">Cadastrar Evento</h1>
 
-        <form method="post" enctype="multipart/form-data" class="row g-4">
+        <form action="{% url 'eventuz:cadastrar_eventos' %}" method="post" enctype="multipart/form-data" class="row g-4">
             {% csrf_token %}
 
-            <!-- Nome do Evento -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.nome }}
-                    <label for="{{ form.nome.id_for_label }} " placeholder="Nome do evento" do Evento</label>
-                </div>
-            </div>
-
-            <!-- Data -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.data }}
-                    <label for="{{ form.data.id_for_label }}">Data do Evento</label>
-                </div>
-            </div>
-
-            <!-- Local -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.local }}
-                    <label for="{{ form.local.id_for_label }}">Local</label>
-                </div>
-            </div>
-
-            <!-- Descrição -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.descricao }}
-                    <label for="{{ form.descricao.id_for_label }}">Descrição</label>
-                </div>
-            </div>
-
-            <!-- Organizador -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.organizador }}
-                    <label for="{{ form.organizador.id_for_label }}">Organizador</label>
-                </div>
-            </div>
-
-            <!-- CNPJ -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.cnpj }}
-                    <label for="{{ form.cnpj.id_for_label }}">CNPJ (Opcional)</label>
-                </div>
-            </div>
-
-            <!-- Contato -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.contato }}
-                    <label for="{{ form.contato.id_for_label }}">Contato</label>
-                </div>
-            </div>
-
-            <!-- Categoria -->
-            <div class="col-12">
-                <div class="form-floating">
-                    {{ form.categoria }}
-                    <label for="{{ form.categoria.id_for_label }}">Categoria</label>
-                </div>
-            </div>
+            {{ form|crispy }}
 
             <!-- Botão -->
             <div class="col-12 text-center">
