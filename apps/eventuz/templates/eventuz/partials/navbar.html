@@ -10,9 +10,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <div class="d-flex ms-auto align-items-center">
-        <a class="nav-link" href="#">Início</a>
-        <a class="nav-link" href="#">Eventos</a>
-        <a class="nav-link" href="#">Histórico</a>
+        <a class="nav-link" href="{% url 'eventuz:index' %}">Início</a>
+        <a class="nav-link" href="{% url 'eventuz:eventos' %}">Eventos</a>
+        <a class="nav-link" href="{% url 'eventuz:historico' %}">Histórico</a>
       </div> 
     </div>
   </nav>
