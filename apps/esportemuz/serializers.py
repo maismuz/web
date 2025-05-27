@@ -42,6 +42,12 @@ class TipoCampeonatoSerializer(serializers.ModelSerializer):
         model = TipoCampeonato
         fields = ['id', 'nome']
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['nome'] = formatar_nome_legivel(instance.nome)
+
+        return representation
+
 class CampeonatoSerializer(serializers.ModelSerializer):
     """
     Serializador para o modelo Campeonato.
@@ -73,6 +79,12 @@ class LocalPartidaSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocalPartida
         fields = ['id', 'nome']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['nome'] = formatar_nome_legivel(instance.nome)
+
+        return representation
 
 class PartidaSerializer(serializers.ModelSerializer):
     """
