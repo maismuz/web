@@ -35,21 +35,19 @@
 {% block js %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const endpoint = getTeamEndpoint();
-
         renderTable({
-            endpoint: endpoint,
+            endpoint: getTeamEndpoint(),
             tableBodyId: 'equipes-table-body',
-            renderRow: renderEquipeRow
+            columns: ['nome']
         });
 
         setupModalForm({
             formId: 'equipeForm',
             modalId: 'equipeModal',
-            endpoint: endpoint,
+            endpoint: getTeamEndpoint(),
             onSuccess: function () {
                 renderTable({
-                    endpoint: endpoint,
+                    endpoint: getTeamEndpoint(),
                     tableBodyId: 'equipes-table-body',
                     renderRow: renderEquipeRow
                 });
@@ -60,14 +58,6 @@
     // Função para retornar o endpoint da API
     function getTeamEndpoint() {
         return `${getApiBaseUrl()}equipes/`;
-    }
-
-    // Função para renderizar uma linha da tabela de equipes
-    function renderEquipeRow(equipe) {
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${equipe.nome}</td>`;
-
-        return row;
     }
 </script>
 {% endblock js %}

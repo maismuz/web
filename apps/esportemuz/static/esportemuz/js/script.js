@@ -74,7 +74,7 @@ function handleFormErrors(form, errors) {
             feedback.classList.add("invalid-feedback");
 
             feedback.innerText = messages.join(" ");
-            
+
             field.after(feedback);
         }
     });
@@ -101,13 +101,30 @@ function fetchData(endpoint) {
 }
 
 // Função para renderizar uma tabela
-function renderTable({ endpoint, tableBodyId, renderRow }) {
+function renderTable({ endpoint, tableBodyId, columns }) {
     const tableBody = document.getElementById(tableBodyId);
     tableBody.innerHTML = '';
 
     fetchData(endpoint).then(data => {
         data.forEach(item => {
-            const row = renderRow(item);
+            const row = document.createElement("tr");
+
+            columns.forEach(col => {
+                const cell = document.createElement("td");
+
+                if (typeof col === 'string') {
+                    cell.textContent = item[col];
+                } else if (typeof col === 'object') {
+                    if (col.format) {
+                        cell.textContent = col.format(item[col.key], item);
+                    } else {
+                        cell.textContent = item[col.key];
+                    }
+                }
+
+                row.appendChild(cell);
+            });
+
             tableBody.appendChild(row);
         });
     });

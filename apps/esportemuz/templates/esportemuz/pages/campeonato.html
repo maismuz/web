@@ -40,21 +40,26 @@
 {% block js %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const endpoint = getChampionshipEndpoint();
-
         renderTable({
-            endpoint: endpoint,
+            endpoint: getChampionshipEndpoint(),
             tableBodyId: 'campeonatos-table-body',
-            renderRow: renderCampeonatoRow
+            columns: [
+                'nome',
+                'modalidade',
+                'tipo_campeonato',
+                { key: 'data_inicio', format: formatDate },
+                { key: 'data_fim', format: formatDate },
+                { key: 'encerrado', format: value => value ? 'Encerrado' : 'Ativo' }
+            ]
         });
 
         setupModalForm({
             formId: 'campeonatoForm',
             modalId: 'campeonatoModal',
-            endpoint: endpoint,
+            endpoint: getChampionshipEndpoint(),
             onSuccess: function () {
                 renderTable({
-                    endpoint: endpoint,
+                    endpoint: getChampionshipEndpoint(),
                     tableBodyId: 'campeonatos-table-body',
                     renderRow: renderCampeonatoRow
                 });
@@ -65,21 +70,6 @@
     // Função para retornar o endpoint da API
     function getChampionshipEndpoint() {
         return `${getApiBaseUrl()}campeonatos/`;
-    }
-
-    // Função para renderizar uma linha da tabela de campeonatos
-    function renderCampeonatoRow(campeonato) {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${campeonato.nome}</td>
-            <td>${campeonato.modalidade}</td>
-            <td>${campeonato.tipo_campeonato}</td>
-            <td>${formatDate(campeonato.data_inicio)}</td>
-            <td>${formatDate(campeonato.data_fim)}</td>
-            <td>${campeonato.encerrado ? 'Encerrado' : 'Ativo'}</td>
-        `;
-
-        return row;
     }
 </script>
 {% endblock js %}
