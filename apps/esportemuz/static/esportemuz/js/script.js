@@ -3,6 +3,23 @@ function getApiBaseUrl() {
     return "http://127.0.0.1:8000/esportemuz/api/";
 }
 
+// Função para retornar o CSRF token do cookie
+function getCsrfToken() {
+    const name = "csrftoken=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+
+        if (cookie.indexOf(name) === 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
+
+    return "";
+}
+
 // Função para inicializar o modal de formulário
 function setupModalForm({ formId, modalId, endpoint, onSuccess }) {
     const form = document.getElementById(formId);
@@ -48,12 +65,16 @@ function setupModalForm({ formId, modalId, endpoint, onSuccess }) {
 function handleFormErrors(form, errors) {
     Object.entries(errors).forEach(([fieldName, messages]) => {
         const field = form.querySelector(`[name="${fieldName}"]`);
+
         if (field) {
             field.classList.add("is-invalid");
 
             const feedback = document.createElement("div");
+
             feedback.classList.add("invalid-feedback");
+
             feedback.innerText = messages.join(" ");
+            
             field.after(feedback);
         }
     });
@@ -87,25 +108,6 @@ function renderTable({ endpoint, tableBodyId, renderRow }) {
     fetchData(endpoint).then(data => {
         data.forEach(item => {
             const row = renderRow(item);
-            tableBody.appendChild(row);
-        });
-    });
-}
-
-// Função para renderizar uma tabela dinâmica (com base em colunas)
-function renderDynamicTable({ endpoint, tableBodyId, columns }) {
-    const tableBody = document.getElementById(tableBodyId);
-    tableBody.innerHTML = '';
-
-    fetchData(endpoint).then(data => {
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            // columns.forEach(column => {
-            //     const cell = document.createElement('td');
-            //     cell.innerText = item[column];
-            //     row.appendChild(cell);
-            // });
-            row.innerHTML = columns.map(column => `<td>${item[column]}</td>`).join('');
             tableBody.appendChild(row);
         });
     });
