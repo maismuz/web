@@ -3,40 +3,40 @@ from django.contrib.auth.models import User
 
 # Criação de modelos de contratos e curriculos para serviços autonomos ou contratação de empreasas;
 class Usuario(models.Model):
-    nome = models.CharField(max_length=100)
-    eh_empresa = models.BooleanField(default=False)
-    eh_prestador = models.BooleanField(default=False)
-    telefone = models.CharField(max_length=15, blank=True)
-    biografia = models.TextField(blank=True)
-    imagem = models.ImageField(upload_to='usuarios/', blank=True, null=True)
+        nome = models.CharField(max_length=100)
+        eh_empresa = models.BooleanField(default=False)
+        eh_prestador = models.BooleanField(default=False)
+        telefone = models.CharField(max_length=15, blank=True)
+        biografia = models.TextField(blank=True)
+        imagem = models.ImageField(upload_to='usuarios/', blank=True, null=True)
 
-    def __str__(self):
-        return self.nome
-    
-    class Meta:
-        verbose_name = 'Usuário'
-        verbose_name_plural = 'Usuários'
-    
+        def __str__(self):
+            return self.nome
+        
+        class Meta:
+            verbose_name = 'Usuário'
+            verbose_name_plural = 'Usuários'
+        
 class Servico(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='servicos')
-    titulo = models.CharField(max_length=100)
-    descricao = models.TextField()
-    categoria = models.CharField(max_length=100)
-    criado_em = models.DateTimeField(auto_now_add=True)
-    contato = models.CharField(max_length=15, blank=True)
-    imagem = models.ImageField(upload_to='servicos/', blank=True, null=True)
+        usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='servicos')
+        titulo = models.CharField(max_length=100)
+        descricao = models.TextField()
+        categoria = models.CharField(max_length=100)
+        criado_em = models.DateTimeField(auto_now_add=True)
+        contato = models.CharField(max_length=15, blank=True)
+        imagem = models.ImageField(upload_to='servicos/', blank=True, null=True)
 
-    def __str__(self):
-        return self.titulo
+        def __str__(self):
+            return self.titulo
     
-    @property
-    def nota_media(self):
+@property
+def nota_media(self):
         avaliacoes = self.avaliacoes.all()
         if avaliacoes.exists():
             return round(sum([a.nota for a in avaliacoes]) / avaliacoes.count(), 1)
         return None
     
-    class Meta:
+class Meta:
         verbose_name = 'Serviço'
         verbose_name_plural = 'Serviços'
     
