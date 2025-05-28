@@ -21,6 +21,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
+                        <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody id="equipes-table-body">
@@ -38,7 +39,13 @@
         renderTable({
             endpoint: getTeamEndpoint(),
             tableBodyId: 'equipes-table-body',
-            columns: ['nome']
+            columns: ['nome'],
+            onEdit: (item) => {
+                console.log('Editar:', item);
+            },
+            onDelete: (item) => {
+                console.log('Excluir:', item);
+            }
         });
 
         setupModalForm({

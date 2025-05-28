@@ -26,6 +26,7 @@
                         <th scope="col">Data de Início</th>
                         <th scope="col">Data de Fim</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody id="campeonatos-table-body">
@@ -50,7 +51,13 @@
                 { key: 'data_inicio', format: formatDate },
                 { key: 'data_fim', format: formatDate },
                 { key: 'encerrado', format: value => value ? 'Encerrado' : 'Ativo' }
-            ]
+            ],
+            onEdit: (item) => {
+                console.log('Editar:', item);
+            },
+            onDelete: (item) => {
+                console.log('Excluir:', item);
+            }
         });
 
         setupModalForm({

@@ -101,7 +101,7 @@ function fetchData(endpoint) {
 }
 
 // Função para renderizar uma tabela
-function renderTable({ endpoint, tableBodyId, columns }) {
+function renderTable({ endpoint, tableBodyId, columns, onEdit, onDelete }) {
     const tableBody = document.getElementById(tableBodyId);
     tableBody.innerHTML = '';
 
@@ -109,6 +109,7 @@ function renderTable({ endpoint, tableBodyId, columns }) {
         data.forEach(item => {
             const row = document.createElement("tr");
 
+            // Renderiza colunas padrão
             columns.forEach(col => {
                 const cell = document.createElement("td");
 
@@ -125,6 +126,23 @@ function renderTable({ endpoint, tableBodyId, columns }) {
                 row.appendChild(cell);
             });
 
+            // Coluna de ações
+            const actionCell = document.createElement("td");
+
+            const editBtn = document.createElement("button");
+            editBtn.innerHTML = '✏️';
+            editBtn.classList.add('btn', 'btn-sm', 'btn-warning', 'me-2');
+            editBtn.addEventListener('click', () => onEdit && onEdit(item));
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerHTML = '🗑️';
+            deleteBtn.classList.add('btn', 'btn-sm', 'btn-danger');
+            deleteBtn.addEventListener('click', () => onDelete && onDelete(item));
+
+            actionCell.appendChild(editBtn);
+            actionCell.appendChild(deleteBtn);
+
+            row.appendChild(actionCell);
             tableBody.appendChild(row);
         });
     });
