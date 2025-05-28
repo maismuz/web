@@ -61,7 +61,14 @@
                 renderTable({
                     endpoint: getChampionshipEndpoint(),
                     tableBodyId: 'campeonatos-table-body',
-                    renderRow: renderCampeonatoRow
+                    columns: [
+                        'nome',
+                        'modalidade',
+                        'tipo_campeonato',
+                        { key: 'data_inicio', format: formatDate },
+                        { key: 'data_fim', format: formatDate },
+                        { key: 'encerrado', format: value => value ? 'Encerrado' : 'Ativo' }
+                    ]
                 });
             }
         });
