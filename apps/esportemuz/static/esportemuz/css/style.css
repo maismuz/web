@@ -4,13 +4,23 @@
     box-sizing: border-box;
 }
 
+html,
 body {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+    height: 100%;
 }
 
-body > div {
-    flex: 1;
-    overflow: auto;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    /* padding-top: 56px; */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
 }
