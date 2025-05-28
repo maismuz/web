@@ -1,17 +1,27 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-custom px-3 py-4">
-    <a href="#" class="navbar-brand d-flex align-items-center text-decoration-none text-dark">
-        <img src="https://placehold.co/100" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
-        EsporteMUZ
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <div class="d-flex ms-auto align-items-center">
-            <a class="nav-link" href="{% url 'esportemuz:equipe' %}">Equipes</a>
-            <a class="nav-link" href="{% url 'esportemuz:campeonato' %}">Campeonatos</a>
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand mb-0 h1 d-flex align-items-center gap-2" href="#">
+            <img src="https://placehold.co/100" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            EsporteMuz
+        </a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'esportemuz:index' %}active{% endif %}" href="{% url 'esportemuz:index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'esportemuz:equipe' %}active{% endif %}" href="{% url 'esportemuz:equipe' %}">Equipes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'esportemuz:campeonato' %}active{% endif %}" href="{% url 'esportemuz:campeonato' %}">Campeonatos</a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
