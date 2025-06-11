@@ -18,6 +18,10 @@ class PatrimonioView(View):
     def get(self, request):
         return render(request, 'patrimonio.html')
     
+class ListaItemView(View):
+    def get(self, request):
+        return render(request, 'lista_item.html')
+    
 class DocumentoHistoricoView(View):
     def get(self, request):
         return render(request, 'documento_historico.html')

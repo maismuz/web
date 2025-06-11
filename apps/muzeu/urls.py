@@ -11,6 +11,7 @@ urlpatterns = [
     path('form-itens-acervo/', FormItensAcervoView.as_view(), name='form_itens_acervo'),
     path('form-patrimonio/', FormPatrimonioView.as_view(), name='form_patrimonio'),
     path('form-documento-historico/', FormDocumentoHistoricoView.as_view(), name='form_documento_historico'),
+    path('lista-item/', FormDocumentoHistoricoView.as_view(), name='lista_item'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
