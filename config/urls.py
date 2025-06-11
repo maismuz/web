@@ -14,6 +14,7 @@ from django.contrib import admin
 urlpatterns = [
 
     path('admin/', admin.site.urls),
+    path('turismuz/', include('apps.turismuz.urls')),
     path('doamuz/', include('apps.doamuz.urls')),  # Certifique-se de que o caminho está correto
 
     path("", include("apps.core.urls")),]
