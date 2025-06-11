@@ -1,6 +1,6 @@
-from apps.movemuz import views
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('veiculo/cadastrar', views.cadastrar_veiculo, name='cadastrar_veiculo'),
 ]
