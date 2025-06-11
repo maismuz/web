@@ -16,7 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('doamuz/', include('apps.doamuz.urls')),  # Certifique-se de que o caminho está correto
 
-    path("", include("apps.core.urls")),
+    path("", include("apps.core.urls")),]
 
 
 
