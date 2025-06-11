@@ -6,5 +6,6 @@ from apps.covamuz.views import *
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('registro/', RegistroView.as_view(), name='registro'),
+    path('registrocemi/', RegiCemiView.as_view(), name='registrocemiterio'),
+    path('registroarea/', RegiAreaView.as_view(), name='registroarea'),
 ]
