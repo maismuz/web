@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeDoa</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  {% include 'components/navbar.html' %}
+
+  <div class="container py-5">
+    <!-- TÍTULO PRINCIPAL -->
+    <h1 class="display-4 text-center mb-4 titulo">DoaMuz</h1>
+
+    <!-- SUBTÍTULO -->
+    <h2 class="h3 text-center mb-5 subtitulo">Uma iniciativa para ajudar a conectar doadores, pessoas em situação de vulnerabilidade e organizações</h2>
+
+    <!-- PARÁGRAFO -->
+    <p class="lead text-justify">
+      Bem-vindo à nossa plataforma! Aqui, acreditamos no poder da conexão para transformar vidas. Unimos doadores, pessoas em situação de vulnerabilidade e organizações não governamentais (ONGs) com um único propósito: promover acolhimento, dignidade e oportunidades para quem mais precisa.
+    </p>
+
+    <p class="lead text-justify">Se você quer doar, receber ajuda ou fortalecer sua ONG, este é o lugar certo. Facilitamos o encontro entre quem quer ajudar e quem precisa ser ajudado, criando uma rede segura, transparente e eficiente.</p>
+    <p class="lead text-justify">Juntos, podemos fazer a diferença.</p>
+    <p class="lead text-justify">Participe dessa corrente de solidariedade!</p>
+    <h2 class="h4 text-muted text-left mb-4">Doe. Apoie. Transforme.</h2>
+    <!-- IMAGEM CENTRALIZADA. Altere style="width: ...%;" para mudar seu tamanho se necessário-->
+    <div class="text-center my-5">
+      <img src="{% static 'imgs/doacoesBanner.png' %}" class="img-fluid rounded shadow" alt="Imagem grande ilustrativa">
+    </div>
+
+    <!-- Bootstrap JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
