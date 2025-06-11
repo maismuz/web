@@ -48,7 +48,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Configurações de banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': DB_CREDENTIALS['ENGINE'],
         'NAME': DB_CREDENTIALS['NAME'],
         'USER': DB_CREDENTIALS['USER'],
         'PASSWORD': DB_CREDENTIALS['PASSWORD'],

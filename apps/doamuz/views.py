@@ -13,4 +13,3 @@ def ongs(request):
     return render(request, 'ongs.html') 
 def doador(request):
     return render(request, 'doador.html') 
-
