@@ -47,7 +47,7 @@ body {
     cursor: pointer;
   }
 
-form input[type="text"],
+  form input[type="text"],
 form input[type="email"],
 form input[type="password"],
 form input[type="number"],
@@ -171,7 +171,6 @@ form h2{
 
 .navbar-custom {
   background-color: #f8f9fa; /* tom claro (você pode trocar por branco puro: #ffffff) */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* leve sombra moderna */
 }
 
 .navbar-custom a {
@@ -203,6 +202,50 @@ form h2{
 
 footer{
   background-color: #0000001c;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.link-pessoal:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-menu-sem-borda {
+  border: none !important;
+  background-color: #f5f5f5 !important;
+  box-shadow: none !important;
+  color: rgb(83, 83, 83); /* cor do texto e seta */
+  font-size: 1rem; /* tamanho da fonte */
+  font-weight: 400;
+  border-radius: 10px;
+}
+
+.btn-menu-sem-borda:hover,
+.btn-menu-sem-borda:focus {
+  background-color: #f5f5f5 !important;
+  box-shadow: none !important;
+  color: rgb(83, 83, 83);
+}
+
+.btn-menu-sem-borda svg {
+  width: 1em;       /* tamanho igual à fonte */
+  height: 1em;      /* tamanho igual à fonte */
+  fill: currentColor; /* pega a cor do texto automaticamente */
+  vertical-align: middle; /* alinha no meio da linha do texto */
+  margin-left: 0.25em; /* espaço entre texto e seta */
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #e9ecef; /* cinza clarinho */
+  color: #000; /* opcional, mantém o texto preto no hover */
+}
+
+.dropdown-menu .dropdown-item {
+  transition: background-color 0.2s ease;
 }
 
 
