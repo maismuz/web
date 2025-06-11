@@ -24,7 +24,19 @@
         {% for evento in eventos %}
         <div class="col">
             <div class="card h-100 shadow-sm">
-                <img src="{% static 'img/img-base.png' %}" class="card-img-top" alt="Imagem do evento">
+                {% with midia=evento.midias.first %}
+                {% if midia %}
+                    {% if midia.is_foto %}
+                        <img src="{{ midia.arquivo.url }}" class="card-img-top" alt="Imagem do evento">
+                    {% elif midia.is_video %}
+                        <div class="ratio ratio-16x9">
+                            <iframe src="{{ midia.url_video }}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <img src="{% static 'img/img-base.png' %}" class="card-img-top" alt="Imagem padrão do evento">
+                {% endif %}
+            {% endwith %}
 
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ evento.nome }}</h5>

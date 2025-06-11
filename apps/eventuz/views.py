@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from datetime import date
 from .forms import EventoForm
-from .models import Evento
+from .models import Evento, Midia
 from datetime import timedelta
 
 
@@ -30,10 +30,31 @@ class CadastrarEventosView(View):
 
     def post(self, request):
         form = EventoForm(request.POST, request.FILES)
-        print(request.POST)
         if form.is_valid():
-            form.save()
+            evento = form.save()
+
+            # Pega a lista de arquivos enviados
+            arquivos = request.FILES.getlist('midia_arquivos')
+            url_video = form.cleaned_data.get('midia_url')
+
+            # Cria um Midia para cada arquivo enviado
+            for arquivo in arquivos:
+                # Detecta tipo pelo content_type ou pela extensão do arquivo para decidir foto ou vídeo
+                if arquivo.content_type.startswith('image/'):
+                    tipo = 'foto'
+                elif arquivo.content_type.startswith('video/'):
+                    tipo = 'video'
+                else:
+                    tipo = 'foto'  # padrão
+
+                Midia.objects.create(evento=evento, tipo=tipo, arquivo=arquivo)
+
+            # Se tiver URL de vídeo, cria a mídia de vídeo
+            if url_video:
+                Midia.objects.create(evento=evento, tipo='video', url_video=url_video)
+
             return redirect('eventuz:eventos')
+
         return render(request, 'eventuz/cadastrar_eventos.html', {'form': form})
 
 
