@@ -1,0 +1,13 @@
+@media (max-width: 576px) {
+    .carousel-inner {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+  
+    .carousel-inner img,
+    .carousel-inner video,
+    .carousel-inner iframe {
+      height: auto !important;
+    }
+  }
+  
