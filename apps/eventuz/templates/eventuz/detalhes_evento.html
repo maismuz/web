@@ -1,0 +1,31 @@
+{% extends 'eventuz/base.html' %}
+{% load static %}
+
+{% block title %}{{ evento.nome }} | Detalhes{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="display-4 text-center mb-4 titulo">{{ evento.nome }}</h1>
+    <h2 class="h5 text-muted text-center mb-5 subtitulo">{{ evento.categoria }}</h2>
+
+    <div class="d-flex flex-column flex-md-row align-items-start gap-4">
+
+        <img src="{% static 'img/img-base.png' %}" class="img-fluid rounded shadow" style="max-width: 400px;" alt="Imagem do evento">
+
+        <div>
+            <p><strong>Data e Hora:</strong> {{ evento.data_hora|date:"d/m/Y H:i" }}</p>
+            <p><strong>Local:</strong> {{ evento.local }}</p>
+            <p><strong>Organizador:</strong> {{ evento.organizador }}</p>
+            <p><strong>CNPJ:</strong> {{ evento.cnpj }}</p>
+            <p><strong>Contato:</strong> {{ evento.contato }}</p>
+            <p><strong>Descrição:</strong><br>{{ evento.descricao }}</p>
+
+            <a href="{% url 'eventuz:eventos' %}" class="btn btn-secondary mt-3">Voltar aos eventos</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,21 +1,22 @@
 from django.db import models
 
 # Create your models here.
-
 class Categoria(models.Model):
     nome = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.nome
 
-
 class Evento(models.Model):
     nome = models.CharField(max_length=200)
-    data = models.DateField()
+    data_hora = models.DateTimeField()
     local = models.CharField(max_length=200)
     descricao = models.TextField()
+    organizador = models.CharField(max_length=100)
+    cnpj = models.CharField(max_length=14, blank=True, null=True)
     contato = models.CharField(max_length=100)
-    categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT, related_name='eventos')
+    categoria = models.ForeignKey('Categoria', on_delete=models.PROTECT, related_name='eventos')
+    aprovado = models.BooleanField(default=False)  # <-- novo campo
 
     def __str__(self):
         return self.nome
