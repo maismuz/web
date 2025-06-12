@@ -5,7 +5,8 @@ from .models import *
 from django.shortcuts import render, get_object_or_404
 
 def hometur(request):
-    return render(request, 'hometur.html')
+    publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')
+    return render(request, 'hometur.html', {'publicacoes': publicacoes})
 
 def guia(request):
     return render(request, 'guia.html')
