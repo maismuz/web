@@ -1,9 +1,10 @@
 from django.views import View
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from datetime import date
 from .forms import EventoForm
-from .models import Evento, Midia
+from .models import *
 from datetime import timedelta
 
 
@@ -19,10 +20,32 @@ class EventosView(View):
         eventos = Evento.objects.filter(
             aprovado=True,
             data_hora__gte=agora - timedelta(days=1)
-        ).order_by('data_hora')
-        return render(request, 'eventuz/eventos.html', {'eventos': eventos})
+        )
 
+        nome = request.GET.get('nome')
+        organizador = request.GET.get('organizador')
+        data_inicio = request.GET.get('data_inicio')
+        data_fim = request.GET.get('data_fim')
+        categoria_id = request.GET.get('categoria')
+        local = request.GET.get('local')
 
+        if nome:
+            eventos = eventos.filter(nome__icontains=nome)
+        if organizador:
+            eventos = eventos.filter(organizador__icontains=organizador)
+        if data_inicio:
+            eventos = eventos.filter(data_hora__date__gte=parse_date(data_inicio))
+        if data_fim:
+            eventos = eventos.filter(data_hora__date__lte=parse_date(data_fim))
+        if categoria_id:
+            eventos = eventos.filter(categoria_id=categoria_id)
+        if local:
+            eventos = eventos.filter(local__icontains=local)
+
+        eventos = eventos.order_by('data_hora')
+        categorias = Categoria.objects.all()
+        return render(request, 'eventuz/eventos.html', {'eventos': eventos, 'categorias': categorias})
+    
 class CadastrarEventosView(View):
     def get(self, request):
         form = EventoForm()
@@ -60,8 +83,38 @@ class CadastrarEventosView(View):
 
 class HistoricoView(View):
     def get(self, request):
-        eventos_passados = Evento.objects.filter(aprovado=True, data_hora__lt=timezone.now()).order_by('-data_hora')
-        return render(request, 'eventuz/historico.html', {'eventos_passados': eventos_passados})
+        eventos_passados = Evento.objects.filter(
+            aprovado=True,
+            data_hora__lt=timezone.now()
+        )
+
+        nome = request.GET.get('nome')
+        organizador = request.GET.get('organizador')
+        data_inicio = request.GET.get('data_inicio')
+        data_fim = request.GET.get('data_fim')
+        categoria_id = request.GET.get('categoria')
+        local = request.GET.get('local')
+
+        if nome:
+            eventos_passados = eventos_passados.filter(nome__icontains=nome)
+        if organizador:
+            eventos_passados = eventos_passados.filter(organizador__icontains=organizador)
+        if data_inicio:
+            eventos_passados = eventos_passados.filter(data_hora__date__gte=parse_date(data_inicio))
+        if data_fim:
+            eventos_passados = eventos_passados.filter(data_hora__date__lte=parse_date(data_fim))
+        if categoria_id:
+            eventos_passados = eventos_passados.filter(categoria_id=categoria_id)
+        if local:
+            eventos_passados = eventos_passados.filter(local__icontains=local)
+
+        eventos_passados = eventos_passados.order_by('-data_hora')
+        categorias = Categoria.objects.all()
+        return render(request, 'eventuz/historico.html', {
+            'eventos': eventos_passados,
+            'categorias': categorias
+        })
+
 
 class DetalhesEventoView(View):
     def get(self, request, pk):

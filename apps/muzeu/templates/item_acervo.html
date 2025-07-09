@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Modelo Base</title>
@@ -9,38 +10,137 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
-<nav class="navbar navbar-expand-lg navbar-custom px-3 py-4">
-    <a class="navbar-brand d-flex align-items-center text-decoration-none text-dark" href="/muzeu/">
-      <img src="{% static 'img/img-base.png' %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2"> 
-      MUZEU
-    </a> 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <div class="d-flex ms-auto align-items-center">
-        <a class="nav-link" href="/muzeu/form-itens-acervo/">Navegação 1</a>
-        <a class="nav-link" href="/muzeu/form-patrimonio/">Navegação 2</a>
-        <a class="nav-link" href="/muzeu/item-acervo/">Navegação 3</a>
-        <a class="nav-link" href="/muzeu/patrimonio/">Navegação 4</a>
-      </div> 
-    </div>
-  </nav>
-  
-  
-<body class="bg-light">
+<!-- Navbar 1: Logo + Login/Cadastro (NÃO ALTERAR) -->
+<nav class="navbar px-2 py-3 d-flex justify-content-between align-items-center">
+  <a class="navbar-brand d-flex align-items-center text-decoration-none text-dark mb-0" href="#">
+    <img src="{% static 'img/logo-maismuz.png' %}" alt="Logo" style="max-height: 40px;">
+  </a>
+  <div class="d-flex align-items-center gap-3">
+    <a class="nav-link text-dark px-2" href="#">Login</a>
+    <a class="nav-link text-dark px-2" href="#">Cadastro</a>
+  </div>
+</nav>
 
+<!-- Navbar 2: Grupos Temáticos (NÃO ALTERAR)-->
+<nav class="navbar navbar-expand-lg px-3 py-2"
+  style="background-color: #0000001c; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+  <div class="container">
+    <div class="d-flex d-lg-none w-100 justify-content-end align-items-center gap-2">
+      <span class="fw-light">Explorar Seções</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGrupos"
+        aria-controls="navbarGrupos" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarGrupos">
+      <ul class="navbar-nav d-flex gap-4">
+        <li class="nav-item dropdown position-static">
+          <a class="nav-link dropdown-toggle" href="#">Cidadania e Sociedade</a>
+          <div class="dropdown-menu mt-0 shadow border-0">
+            <div class="d-flex flex-column px-3 py-2">
+              <a class="dropdown-item" href="/admin/reclamemuz/">Reclame</a>
+              <a class="dropdown-item" href="/admin/doamuz/">Doações</a>
+              <a class="dropdown-item" href="/admin/adotamuz/">Adoção de Animais</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown position-static">
+          <a class="nav-link dropdown-toggle" href="#">Trabalho e Economia</a>
+          <div class="dropdown-menu mt-0 shadow border-0">
+            <div class="d-flex flex-column px-3 py-2">
+              <a class="dropdown-item" href="/admin/contratamuz/">Empregos e Estágios</a>
+              <a class="dropdown-item" href="/admin/escambuz/">Classificados</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown position-static">
+          <a class="nav-link dropdown-toggle" href="#">Cultura, Esporte e Lazer</a>
+          <div class="dropdown-menu mt-0 shadow border-0">
+            <div class="d-flex flex-column px-3 py-2">
+              <a class="dropdown-item" href="/admin/eventuz/">Eventos</a>
+              <a class="dropdown-item" href="/admin/esportemuz/">Campeonatos</a>
+              <a class="dropdown-item" href="/admin/muzeu/">Patrimônio Cultural</a>
+              <a class="dropdown-item" href="/admin/turismuz/">Turismo</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown position-static">
+          <a class="nav-link dropdown-toggle" href="#">Mobilidade e Saúde</a>
+          <div class="dropdown-menu mt-0 shadow border-0">
+            <div class="d-flex flex-column px-3 py-2">
+              <a class="dropdown-item" href="/admin/movemuz/">Transporte Compartilhado</a>
+              <a class="dropdown-item" href="/admin/muzsaude/">Transporte para Saúde</a>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Navbar 3: Navegação pelo projeto interna (ALTERAR) -->
+<nav class="container mt-3 py-2 px-3 shadow-sm rounded-pill d-flex align-items-center justify-content-between flex-wrap"
+  style="background-color: #ffffff; border: 1px solid #ddd;">
+  <!-- Logo: TROQUE PELA A DO SEU PROJETO. TODAS JÁ FEITAS EM CORE/STATIC/IMG/logo-(...).png -->
+  <div class="d-flex align-items-center me-3">
+    <img src="{% static 'img/logo-contratamuz.png' %}" alt="Logo" style="height: 40px;">
+  </div>
+  <ul class="nav d-none d-lg-flex align-items-center gap-3 mb-0">
+    <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 1</a>
+    </li>
+
+    <span style="color: #ccc;">|</span>
+    <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 2</a>
+    </li>
+
+    <span style="color: #ccc;">|</span>
+    <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 3</a>
+    </li>
+    <!-- ADICIONAR MAIS SE NECESSÁRIO -->
+  </ul>
+
+  <div class="dropdown d-lg-none">
+    <button class="btn btn-sm btn-menu-sem-borda d-flex align-items-center gap-1" type="button"
+      data-bs-toggle="dropdown" aria-expanded="false" aria-label="Abrir menu">
+      Menu
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill"
+        viewBox="0 0 16 16">
+        <path
+          d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592c.859 0 1.319 1.013.753 1.658l-4.796 5.482a1 1 0 01-1.506 0z" />
+      </svg>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="#">Item 1</a></li>
+      <li><a class="dropdown-item" href="#">Item 2</a></li>
+      <li><a class="dropdown-item" href="#">Item 3</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- CONTEÚDOS DA PAGINA -->
+
+<body class="bg-light">
   <div class="container py-5">
     <!-- TÍTULO PRINCIPAL -->
-    <h1 class="display-4 text-center mb-4 titulo">Impressora</h1>
+    <h1 class="display-4 text-center mb-4 titulo">Títulos</h1>
 
     <!-- SUBTÍTULO -->
-        <!--  <h2 class="h3 text-center mb-5 subtitulo">Subtítulos</h2> -->
+    <h2 class="h3 text-center mb-5 subtitulo">Subtítulos</h2>
+
+    <h2 class="h4 text-muted text-left mb-4">Subtítulo 2.0</h2>
 
 
     <!-- PARÁGRAFO -->
     <p class="lead text-justify">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
 
     <!-- IMAGEM CENTRALIZADA. Altere style="width: ...%;" para mudar seu tamanho se necessário-->
@@ -60,10 +160,11 @@
       </div>
     </div>
   </footer>
-  
-  
+
+
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
