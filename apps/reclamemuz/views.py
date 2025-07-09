@@ -15,3 +15,7 @@ def index(request):
     # }
 
     return render(request, 'homereclamemuz.html')
+
+def listar_denuncias(request):
+    #denuncias = Denuncia.objects.all()
+    return render(request, 'denuncias.html')
