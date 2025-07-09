@@ -5,7 +5,8 @@ from .models import *
 from django.shortcuts import render, get_object_or_404
 
 def hometur(request):
-    return render(request, 'hometur.html')
+    publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')
+    return render(request, 'hometur.html', {'publicacoes': publicacoes})
 
 def guia(request):
     return render(request, 'guia.html')
@@ -15,8 +16,12 @@ def estabelecimentos(request):
     return render(request, 'estabelecimentos.html', {'estabelecimentos': estabelecimentos})
 
 def guias(request):
-    guias = GuiaTuristico.objects.all()
-    return render(request, 'guias.html', {'guias': guias})
+    guias = list(GuiaTuristico.objects.all())
+    grupos = [guias[i:i+3] for i in range(0, len(guias), 3)]
+    return render(request, 'guias.html', {
+        'grupos': grupos,
+        'guias': guias,     # adiciona variável esperada no template
+    })
 
 def publicacoes(request):
     publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')

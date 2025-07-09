@@ -1,6 +1,7 @@
 from django.db import models
 
-class Usuario(models.Model):
+
+class Permissao(models.Model):
     TIPO_CHOICES = [
         ("ADMIN", "Admin"),
         ("AUTOR", "Autor"),
@@ -12,6 +13,8 @@ class Usuario(models.Model):
         choices=TIPO_CHOICES,
         default="COMUM",
     )
+    # usuario = models.ForeignKey()
+    # perfil = models.ForeignKey()
 
 class Categorias(models.Model):
     """
@@ -149,6 +152,13 @@ class GuiaTuristico(models.Model):
         blank=True,
         null=True
     )
+
+    class Meta:
+
+        verbose_name = 'Guia de Turismo'
+        verbose_name_plural = 'Guias de Turismo'
+        ordering = ['nome']
+
     imagem = models.ImageField(
         verbose_name='Imagem',
         help_text='Imagem do guia',
@@ -158,21 +168,11 @@ class GuiaTuristico(models.Model):
     )
 
     def __str__(self):
-        return f"{self.nome} "
+        return f"{self.nome}"
+
+
 
 class Publicacao(models.Model):
-
-    TIPO_CHOICES = [
-        ("EM_ANALISE", "Em_analise"),
-        ("RECUSADO", "Recusado"),
-        ("ACEITO", "Aceito"),
-    ]
-
-    estado = models.CharField(
-        max_length=10,
-        choices=TIPO_CHOICES,
-        default="COMUM",
-    )
     
     titulo = models.CharField(
         max_length=255, 
@@ -217,7 +217,6 @@ class ImagemPublicacao(models.Model):
     def __str__(self):
         return self.legenda
 
-
 class Avaliacao(models.Model):
     nota = models.PositiveSmallIntegerField(
         verbose_name='Nota',
@@ -246,5 +245,4 @@ class Avaliacao(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - Nota: {self.nota}"
-
 

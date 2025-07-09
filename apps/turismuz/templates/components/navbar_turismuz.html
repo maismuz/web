@@ -1,0 +1,85 @@
+{% load static %}
+<nav class="navbar px-2 py-3 d-flex justify-content-between align-items-center">
+  <a class="navbar-brand d-flex align-items-center text-decoration-none text-dark mb-0" href="#">
+    <img src="{% static 'img/logo-maismuz.png' %}" alt="Logo" style="max-height: 40px;">
+  </a>
+  <div class="d-flex align-items-center gap-3">
+    <a class="nav-link text-dark px-2" href="#">Login</a>
+    <a class="nav-link text-dark px-2" href="#">Cadastro</a>
+  </div>
+</nav>
+<nav class="navbar navbar-expand-lg px-3 py-2" style="background-color: #0000001c; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+  <div class="container">
+    <div class="d-flex d-lg-none w-100 justify-content-end align-items-center gap-2">
+      <span class="fw-light">Explorar Seções</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGrupos" aria-controls="navbarGrupos" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarGrupos">
+      <ul class="navbar-nav d-flex gap-4">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="cidSocDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cidadania e Sociedade
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="cidSocDropdown">
+            <li><a class="dropdown-item" href="/admin/reclamemuz/">Reclame</a></li>
+            <li><a class="dropdown-item" href="/admin/doamuz/">Doações</a></li>
+            <li><a class="dropdown-item" href="/admin/adotamuz/">Adoção de Animais</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="trabEcoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Trabalho e Economia
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="trabEcoDropdown">
+            <li><a class="dropdown-item" href="/admin/contratamuz/">Empregos e Estágios</a></li>
+            <li><a class="dropdown-item" href="/admin/escambuz/">Classificados</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="culturaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cultura, Esporte e Lazer
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="culturaDropdown">
+            <li><a class="dropdown-item" href="/admin/eventuz/">Eventos</a></li>
+            <li><a class="dropdown-item" href="/admin/esportemuz/">Campeonatos</a></li>
+            <li><a class="dropdown-item" href="/admin/muzeu/">Patrimônio Cultural</a></li>
+            <li><a class="dropdown-item" href="/admin/turismuz/">Turismo</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="mobilidadeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Mobilidade e Saúde
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="mobilidadeDropdown">
+            <li><a class="dropdown-item" href="/admin/movemuz/">Transporte Compartilhado</a></li>
+            <li><a class="dropdown-item" href="/admin/muzsaude/">Transporte para Saúde</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<nav class="container mt-3 py-2 px-3 shadow-sm rounded-pill d-flex align-items-center justify-content-between flex-wrap" style="background-color: #ffffff; border: 1px solid #ddd;">
+  <!-- Logo: TROQUE PELA A DO SEU PROJETO. TODAS JÁ FEITAS EM CORE/STATIC/IMG/logo-(...).png -->
+  
+  <div class="d-flex align-items-center me-3">
+    <img src="{% static 'img/logo-turismuz.png' %}" alt="Logo" height="42"></div>
+  <ul class="nav d-none d-lg-flex align-items-center gap-3 mb-0">
+    <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="{% url 'hometur' %}">Início</a>
+    </li>
+    <span style="color: #ccc;">|</span>
+    <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="{% url 'estabelecimentos' %}">Estabelecimentos</a>
+    </li>
+    <span style="color: #ccc;">|</span>
+    <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="{% url 'guias' %}">Guias</a>
+    </li>
+    <span style="color: #ccc;">|</span>
+
+  </ul>
+</nav>
+

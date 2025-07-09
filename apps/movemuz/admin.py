@@ -1,9 +1,14 @@
 from django.contrib import admin
+from .models import *
 from django.utils.safestring import mark_safe
-from .models import (
-    Combustivel, TipoVeiculo, Veiculo, Local,
-    Viagem, Passageiro, Motorista, HorarioTransporte
-)
+
+@admin.register(Motorista)
+class MotoristaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'cpf', 'telefone', 'email', 'cnh_numero', 'data_nascimento', 'ativo')
+    search_fields = ('nome', 'cpf', 'cnh_numero')
+    list_filter = ('ativo', 'cnh_numero')
+    ordering = ('nome',)
+    list_per_page = 20
 
 @admin.register(Combustivel)
 class CombustivelAdmin(admin.ModelAdmin):
@@ -41,8 +46,8 @@ class VeiculoAdmin(admin.ModelAdmin):
             return mark_safe(f'<img src="{obj.foto.url}" width="128" height="128" />')
         return "Sem imagem"
 
-    foto_preview.short_description = "Prévia da foto"
-
+    foto_preview.allow_tags = True
+    foto_preview.short_description = "Prévia da Foto"
 
 @admin.register(Local)
 class LocalAdmin(admin.ModelAdmin):
@@ -68,16 +73,28 @@ class PassageiroAdmin(admin.ModelAdmin):
     ordering = ('nome',)
 
 
-@admin.register(Motorista)
-class MotoristaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'cpf', 'cnh_numero', 'ativo')
-    search_fields = ('nome', 'cpf', 'cnh_numero')
-    list_filter = ('ativo',)
-    ordering = ('nome',)
-
-
 @admin.register(HorarioTransporte)
 class HorarioTransporteAdmin(admin.ModelAdmin):
     list_display = ('veiculo', 'origem', 'destino', 'horario_partida', 'dias_semana')
     search_fields = ('origem__nome', 'destino__nome', 'dias_semana')
     list_filter = ('dias_semana',)
+
+@admin.register(Ponto)
+class PontoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'localizacao')
+    search_fields = ('nome', 'localizacao')
+    ordering = ('nome',)
+
+@admin.register(Parada)
+class ParadaAdmin(admin.ModelAdmin):
+    list_display = ('horario_transporte', 'ponto', 'horario', 'passageiros_estimados')
+    list_filter = ('ponto', 'horario')
+    search_fields = ('ponto__nome', 'horario_transporte__veiculo__modelo')
+    ordering = ('horario_transporte', 'horario')
+
+@admin.register(OcupacaoVeiculo)
+class OcupacaoVeiculoAdmin(admin.ModelAdmin):
+    list_display = ('horario_transporte', 'data', 'passageiros_a_bordo', 'atualizado_em')
+    list_filter = ('data', 'horario_transporte__veiculo')
+    search_fields = ('horario_transporte__veiculo__modelo', 'horario_transporte__origem__nome', 'horario_transporte__destino__nome')
+    ordering = ('-data',)

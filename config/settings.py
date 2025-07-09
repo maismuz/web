@@ -23,6 +23,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # Credenciais de banco de dados a partir de variáveis de ambiente
 DB_CREDENTIALS = {
+    'ENGINE': config('DB_ENGINE'),
     'NAME': config('DB_NAME'),
     'USER': config('DB_USER'),
     'PASSWORD': config('DB_PASSWORD'),
@@ -34,14 +35,14 @@ DB_CREDENTIALS = {
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Hosts permitidos e origens CSRF confiáveis
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1').split(',')
 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost').split(',')
 
 # Configurações de banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': DB_CREDENTIALS['ENGINE'],
         'NAME': DB_CREDENTIALS['NAME'],
         'USER': DB_CREDENTIALS['USER'],
         'PASSWORD': DB_CREDENTIALS['PASSWORD'],
@@ -58,6 +59,9 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # API
+    'rest_framework',
 ]
 
 PROJECT_APPS = [
@@ -127,7 +131,9 @@ TEMPLATE_DIRS = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': TEMPLATE_DIRS,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'apps/doamuz/templates'),  # Certifique-se de que o caminho está correto
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -195,3 +201,31 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LOGIN_URL = '/'
 # URL de logout
 # LOGOUT_URL = '/logout/'
+
+# Configuração do Django Rest Framework
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATE_FORMAT': "%d/%m/%Y",
+    'DATETIME_FORMAT': "%d/%m/%Y às %H:%M",
+    'DATETIME_INPUT_FORMATS': [
+        "%d/%m/%Y %H:%M:%S",
+        "%d/%m/%Y %H:%M",
+    ],
+    'DATE_INPUT_FORMATS': [
+        "%d/%m/%Y",
+        "%Y-%m-%d",
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+}

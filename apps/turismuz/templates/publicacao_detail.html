@@ -8,63 +8,114 @@
 
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        .card {
-            border: none;
-            border-radius: 10px;
-            overflow: hidden;
+        .main-content {
+            max-width: 650px;
+            margin: 40px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(13,110,253,0.04);
+            padding: 32px 24px 32px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .card-img-top {
+        .pub-img {
+            width: 100%;
+            max-width: 540px;
+            max-height: 420px;
             object-fit: cover;
-            max-height: 400px;
+            border-radius: 16px;
+            margin-bottom: 1.2rem;
+            background: #e9ecef;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .card-body {
-            padding: 2rem;
+        .pub-caption {
+            color: #6c757d;
+            font-size: 0.98rem;
+            margin-bottom: 1.6rem;
+            text-align: left;
+            width: 100%;
         }
 
-        .card-title {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #0d6efd;
-            margin-bottom: 1rem;
+        .pub-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #28a745; /* azul */
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            letter-spacing: -1px;
+            text-align: left;
+            width: 100%;
         }
 
-        .card-text {
-            font-size: 1.1rem;
+        .pub-meta {
+            color: #6c757d;
+            font-size: 1rem;
+            margin-bottom: 2.2rem;
+            text-align: left;
+            width: 100%;
+        }
+
+        .pub-desc {
+            font-size: 1.18rem;
+            color: #222;
+            margin-bottom: 2rem;
             line-height: 1.7;
-            color: #343a40;
+            text-align: left;
+            width: 100%;
         }
 
-        .text-muted {
-            font-size: 0.9rem;
+        .pub-desc strong, .pub-desc b {
+            color: #28a745; /* azul */
+        }
+
+        .pub-desc em, .pub-desc i {
+            color: #28a745;
+        }
+
+        @media (max-width: 700px) {
+            .main-content {
+                padding: 18px 4vw 24px 4vw;
+            }
+
+            .pub-title {
+                font-size: 1.3rem;
+            }
+
+            .pub-img {
+                max-width: 100%;
+                height: auto;
+            }
         }
     </style>
 </head>
 <body>
-    {% include 'components/navbar.html' %}
+    {% include 'components/navbar_turismuz.html' %}
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10 col-xl-8">
-                <div class="card shadow-sm">
-                    {% if publicacao.imagem %}
-                        <img src="{{ publicacao.imagem.url }}" class="card-img-top" alt="{{ publicacao.titulo }}">
-                    {% endif %}
-                    <div class="card-body">
-                        <h2 class="card-title">{{ publicacao.titulo }}</h2>
-                        <p class="card-text">{{ publicacao.texto_da_noticia|linebreaks }}</p>
-                        <p class="card-text text-end mt-4">
-                            <small class="text-muted">Publicado em {{ publicacao.data_de_publicacao|date:"d/m/Y H:i" }}</small>
-                        </p>
-                    </div>
-                </div>
-            </div>
+    <div class="main-content">
+        {% if publicacao.imagem %}
+            <img src="{{ publicacao.imagem.url }}" class="pub-img" alt="{{ publicacao.titulo }}">
+        {% endif %}
+        {% if publicacao.legenda %}
+            <div class="pub-caption">{{ publicacao.legenda }}</div>
+        {% endif %}
+        <div class="pub-title">{{ publicacao.titulo }}</div>
+        <div class="pub-meta">
+            Publicado em {{ publicacao.data_de_publicacao|date:"d/m/Y H:i" }}
+        </div>
+        <div class="pub-desc">
+            {{ publicacao.texto_da_noticia|linebreaks }}
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
