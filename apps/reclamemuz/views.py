@@ -20,3 +20,6 @@ def denuncias(request):
 
 def denuncia_sucesso(request):
     return render(request, 'denuncia_sucesso.html')
+
+def listar_denuncias(request):
+    return render(request, 'denuncias.html')
