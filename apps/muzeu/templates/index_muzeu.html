@@ -88,12 +88,12 @@
   </div>
   <ul class="nav d-none d-lg-flex align-items-center gap-3 mb-0">
     <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Patrimônios</a>
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/lista_item/">Patrimônios</a>
     </li>
 
     <span style="color: #ccc;">|</span>
     <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Itens do Acervo</a>
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/item-acervo/">Itens do Acervo</a>
     </li>
 
   </ul>
@@ -138,13 +138,22 @@
 
     <!-- IMAGEM CENTRALIZADA. Altere style="width: ...%;" para mudar seu tamanho se necessário-->
     <div class="text-center my-5">
-      <img src="{% static 'img/img-base.png' %}" class="img-fluid rounded shadow" alt="Imagem grande ilustrativa">
+      {% if imagens_patrimonio %}
+        {% for imagem in imagens_patrimonio %}
+          {% if imagem.patrimonio.nome == "Museu Municipal Francisco Leonardo Cerávolo" %}
+            <img src="{{ imagem.imagem.url }}" class="img-fluid rounded shadow" alt="Imagem de {{ imagem.patrimonio.nome }}">
+            <p class="mt-2">{{ imagem.patrimonio.nome }}</p>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <img src="{% static 'img/img-base.png' %}" class="img-fluid rounded shadow" alt="Imagem grande ilustrativa">
+      {% endif %}
     </div>
   </div>
 
   <footer class="text-dark py-4">
     <div class="container text-center">
-      <p>&copy; 2025 Nome do Projeto. Todos os direitos reservados.</p>
+      <p>&copy; 2025 MuZeu. Todos os direitos reservados.</p>
       <div class="d-flex justify-content-center">
         <a href="#" class="text-dark mx-3">Termos de Uso</a>
         <a href="#" class="text-dark mx-3">Política de Privacidade</a>

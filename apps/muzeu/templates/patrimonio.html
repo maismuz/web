@@ -76,71 +76,95 @@
   </div>
 </nav>
 
-<!-- Navbar 3: Navegação pelo projeto interna (ALTERAR) -->
-<nav class="container mt-3 py-2 px-3 shadow-sm rounded-pill d-flex align-items-center justify-content-between flex-wrap" style="background-color: #ffffff; border: 1px solid #ddd;">
+
+<nav class="container mt-3 py-2 px-3 shadow-sm rounded-pill d-flex align-items-center justify-content-between flex-wrap"
+  style="background-color: #ffffff; border: 1px solid #ddd;">
   <!-- Logo: TROQUE PELA A DO SEU PROJETO. TODAS JÁ FEITAS EM CORE/STATIC/IMG/logo-(...).png -->
   <div class="d-flex align-items-center me-3">
     <img src="{% static 'img/logo-contratamuz.png' %}" alt="Logo" style="height: 40px;">
   </div>
   <ul class="nav d-none d-lg-flex align-items-center gap-3 mb-0">
+      <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/">Home</a>
+    </li>
+ <span style="color: #ccc;">|</span>
     <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 1</a>
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/lista_item/">Patrimônios</a>
     </li>
 
     <span style="color: #ccc;">|</span>
     <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 2</a>
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Itens do Acervo</a>
     </li>
 
-    <span style="color: #ccc;">|</span>
-    <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 3</a>
-    </li>
-      <!-- ADICIONAR MAIS SE NECESSÁRIO --> 
   </ul>
 
-<div class="dropdown d-lg-none">
-  <button class="btn btn-sm btn-menu-sem-borda d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Abrir menu">
-    Menu
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-      <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592c.859 0 1.319 1.013.753 1.658l-4.796 5.482a1 1 0 01-1.506 0z"/>
-    </svg>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-    <li><a class="dropdown-item" href="#">Item 1</a></li>
-    <li><a class="dropdown-item" href="#">Item 2</a></li>
-    <li><a class="dropdown-item" href="#">Item 3</a></li>
-  </ul>
-</div>
+  <div class="dropdown d-lg-none">
+    <button class="btn btn-sm btn-menu-sem-borda d-flex align-items-center gap-1" type="button"
+      data-bs-toggle="dropdown" aria-expanded="false" aria-label="Abrir menu">
+      Menu
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill"
+        viewBox="0 0 16 16">
+        <path
+          d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592c.859 0 1.319 1.013.753 1.658l-4.796 5.482a1 1 0 01-1.506 0z" />
+      </svg>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="#">Item 1</a></li>
+      <li><a class="dropdown-item" href="#">Item 2</a></li>
+      <li><a class="dropdown-item" href="#">Item 3</a></li>
+    </ul>
+  </div>
 </nav>
   
   
 <!-- CONTEÚDOS DA PAGINA -->
 <body class="bg-light">
   <div class="container py-5">
-    <!-- TÍTULO PRINCIPAL -->
-    <h1 class="display-4 text-center mb-4 titulo">Títulos</h1>
+    {% if patrimonio %}
+      <!-- TÍTULO PRINCIPAL -->
+      <h1 class="display-4 text-center mb-4 titulo">{{ patrimonio.nome }}</h1>
 
-    <!-- SUBTÍTULO -->
-    <h2 class="h3 text-center mb-5 subtitulo">Subtítulos</h2>
+      <!-- SUBTÍTULO -->
+      {% if patrimonio.data_origem %}
+        <h2 class="h5 text-center mb-2 subtitulo">Data de Origem: {{ patrimonio.data_origem|date:"d/m/Y" }}</h2>
+      {% endif %}
 
-    <h2 class="h4 text-muted text-left mb-4">Subtítulo 2.0</h2>
+      {% if patrimonio.localizacao %}
+        <h2 class="h6 text-center mb-4 subtitulo2">Localização: {{ patrimonio.localizacao }}</h2>
+      {% endif %}
 
-    <!-- PARÁGRAFO -->
-    <p class="lead text-justify">
-      Paragrafos
-    </p>
+      <!-- PARÁGRAFO -->
+      {% if patrimonio.descricao %}
+        <p class="lead text-justify">
+          {{ patrimonio.descricao }}
+        </p>
+      {% endif %}
 
-     <!-- IMAGEM CENTRALIZADA. Altere style="width: ...%;" para mudar seu tamanho se necessário-->
-    <div class="text-center my-5">
-      <img src="{% static 'img/img-base.png' %}" class="img-fluid rounded shadow" alt="Imagem grande ilustrativa">
-    </div>
+      <!-- IMAGENS DO PATRIMÔNIO -->
+      {% if imagens %}
+        <div class="row justify-content-center my-5">
+          {% for imagem in imagens %}
+            <div class="col-md-4 mb-3">
+              <img src="{{ imagem.imagem.url }}" class="img-fluid rounded shadow" alt="Imagem do patrimônio">
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
 
+      <!-- INFORMAÇÕES ADICIONAIS -->
+      <div class="text-muted small mt-4">
+        <p>Adicionado por: {{ patrimonio.usuario_adicionado.get_full_name|default:patrimonio.usuario_adicionado.username }}</p>
+        <p>Data de adição: {{ patrimonio.data_adicao|date:"d/m/Y H:i" }}</p>
+      </div>
+    {% else %}
+      <h1 class="display-6 text-center my-5">Patrimônio não encontrado.</h1>
+    {% endif %}
   </div>
 
   <footer class="text-dark py-4">
     <div class="container text-center">
-      <p>&copy; 2025 Nome do Projeto. Todos os direitos reservados.</p>
+      <p>&copy; 2025 MuZeu. Todos os direitos reservados.</p>
       <div class="d-flex justify-content-center">
         <a href="#" class="text-dark mx-3">Termos de Uso</a>
         <a href="#" class="text-dark mx-3">Política de Privacidade</a>
