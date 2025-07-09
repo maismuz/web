@@ -18,8 +18,27 @@ class PatrimonioView(View):
     def get(self, request):
         return render(request, 'patrimonio.html')
     
+class ListaItemView(View):
+    def get(self, request):
+        return render(request, 'lista_item.html')
+    
 class DocumentoHistoricoView(View):
     def get(self, request):
         return render(request, 'documento_historico.html')
+    
+class FormItensAcervoView(View):
+    
+    def get(self, request):
+        return render(request, 'formulario_itens.html')
+    
+class FormPatrimonioView(View):
+    
+    def get(self, request):
+        return render(request, 'formulario_patrimonio.html')
+    
+class FormDocumentoHistoricoView(View):
+    
+    def get(self, request):
+        return render(request, 'formulario_docshistorico.html')
 # Create your views here.
 

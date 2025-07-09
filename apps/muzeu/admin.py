@@ -2,6 +2,9 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 from .models import *
+from django.utils.translation import gettext_lazy as _
+from django.utils.html import format_html
+from django.conf import settings
 # Register your models here.
 
 class CategoriaResource(resources.ModelResource):
@@ -67,6 +70,19 @@ class PatrimonioResource(resources.ModelResource):
         fields = ('id', 'nome', 'descricao', 'data_origem', 'localizacao', 'data_adicao', 'usuario_adicionado')
         export_order = ('id', 'nome', 'descricao', 'data_origem', 'localizacao', 'data_adicao', 'usuario_adicionado')
 
+class ImagemPatrimonioInline(admin.TabularInline):
+    model = ImagemPatrimonio
+    extra = 1
+    fields = ('imagem', 'preview')
+    readonly_fields = ('preview',)
+
+    def preview(self, obj):
+        if obj.imagem:
+            return format_html('<img src="{}" style="max-height: 100px;"/>', obj.imagem.url)
+        return ""
+
+    preview.short_description = "Pré-visualização"
+
 class PatrimonioAdmin(ImportExportModelAdmin):
     resource_class = PatrimonioResource
     list_display = ('id', 'nome', 'descricao', 'data_origem', 'localizacao', 'data_adicao', 'usuario_adicionado')
@@ -76,9 +92,9 @@ class PatrimonioAdmin(ImportExportModelAdmin):
     list_per_page = 10
     list_display_links = ('id', 'nome')
     list_editable = ('descricao', 'data_origem')
-    list_select_related = ('localizacao',)
     list_filter = ('localizacao',)
     list_display_links = ('id', 'nome')
+    inlines = [ImagemPatrimonioInline] 
 
 class ImagemPatrimonioResource(resources.ModelResource):
     class Meta:

@@ -185,8 +185,12 @@ requirements.txt
 
 # Arquivos relacionados ao docker
 compose.yaml
+compose.dev.yaml
 Dockerfile
 .dockerignore
 
 # Arquivos relacionados ao github
 .github/*
+
+# Qualquer arquivo de migrations
+*/migrations/*
