@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import modelform_factory
 from .models import (
@@ -29,12 +28,6 @@ def full_forms_view(request):
 def generic_table_view(request, model_name, form_class):
     model = globals()[model_name] # Get the model class from its name
     form_add = form_class()
-=======
-from django.shortcuts import render, redirect
-from .forms import VeiculoForm
-from .models import TipoVeiculo, Combustivel, Veiculo
-from datetime import datetime
->>>>>>> c82908cbfa9471dfd69a3d07cc441a2dfeda63f0
 
     if request.method == 'POST':
         if 'add_record' in request.POST:
@@ -68,7 +61,6 @@ from datetime import datetime
         'fields': [field.name for field in model._meta.fields if field.name not in ['id', 'foto']], # Exclude 'id' and 'foto' for simple display
         'has_foto': 'foto' in [f.name for f in model._meta.fields], # Check if model has a 'foto' field
     }
-<<<<<<< HEAD
     return render(request, 'movemuz_base_tabela.html', context)
 
 
@@ -113,13 +105,3 @@ def ocupacao_veiculos_table_view(request):
 # --- View for base_pagina.html (Base Page Template) ---
 def base_page_view(request):
     return render(request, 'base_pagina.html')
-=======
-    return render(request, 'cadastro_veiculo.html', context)
-
-def lista_veiculos(request):
-    veiculos = Veiculo.objects.all().order_by('modelo') # Recupera todos os veículos do banco de dados, ordenados por modelo
-    context = {
-        'veiculos': veiculos,
-    }
-    return render(request, 'listar_veiculos.html', context)
->>>>>>> c82908cbfa9471dfd69a3d07cc441a2dfeda63f0
