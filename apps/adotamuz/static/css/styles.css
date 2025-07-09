@@ -1,0 +1,14 @@
+#titleAdota, .navbar p{
+    color: orange;
+}
+
+.navbar img{
+    border-radius: 100%;
+    border: 1px solid #0a58ca;
+    height: 50px;
+    width: 50px;
+}
+
+.navbar-custom {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* sombra leve abaixo da nav */
+  }
