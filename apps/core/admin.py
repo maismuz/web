@@ -162,7 +162,7 @@ class CustomUserAdmin(UserAdmin):
         try:
             if hasattr(obj, 'perfil'):
                 return format_html('<a href="{}">{}</a>', 
-                                  f'/admin/core/perfil/{obj.perfil.id}/change/', 
+                                  f'/admin/contratamuz/perfil/{obj.perfil.id}/change/', 
                                   _('Ver perfil'))
             return _('Sem perfil')
         except Perfil.DoesNotExist:

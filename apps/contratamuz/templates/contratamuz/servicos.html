@@ -1,0 +1,339 @@
+{% extends 'contratamuz/base.html' %}
+
+{% block title %}Serviços - ContrataMuz{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="fw-bold mb-3">
+                    <i data-lucide="search" class="me-2"></i>
+                    Encontre o Serviço Ideal
+                </h1>
+                <p class="lead text-muted">
+                    Explore nossa ampla variedade de serviços profissionais. 
+                    Use os filtros para encontrar exatamente o que você precisa.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="stats-card d-inline-block">
+                    <div class="stats-number">{{ total_servicos }}</div>
+                    <h6 class="text-muted">Serviços Encontrados</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search and Filters -->
+<section class="search-section">
+    <div class="container">
+        <form method="GET" class="row g-3 align-items-end">
+            <div class="col-lg-4">
+                <label for="busca" class="form-label fw-bold">
+                    <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+                    Buscar Serviços
+                </label>
+                <input type="text" class="form-control" id="busca" name="busca" 
+                       value="{{ busca|default:'' }}" 
+                       placeholder="Digite palavras-chave...">
+            </div>
+            
+            <div class="col-lg-3">
+                <label for="categoria" class="form-label fw-bold">
+                    <i data-lucide="filter" style="width: 16px; height: 16px;"></i>
+                    Categoria
+                </label>
+                <select class="form-select" id="categoria" name="categoria">
+                    <option value="todos" {% if not categoria_selecionada or categoria_selecionada == 'todos' %}selected{% endif %}>
+                        Todas as Categorias
+                    </option>
+                    {% for valor, nome in categorias %}
+                        <option value="{{ valor }}" {% if categoria_selecionada == valor %}selected{% endif %}>
+                            {{ nome }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="col-lg-3">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i data-lucide="search" class="me-2"></i>
+                    Buscar
+                </button>
+            </div>
+            
+            <div class="col-lg-2">
+                <a href="{% url 'listar_servicos' %}" class="btn btn-outline-secondary w-100">
+                    <i data-lucide="x" class="me-2"></i>
+                    Limpar
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="py-5">
+    <div class="container">
+        {% if page_obj %}
+            <!-- Results Info -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h5 class="mb-0">
+                        {% if busca or categoria_selecionada != 'todos' %}
+                            Resultados da Busca
+                        {% else %}
+                            Todos os Serviços
+                        {% endif %}
+                    </h5>
+                    <small class="text-muted">
+                        Mostrando {{ page_obj.start_index }}-{{ page_obj.end_index }} 
+                        de {{ page_obj.paginator.count }} serviços
+                    </small>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <a href="{% url 'publicar_servico' %}" class="btn btn-outline-primary">
+                        <i data-lucide="plus" class="me-2"></i>
+                        Publicar Serviço
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Services Cards -->
+            <div class="row g-4">
+                {% for servico in page_obj %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <img src="{{ servico.imagem_url }}" class="card-img-top" alt="{{ servico.titulo }}">
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <span class="category-badge">
+                                        <i data-lucide="{{ servico.get_categoria_display_icon }}" style="width: 14px; height: 14px;"></i>
+                                        {{ servico.get_categoria_display }}
+                                    </span>
+                                </div>
+                                <h5 class="card-title">{{ servico.titulo }}</h5>
+                                <p class="card-text text-muted flex-grow-1">{{ servico.descricao_curta }}</p>
+                                
+                                <div class="mt-auto">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="{{ servico.usuario.imagem_url }}" class="rounded-circle me-2" 
+                                             style="width: 32px; height: 32px; object-fit: cover;" alt="{{ servico.usuario.nome }}">
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold small">{{ servico.usuario.nome }}</div>
+                                            <small class="text-muted">
+                                                <i data-lucide="map-pin" style="width: 12px; height: 12px;"></i>
+                                                {{ servico.usuario.cidade }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary" 
+                                                onclick="carregarDetalhesServico({{ servico.id }})"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#modalDetalhes">
+                                            <i data-lucide="eye" class="me-2"></i>
+                                            Ver Detalhes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+                <nav aria-label="Navegação de páginas" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1{% if busca %}&busca={{ busca }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">
+                                    <i data-lucide="chevrons-left" style="width: 16px; height: 16px;"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if busca %}&busca={{ busca }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">
+                                    <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}{% if busca %}&busca={{ busca }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if busca %}&busca={{ busca }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">
+                                    <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if busca %}&busca={{ busca }}{% endif %}{% if categoria_selecionada %}&categoria={{ categoria_selecionada }}{% endif %}">
+                                    <i data-lucide="chevrons-right" style="width: 16px; height: 16px;"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+            
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-5">
+                <i data-lucide="search-x" style="width: 80px; height: 80px; color: var(--primary-color); opacity: 0.5;"></i>
+                <h4 class="mt-3 text-muted">Nenhum serviço encontrado</h4>
+                {% if busca or categoria_selecionada != 'todos' %}
+                    <p class="text-muted">Tente ajustar os filtros de busca ou explore outras categorias.</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'listar_servicos' %}" class="btn btn-outline-primary">
+                            <i data-lucide="refresh-cw" class="me-2"></i>
+                            Ver Todos os Serviços
+                        </a>
+                        <a href="{% url 'publicar_servico' %}" class="btn btn-primary">
+                            <i data-lucide="plus" class="me-2"></i>
+                            Publicar Serviço
+                        </a>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Seja o primeiro a publicar um serviço!</p>
+                    <a href="{% url 'publicar_servico' %}" class="btn btn-primary">
+                        <i data-lucide="plus" class="me-2"></i>
+                        Publicar Primeiro Serviço
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Modal de Detalhes do Serviço -->
+<div class="modal fade" id="modalDetalhes" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i data-lucide="info" class="me-2"></i>
+                    Detalhes do Serviço
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="conteudoModal">
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function carregarDetalhesServico(servicoId) {
+    const conteudoModal = document.getElementById('conteudoModal');
+    
+    // Mostrar loading
+    conteudoModal.innerHTML = `
+        <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+        </div>
+    `;
+    
+    // Fazer requisição AJAX
+    fetch(`/servicos/${servicoId}/`)
+        .then(response => response.json())
+        .then(data => {
+            conteudoModal.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="${data.imagem_url}" class="img-fluid rounded" alt="${data.titulo}">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <span class="category-badge">
+                                <i data-lucide="${data.categoria_icon}"></i>
+                                ${data.categoria}
+                            </span>
+                        </div>
+                        <h4 class="fw-bold">${data.titulo}</h4>
+                        <p class="text-muted">${data.descricao}</p>
+                        
+                        <hr>
+                        
+                        <h6 class="fw-bold">Prestador</h6>
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="${data.prestador.imagem_url}" class="rounded-circle me-3" 
+                                 style="width: 50px; height: 50px; object-fit: cover;" alt="${data.prestador.nome}">
+                            <div>
+                                <div class="fw-bold">${data.prestador.nome}</div>
+                                <small class="text-muted">
+                                    <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
+                                    ${data.prestador.cidade}
+                                </small>
+                            </div>
+                        </div>
+                        
+                        ${data.prestador.biografia ? `<p class="text-muted small">${data.prestador.biografia}</p>` : ''}
+                        
+                        <div class="d-grid gap-2">
+                            <a href="tel:${data.telefone_contato}" class="btn btn-primary">
+                                <i data-lucide="phone" class="me-2"></i>
+                                ${data.telefone_contato}
+                            </a>
+                            <a href="https://wa.me/55${data.telefone_contato.replace(/\D/g, '')}" 
+                               target="_blank" class="btn btn-success">
+                                <i data-lucide="message-circle" class="me-2"></i>
+                                WhatsApp
+                            </a>
+                        </div>
+                        
+                        <small class="text-muted d-block mt-3">
+                            <i data-lucide="calendar" style="width: 14px; height: 14px;"></i>
+                            Publicado em ${data.created_at}
+                        </small>
+                    </div>
+                </div>
+            `;
+            
+            // Reinicializar ícones Lucide
+            lucide.createIcons();
+        })
+        .catch(error => {
+            conteudoModal.innerHTML = `
+                <div class="text-center py-4">
+                    <i data-lucide="alert-circle" style="width: 48px; height: 48px; color: #dc3545;"></i>
+                    <h6 class="mt-3">Erro ao carregar detalhes</h6>
+                    <p class="text-muted">Tente novamente em alguns instantes.</p>
+                </div>
+            `;
+            lucide.createIcons();
+        });
+}
+
+// Auto-submit form on category change
+document.getElementById('categoria').addEventListener('change', function() {
+    this.form.submit();
+});
+</script>
+{% endblock %}
+

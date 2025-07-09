@@ -1,0 +1,219 @@
+{% extends 'contratamuz/base.html' %}
+
+{% block title %}Login - ContrataMuz{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        min-height: calc(100vh - 76px);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 0;
+    }
+    
+    .auth-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        max-width: 400px;
+        width: 100%;
+        margin: 0 1rem;
+    }
+    
+    .auth-header {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .auth-header h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+    
+    .auth-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }
+    
+    .auth-body {
+        padding: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .form-control {
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    .form-control:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        outline: none;
+    }
+    
+    .btn-login {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        width: 100%;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+    
+    .auth-links {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e5e7eb;
+    }
+    
+    .auth-links a {
+        color: #6366f1;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    
+    .auth-links a:hover {
+        color: #4f46e5;
+    }
+    
+    .alert {
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .icon-wrapper {
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="icon-wrapper">
+                <i data-lucide="log-in" size="24"></i>
+            </div>
+            <h1>Bem-vindo de volta!</h1>
+            <p>Faça login para acessar sua conta</p>
+        </div>
+        
+        <div class="auth-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username" class="form-label">
+                        <i data-lucide="user" size="16"></i>
+                        Usuário
+                    </label>
+                    <input type="text" 
+                           class="form-control" 
+                           id="username" 
+                           name="username" 
+                           placeholder="Digite seu nome de usuário"
+                           required
+                           autofocus>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i data-lucide="lock" size="16"></i>
+                        Senha
+                    </label>
+                    <input type="password" 
+                           class="form-control" 
+                           id="password" 
+                           name="password" 
+                           placeholder="Digite sua senha"
+                           required>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i data-lucide="log-in" size="16"></i>
+                    Entrar
+                </button>
+            </form>
+            
+            <div class="auth-links">
+                <p>Ainda não tem uma conta?</p>
+                <a href="{% url 'register' %}">
+                    <i data-lucide="user-plus" size="16"></i>
+                    Criar conta gratuita
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Adicionar animações aos campos de input
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Animação do botão de login
+    document.querySelector('.btn-login').addEventListener('click', function(e) {
+        if (this.form.checkValidity()) {
+            this.innerHTML = '<i data-lucide="loader-2" size="16" class="animate-spin"></i> Entrando...';
+            this.disabled = true;
+        }
+    });
+</script>
+{% endblock %}
+
