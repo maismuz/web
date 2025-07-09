@@ -1,0 +1,198 @@
+{% extends "esportemuz/base.html" %}
+
+{% block title %}Início - EsporteMUZ{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    <i class="fas fa-futbol me-3"></i>
+                    EsporteMUZ
+                </h1>
+                <p class="lead mb-4">
+                    Gerencie seus campeonatos de futsal e futebol de forma profissional. 
+                    Organize equipes, agende partidas e acompanhe classificações em tempo real.
+                </p>
+                <div class="d-flex gap-3 flex-column flex-md-row">
+                    <a href="#" class="btn btn-light btn-lg">
+                        <i class="fas fa-plus me-2"></i>Criar Campeonato
+                    </a>
+                    <a href="#" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-list me-2"></i>Ver Campeonatos
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <i class="fas fa-trophy" style="font-size: 12rem; opacity: 0.3;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Stats Cards -->
+    <div class="row mb-5 d-flex justify-content-center">
+        <div class="col-md-3 mb-4">
+            <div class="stats-card">
+                <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
+                <div class="stats-number">10</div>
+                <h6 class="text-muted">Campeonatos Ativos</h6>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="stats-card">
+                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                <div class="stats-number">10</div>
+                <h6 class="text-muted">Equipes Cadastradas</h6>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="stats-card">
+                <i class="fas fa-calendar fa-3x text-success mb-3"></i>
+                <div class="stats-number">10</div>
+                <h6 class="text-muted">Próximas Partidas</h6>
+            </div>
+        </div>
+        <!-- <div class="col-md-3 mb-4">
+            <div class="stats-card">
+                <i class="fas fa-futbol fa-3x text-info mb-3"></i>
+                <div class="stats-number">10</div>
+                <h6 class="text-muted">Jogadores</h6>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="row">
+        <!-- Campeonatos Recentes -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-trophy me-2"></i>Campeonatos Recentes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded">
+                        <div>
+                            <h6 class="mb-1">
+                                <a href="#" class="text-decoration-none">
+                                    Campeonato de Futsal 2024
+                                </a>
+                            </h6>
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>
+                                01/01/2024 - 31/12/2024
+                            </small>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge badge-status-agendado">
+                                Agendado
+                            </span>
+                            <br>
+                            <small class="text-muted">
+                                <i class="fas fa-users me-1"></i>10 equipes
+                            </small>
+                        </div>
+                    </div>
+                    <!-- <div class="text-center py-4">
+                        <i class="fas fa-trophy fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Nenhum campeonato encontrado.</p>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Criar Primeiro Campeonato
+                        </a>
+                    </div> -->
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-list me-1"></i>Ver Todos
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Partidas Próximas -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-calendar me-2"></i>Partidas Próximas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded">
+                        <div>
+                            <h6 class="mb-1">
+                                <a href="#" class="text-decoration-none">
+                                    Santos vs Palmeiras
+                                </a>
+                            </h6>
+                            <small class="text-muted">
+                                <i class="fas fa-map-marker-alt me-1"></i>Poliesportivo
+                            </small>
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>
+                                01/01/2001 às 15:00
+                            </small>
+                            <br>
+                            <span class="badge bg-info">Agendada</span>
+                        </div>
+                    </div>
+                    <!-- <div class="text-center py-4">
+                        <i class="fas fa-calendar fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Nenhuma partida agendada.</p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-5">Funcionalidades do Sistema</h2>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
+                    <h5 class="card-title">Gestão de Campeonatos</h5>
+                    <p class="card-text">
+                        Crie e gerencie campeonatos de futsal e futebol com diferentes formatos: 
+                        pontos corridos ou grupos + mata-mata.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Controle de Equipes</h5>
+                    <p class="card-text">
+                        Cadastre equipes, jogadores e organize grupos. 
+                        Mantenha todas as informações organizadas em um só lugar.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Classificações</h5>
+                    <p class="card-text">
+                        Acompanhe classificações em tempo real, estatísticas detalhadas 
+                        e histórico completo de partidas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

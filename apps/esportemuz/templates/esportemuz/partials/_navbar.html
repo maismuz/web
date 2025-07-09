@@ -1,0 +1,52 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'esportemuz:home' %}">
+            <i class="fas fa-futbol me-2"></i>
+            EsporteMUZ
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'esportemuz:home' %}active{% endif %}" aria-current="page" href="{% url 'esportemuz:home' %}">
+                        <i class="fas fa-home me-1"></i>Início
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'esportemuz:campeonato_list' %}active{% endif %}" href="{% url 'esportemuz:campeonato_list' %}">
+                        <i class="fas fa-trophy me-1"></i>Campeonatos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'esportemuz:equipe_list' %}active{% endif %}" href="{% url 'esportemuz:equipe_list' %}">
+                        <i class="fas fa-users me-1"></i>Equipes
+                    </a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">
+                        <i class="fas fa-cog me-1"></i>Admin
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% if request.user.is_authenticated %}#{% else %}#{% endif %}">
+                        {% if request.user.is_authenticated %}
+                            <i class="fas fa-sign-out-alt me-1"></i>
+                            Sair
+                        {% else %}
+                            <i class="fas fa-sign-in-alt me-1"></i>
+                            Entrar
+                        {% endif %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
