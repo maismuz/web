@@ -15,6 +15,7 @@ class Objeto(models.Model):
     TIPO_CHOICES = (('venda', 'Venda'), ('troca', 'Troca'), ('doacao', 'Doação'), )
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
+    imagem = models.ImageField(upload_to='objetos_imgs/', blank=True, null=True) 
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
@@ -26,8 +27,8 @@ class Objeto(models.Model):
         return self.nome
 
     class Meta:
-        verbose_name = "Categoria"
-        verbose_name_plural = "Categorias"
+        verbose_name = "Objeto"
+        verbose_name_plural = "Objetos"
 
 
 class Transacao(models.Model):
