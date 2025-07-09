@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import VeiculoForm
-from .models import TipoVeiculo, Combustivel
+from .models import TipoVeiculo, Combustivel, Veiculo
 from datetime import datetime
 
 def cadastrar_veiculo(request):
@@ -23,3 +23,10 @@ def cadastrar_veiculo(request):
         'current_year': current_year,
     }
     return render(request, 'cadastro_veiculo.html', context)
+
+def lista_veiculos(request):
+    veiculos = Veiculo.objects.all().order_by('modelo') # Recupera todos os veículos do banco de dados, ordenados por modelo
+    context = {
+        'veiculos': veiculos,
+    }
+    return render(request, 'listar_veiculos.html', context)
