@@ -8,17 +8,35 @@ class DenunciaResource(resources.ModelResource):
     class Meta:
         model = Denuncia
         fields = (
-            'id_denuncia', 'titulo', 'descricao', 'categoria',
-            'endereco', 'latitude', 'longitude', 'data_ocorrencia',
-            'status', 'id_usuario__username'
+            'id', 
+            'titulo', 
+            'tipo', 
+            'descricao', 
+            'data_ocorrencia', 
+            'logradouro_ocorrencia', 
+            'bairro_ocorrencia',
+            'status',
+            'data_criacao',
         )
+        export_order = fields
 
 @admin.register(Denuncia)
 class DenunciaAdmin(ImportExportModelAdmin):
     resource_class = DenunciaResource
-    list_display = ('id_denuncia', 'titulo', 'categoria', 'status', 'data_ocorrencia', 'id_usuario')
-    list_filter = ('categoria', 'status', 'data_ocorrencia')
-    search_fields = ('titulo', 'descricao', 'endereco', 'id_usuario__username')
+    list_display = (
+        'titulo',
+        'tipo',
+        'status',
+        'bairro_ocorrencia',
+        'data_ocorrencia',
+        'data_criacao',
+    )
+    
+    # Filtros que aparecerão na barra lateral direita
+    list_filter = ('status', 'tipo', 'data_criacao')
+    
+    # Campo de busca
+    search_fields = ('titulo', 'descricao', 'bairro_ocorrencia')
 
 #Gerenciar comentários nas denúncias
 @admin.register(Comentario)
