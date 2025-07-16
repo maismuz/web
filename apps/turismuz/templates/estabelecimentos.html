@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estabelecimentos</title>
-    <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       body {
@@ -26,41 +25,127 @@
       }
       .main-content h1 {
         font-size: 2.5rem;
-        color: #0d6efd;
-        margin-bottom: 20px;
+        color: #28a745;
+        margin-bottom: 30px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-align: center;
+      }
+      .estab-card {
+        display: flex;
+        flex-direction: row;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(13,110,253,0.08);
+        margin-bottom: 32px;
+        overflow: hidden;
+        transition: box-shadow 0.15s;
+        border: none;
+        min-height: 170px;
+      }
+      .estab-card:hover {
+        box-shadow: 0 8px 32px rgba(13,110,253,0.15);
+      }
+      .estab-img {
+        width: 260px;
+        height: 170px;
+        object-fit: cover;
+        background: #e9ecef;
+        flex-shrink: 0;
+      }
+      .estab-info {
+        padding: 1.5rem 2rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+        text-align: left;
+      }
+      .estab-categoria {
+        font-size: 1rem;
+        color: #6c757d;
+        margin-bottom: 0.2rem;
+        font-weight: 500;
+      }
+      .estab-titulo {
+        font-size: 1.35rem;
+        font-weight: bold;
+        color: #28a745;
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+      }
+      .estab-desc {
+        color: #28a745;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .estab-meta {
+        font-size: 0.98rem;
+        color: #6c757d;
+        margin-top: auto;
+      }
+      .estab-divider {
+        border: none;
+        border-top: 1px solid #e0e0e0;
+        margin: 32px 0;
+      }
+      @media (max-width: 900px) {
+        .estab-card, .estab-img {
+          flex-direction: column;
+          width: 100%;
+          height: auto;
+        }
+        .estab-img {
+          width: 100%;
+          height: 200px;
+          border-radius: 16px 16px 0 0;
+        }
+        .estab-info {
+          padding: 1rem 1rem 1.5rem 1rem;
+        }
       }
     </style>
 </head>
 <body>
   {% include 'components/navbar_turismuz.html' %}
-
   <div class="main-content">
     <div class="container mt-5">
       <h1>Estabelecimentos</h1>
-      <div class="row justify-content-center">
-        {% for estabelecimento in estabelecimentos %}
-          <div class="col-md-8 mb-3">
-            <a href="{% url 'estabelecimento_detail' estabelecimento.pk %}" style="text-decoration: none; color: inherit;">
-              <div class="card shadow-sm flex-row align-items-center" style="min-height:120px;">
-                {% if estabelecimento.imagem %}
-                  <img src="{{ estabelecimento.imagem.url }}" alt="{{ estabelecimento.nome }}" class="img-fluid rounded-start" style="width: 120px; height: 90px; object-fit: cover;">
+      {% for estabelecimento in estabelecimentos %}
+        <a href="{% url 'estabelecimento_detail' estabelecimento.pk %}" style="text-decoration: none;">
+          <div class="estab-card">
+            {% if estabelecimento.imagem %}
+              <img src="{{ estabelecimento.imagem.url }}" alt="{{ estabelecimento.nome }}" class="estab-img">
+            {% else %}
+              <img src="{% static 'img/user-default.png' %}" alt="Sem imagem" class="estab-img">
+            {% endif %}
+            <div class="estab-info">
+              <div class="estab-categoria">
+                {% if estabelecimento.categoria %}
+                  {{ estabelecimento.categoria.nome }}
                 {% endif %}
-                <div class="card-body py-2 px-3">
-                  <h6 class="card-title mb-0">{{ estabelecimento.nome }}</h6>
-                  <p class="mb-0">{{ estabelecimento.descricao|truncatewords:15 }}</p>
-                </div>
               </div>
-            </a>
+              <div class="estab-titulo">{{ estabelecimento.nome }}</div>
+              <div class="estab-desc">{{ estabelecimento.descricao|truncatewords:18 }}</div>
+              <div class="estab-meta">
+                {% if estabelecimento.endereco %}
+                  {{ estabelecimento.endereco }}
+                {% endif %}
+              </div>
+            </div>
           </div>
-        {% empty %}
-          <p>Nenhum estabelecimento encontrado.</p>
-        {% endfor %}
-      </div>
+        </a>
+        {% if not forloop.last %}
+          <hr class="estab-divider">
+        {% endif %}
+      {% empty %}
+        <p>Nenhum estabelecimento encontrado.</p>
+      {% endfor %}
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
-
-    <!-- Bootstrap JS Bundle CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Botão flutuante para adicionar posts -->
+  {% include 'components/floating_add_button.html' %}
 </body>
 </html>

@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Bootstrap CSS CDN -->
+    <title>Guias</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       body {
@@ -26,40 +25,116 @@
       }
       .main-content h1 {
         font-size: 2.5rem;
-        color: #0d6efd;
-        margin-bottom: 20px;
+        color: #28a745;
+        margin-bottom: 30px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-align: center;
+      }
+      .guia-card {
+        display: flex;
+        flex-direction: row;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(13,110,253,0.08);
+        margin-bottom: 32px;
+        overflow: hidden;
+        transition: box-shadow 0.15s;
+        border: none;
+        min-height: 170px;
+      }
+      .guia-card:hover {
+        box-shadow: 0 8px 32px rgba(13,110,253,0.15);
+      }
+      .guia-img {
+        width: 260px;
+        height: 170px;
+        object-fit: cover;
+        background: #e9ecef;
+        flex-shrink: 0;
+      }
+      .guia-info {
+        padding: 1.5rem 2rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+        text-align: left;
+      }
+      .guia-titulo {
+        font-size: 1.35rem;
+        font-weight: bold;
+        color: #28a745;
+        margin-bottom: 0.5rem;
+        line-height: 1.2;
+      }
+      .guia-desc {
+        color: #28a745;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .guia-meta {
+        font-size: 0.98rem;
+        color: #6c757d;
+        margin-top: auto;
+      }
+      .guia-divider {
+        border: none;
+        border-top: 1px solid #e0e0e0;
+        margin: 32px 0;
+      }
+      @media (max-width: 900px) {
+        .guia-card, .guia-img {
+          flex-direction: column;
+          width: 100%;
+          height: auto;
+        }
+        .guia-img {
+          width: 100%;
+          height: 200px;
+          border-radius: 16px 16px 0 0;
+        }
+        .guia-info {
+          padding: 1rem 1rem 1.5rem 1rem;
+        }
       }
     </style>
 </head>
 <body>
-    {% include 'components/navbar_turismuz.html' %}
-
-    <div class="main-content">
-      <div class="container mt-5">
-        <h1>Guias</h1>
-        <div class="row justify-content-center">
-          {% for guia in guias %}
-            <div class="col-md-8 mb-3">
-              <a href="{% url 'guia_detail' guia.pk %}" style="text-decoration: none; color: inherit;">
-                <div class="card shadow-sm flex-row align-items-center" style="min-height:120px;">
-                  {% if guia.imagem %}
-                    <img src="{{ guia.imagem.url }}" alt="{{ guia.nome }}" class="img-fluid rounded-start" style="width: 120px; height: 90px; object-fit: cover;">
-                  {% endif %}
-                  <div class="card-body py-2 px-3">
-                    <h6 class="card-title mb-0">{{ guia.nome }}</h6>
-                    <p class="mb-0">{{ guia.descricao|truncatewords:15 }}</p>
-                  </div>
-                </div>
-              </a>
+  {% include 'components/navbar_turismuz.html' %}
+  <div class="main-content">
+    <div class="container mt-5">
+      <h1>Guias</h1>
+      {% for guia in guias %}
+        <a href="{% url 'guia_detail' guia.pk %}" style="text-decoration: none;">
+          <div class="guia-card">
+            {% if guia.imagem %}
+              <img src="{{ guia.imagem.url }}" alt="{{ guia.nome }}" class="guia-img">
+            {% else %}
+              <img src="{% static 'img/user-default.png' %}" alt="Sem imagem" class="guia-img">
+            {% endif %}
+            <div class="guia-info">
+              <div class="guia-titulo">{{ guia.nome }}</div>
+              <div class="guia-desc">{{ guia.descricao|truncatewords:18 }}</div>
+              <div class="guia-meta">
+                {% if guia.contato %}
+                  Contato: {{ guia.contato }}
+                {% endif %}
+              </div>
             </div>
-          {% empty %}
-            <p>Nenhum guia encontrado.</p>
-          {% endfor %}
-        </div>
-      </div>
+          </div>
+        </a>
+        {% if not forloop.last %}
+          <hr class="guia-divider">
+        {% endif %}
+      {% empty %}
+        <p>Nenhum guia encontrado.</p>
+      {% endfor %}
     </div>
-
-    <!-- Bootstrap JS Bundle CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Botão flutuante para adicionar posts -->
+  {% include 'components/floating_add_button.html' %}
 </body>
 </html>

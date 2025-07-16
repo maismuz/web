@@ -1,10 +1,10 @@
 from django.shortcuts import render
+from .models import Solicitacao, Categoria
 
 def homedoa(request):
-    return render(request, 'homedoa.html')  # Certifique-se de que o nome do template está correto
-
+    return render(request, 'homedoa.html') 
 def instrucoes(request):
-    return render(request, 'instrucoes.html')  # Certifique-se de que o template existe
+    return render(request, 'instrucoes.html')  
 def doacao(request):
     return render(request, 'doacao.html') 
 def login(request):
@@ -12,4 +12,14 @@ def login(request):
 def ongs(request):
     return render(request, 'ongs.html') 
 def doador(request):
-    return render(request, 'doador.html') 
+    categoria_id = request.GET.get('categoria')
+    categorias = Categoria.objects.all()
+    if categoria_id:
+        solicitacoes = Solicitacao.objects.filter(categoria_id=categoria_id)
+    else:
+        solicitacoes = Solicitacao.objects.all()
+    return render(request, 'doador.html', {
+        'solicitacoes': solicitacoes,
+        'categorias': categorias,
+        'categoria_selecionada': categoria_id
+    })
