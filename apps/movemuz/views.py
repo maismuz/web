@@ -12,13 +12,13 @@ from .forms import (
 )
 
 def homepage_view(request):
-    return render(request, 'homepage.html')
+    return render(request, 'homepage_movemuz.html')
 
 # --- Views for base_forms.html (Full Forms Page) ---
 def full_forms_view(request):
     """
     Renders a page with all types of form fields.
-    This uses a placeholder form, not directly linked to models.
+    This uses a placeholder form, not directly linked to modelss.
     """
     return render(request, 'base_forms.html')
 
