@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <title>Modelo Base</title>
@@ -22,13 +21,11 @@
 </nav>
 
 <!-- Navbar 2: Grupos Temáticos (NÃO ALTERAR)-->
-<nav class="navbar navbar-expand-lg px-3 py-2"
-  style="background-color: #0000001c; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+<nav class="navbar navbar-expand-lg px-3 py-2" style="background-color: #0000001c; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
   <div class="container">
     <div class="d-flex d-lg-none w-100 justify-content-end align-items-center gap-2">
       <span class="fw-light">Explorar Seções</span>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGrupos"
-        aria-controls="navbarGrupos" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGrupos" aria-controls="navbarGrupos" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
@@ -79,7 +76,7 @@
   </div>
 </nav>
 
-<!-- Navbar 3: Navegação pelo projeto interna (ALTERAR) -->
+
 <nav class="container mt-3 py-2 px-3 shadow-sm rounded-pill d-flex align-items-center justify-content-between flex-wrap"
   style="background-color: #ffffff; border: 1px solid #ddd;">
   <!-- Logo: TROQUE PELA A DO SEU PROJETO. TODAS JÁ FEITAS EM CORE/STATIC/IMG/logo-(...).png -->
@@ -87,20 +84,19 @@
     <img src="{% static 'img/logo-contratamuz.png' %}" alt="Logo" style="height: 40px;">
   </div>
   <ul class="nav d-none d-lg-flex align-items-center gap-3 mb-0">
+      <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/">Home</a>
+    </li>
+ <span style="color: #ccc;">|</span>
     <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 1</a>
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/lista_item/">Patrimônios</a>
     </li>
 
     <span style="color: #ccc;">|</span>
     <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 2</a>
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Itens do Acervo</a>
     </li>
 
-    <span style="color: #ccc;">|</span>
-    <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 3</a>
-    </li>
-    <!-- ADICIONAR MAIS SE NECESSÁRIO -->
   </ul>
 
   <div class="dropdown d-lg-none">
@@ -119,40 +115,52 @@
       <li><a class="dropdown-item" href="#">Item 3</a></li>
     </ul>
   </div>
-</nav>
-
-
-<!-- CONTEÚDOS DA PAGINA -->
-
-<body class="bg-light">
+  
+  <!-- CONTEÚDOS DA PAGINA -->
+  <body class="bg-light">
   <div class="container py-5">
-    <!-- TÍTULO PRINCIPAL -->
-    <h1 class="display-4 text-center mb-4 titulo">Títulos</h1>
-
-    <!-- SUBTÍTULO -->
-    <h2 class="h3 text-center mb-5 subtitulo">Subtítulos</h2>
-
-    <h2 class="h4 text-muted text-left mb-4">Subtítulo 2.0</h2>
-
-
-    <!-- PARÁGRAFO -->
-    <p class="lead text-justify">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-
-    <!-- IMAGEM CENTRALIZADA. Altere style="width: ...%;" para mudar seu tamanho se necessário-->
-    <div class="text-center my-5">
-      <img src="{% static 'img/img-base.png' %}" class="img-fluid rounded shadow" alt="Imagem grande ilustrativa">
+    <h1 class="display-4 text-center mb-4 titulo">Itens do Acervo</h1>
+    {% if itens_acervo %}
+    <div class="row">
+      {% for item in itens_acervo %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+        {% for imagem in imagens_itens_acervo %}
+          {% if imagem.item_acervo.id == item.id %}
+          <img src="{{ imagem.imagem.url }}" class="card-img-top" alt="Imagem do item">
+          {% endif %}
+        {% empty %}
+          <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="Sem imagem">
+        {% endfor %}
+        <div class="card-body">
+          <h5 class="card-title">{{ item.nome }}</h5>
+          {% if item.descricao %}
+          <p class="card-text">{{ item.descricao|truncatewords:25 }}</p>
+          {% endif %}
+          {% if item.data_origem %}
+          <p class="mb-1"><strong>Data de Origem:</strong> {{ item.data_origem|date:"d/m/Y" }}</p>
+          {% endif %}
+          {% if item.localizacao %}
+          <p class="mb-1"><strong>Localização:</strong> {{ item.localizacao }}</p>
+          {% endif %}
+          <a href="{% url 'detalhe_item_acervo' item.id %}" class="btn btn-primary mt-2">Saiba mais</a>
+        </div>
+        <div class="card-footer text-muted small">
+          <span>Adicionado por: {{ item.usuario_adicionado.get_full_name|default:item.usuario_adicionado.username }}</span><br>
+          <span>Data de adição: {{ item.data_adicao|date:"d/m/Y H:i" }}</span>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-
+    {% else %}
+    <h2 class="display-6 text-center my-5">Nenhum item no acervo encontrado.</h2>
+    {% endif %}
   </div>
 
   <footer class="text-dark py-4">
     <div class="container text-center">
-      <p>&copy; 2025 Nome do Projeto. Todos os direitos reservados.</p>
+      <p>&copy; 2025 MuZeu. Todos os direitos reservados.</p>
       <div class="d-flex justify-content-center">
         <a href="#" class="text-dark mx-3">Termos de Uso</a>
         <a href="#" class="text-dark mx-3">Política de Privacidade</a>
@@ -160,11 +168,10 @@
       </div>
     </div>
   </footer>
-
-
+  
+  
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
