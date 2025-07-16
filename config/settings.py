@@ -35,7 +35,7 @@ DB_CREDENTIALS = {
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Hosts permitidos e origens CSRF confiáveis
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost').split(',')
 
@@ -228,4 +228,5 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+    
 }

@@ -16,10 +16,20 @@ class Evento(models.Model):
     cnpj = models.CharField(max_length=14, blank=True, null=True)
     contato = models.CharField(max_length=100)
     categoria = models.ForeignKey('Categoria', on_delete=models.PROTECT, related_name='eventos')
-    aprovado = models.BooleanField(default=False)  # <-- novo campo
+    aprovado = models.BooleanField(default=False)
+    rede_social = models.CharField(max_length=100, blank=True, null=True)  # novo campo
 
     def __str__(self):
         return self.nome
+
+    def link_rede_social(self):
+        if self.rede_social:
+            if self.rede_social.startswith("http"):
+                return self.rede_social
+            else:
+                # Gera link do Instagram por padrão (você pode mudar isso para Facebook, etc.)
+                return f"https://instagram.com/{self.rede_social.lstrip('@')}"
+        return None
 
 class Midia(models.Model):
     TIPOS_MIDIA = (
