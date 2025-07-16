@@ -1,0 +1,84 @@
+{% extends 'base_movemuz.html' %}
+{% load static %}
+
+{% block title %}MoveMuz - Transporte Inteligente{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 titulo">Recursos do MoveMuz</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill display-4 text-success mb-3"></i>
+                        <h5 class="card-title">Motoristas</h5>
+                        <p class="card-text">Gerencie o cadastro completo de seus motoristas, CNHs e status.</p>
+                        <a href="{% url 'motoristas_table' %}" class="btn btn-sm btn-outline-success">Acessar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-car-front-fill display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Veículos</h5>
+                        <p class="card-text">Controle sua frota, modelos, placas, condição de manutenção e capacidade.</p>
+                        <a href="{% url 'veiculos_table' %}" class="btn btn-sm btn-outline-primary">Acessar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-geo-alt-fill display-4 text-info mb-3"></i>
+                        <h5 class="card-title">Locais e Rotas</h5>
+                        <p class="card-text">Cadastre origens, destinos e pontos de parada para suas viagens.</p>
+                        <a href="{% url 'locais_table' %}" class="btn btn-sm btn-outline-info">Acessar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-journal-check display-4 text-warning mb-3"></i>
+                        <h5 class="card-title">Viagens e Passageiros</h5>
+                        <p class="card-text">Planeje viagens, registre finalidades e associe passageiros.</p>
+                        <a href="{% url 'viagens_table' %}" class="btn btn-sm btn-outline-warning">Acessar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-clock-fill display-4 text-danger mb-3"></i>
+                        <h5 class="card-title">Horários e Escalas</h5>
+                        <p class="card-text">Gerencie horários de transporte e escalas de veículos para otimização.</p>
+                        <a href="{% url 'horario_transportes_table' %}" class="btn btn-sm btn-outline-danger">Acessar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-bar-chart-fill display-4 text-secondary mb-3"></i>
+                        <h5 class="card-title">Ocupação e Paradas</h5>
+                        <p class="card-text">Monitore a ocupação de veículos e detalhes das paradas.</p>
+                        <a href="{% url 'ocupacao_veiculos_table' %}" class="btn btn-sm btn-outline-secondary">Acessar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 text-center">
+    <div class="container">
+        <h2 class="mb-4 subtitulo">Pronto para começar?</h2>
+        <p class="lead mb-4">Explore todas as funcionalidades ou adicione seu primeiro registro agora!</p>
+        <a href="{% url 'motoristas_table' %}" class="btn btn-verde-principal btn-lg me-2">Começar Agora</a>
+        <a href="{% url 'base_page' %}" class="btn btn-outline-dark btn-lg">Saiba Mais</a>
+    </div>
+</section>
+
+{% endblock %}
