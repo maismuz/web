@@ -1,0 +1,61 @@
+{% extends 'escambuz/base.html' %}
+{% load static %}
+
+{% block title %}Página Inicial - Escambuz{% endblock %}
+
+{% block content %}
+<h1 class="display-4 text-center mb-4">Bem-vindo ao Escambuz!</h1>
+<h2 class="h5 text-center text-muted mb-5">Troque, venda e doe em Muzambinho e região.</h2>
+
+{% if categorias %}
+<div id="carrosselCategorias" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner rounded shadow-sm">
+        {% for categoria in categorias %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <a href="#">
+                <div class="d-flex justify-content-center align-items-center bg-success" style="height: 300px;">
+                    <h5 class="text-white display-3">{{ categoria.nome }}</h5>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carrosselCategorias" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carrosselCategorias" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{% endif %}
+
+<h3 class="mb-4">Adicionados Recentemente</h3>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for obj in objetos %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            {% if obj.imagem %}
+                <img src="{{ obj.imagem.url }}" class="card-img-top" alt="{{ obj.nome }}" style="height: 220px; object-fit: cover;">
+            {% else %}
+                <img src="{% static 'escambuz/img/sem-imagem.png' %}" class="card-img-top" alt="Sem imagem" style="height: 220px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ obj.nome }}</h5>
+                <p class="card-text text-muted">{{ obj.descricao|truncatechars:80 }}</p>
+                <span class="badge bg-primary mb-2">{{ obj.get_tipo_display }}</span>
+                <p class="fs-5 fw-bold">R$ {{ obj.preco }}</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+                <small class="text-muted">Usuário: {{ obj.usuario.username }}</small>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p class="text-center">Nenhum objeto cadastrado ainda. Seja o primeiro!</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

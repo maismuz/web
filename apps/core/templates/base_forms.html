@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulário Completo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .modal-dialog {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .modal-body img {
+      max-width: 100%;
+      max-height: 300px;
+      height: auto;
+      width: auto;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1 class="text-center mb-4">Formulário com todos os tipos de campos</h1>
+
+  <form action="#" method="post" enctype="multipart/form-data">
+    <h2 class="mb-4 fw-semibold text-center border-bottom pb-2">Título do Formulário</h2>
+    <div class="row g-4">
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="inputTexto" placeholder="Texto">
+          <label for="inputTexto">Campo de texto simples</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="password" class="form-control" id="inputSenha" placeholder="Senha">
+          <label for="inputSenha">Campo de senha</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+          <label for="inputEmail">Campo de email</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="number" class="form-control" id="inputNumero" placeholder="Número">
+          <label for="inputNumero">Campo de número</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="inputData" placeholder="Data"
+            onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'">
+          <label for="inputData">Campo de data</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="inputHora" placeholder="Hora"
+            onfocus="(this.type='time')" onblur="if(!this.value) this.type='text'">
+          <label for="inputHora">Hora</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="inputDataHora" placeholder="Data e Hora"
+            onfocus="(this.type='datetime-local')" onblur="if(!this.value) this.type='text'">
+          <label for="inputDataHora">Data e Hora</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="tel" class="form-control" id="inputTelefone" placeholder="Telefone">
+          <label for="inputTelefone">Campo de telefone</label>
+        </div>
+      </div>
+
+
+      <div class="col-12 mb-3">
+        <label for="formFile" class="form-label">Upload de arquivos</label>
+        <div class="input-group">
+          <input class="form-control" type="file" id="formFile" multiple accept="image/*">
+          <button class="btn btn-outline-secondary d-none" type="button" id="btnPreview" data-bs-toggle="modal" data-bs-target="#imageModal">
+            </button>
+        </div>
+      </div>
+
+      <div class="modal fade image-modal" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="imageModalLabel">Imagens Enviadas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body" id="imagePreviewContainer">
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <label class="form-label">Checkboxes:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="check1">
+          <label class="form-check-label" for="check1">Exemplo 1...</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="check2" checked>
+          <label class="form-check-label" for="check2">Exemplo 2...</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <label class="form-label">Radios:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radioExample" id="radio1">
+          <label class="form-check-label" for="radio1">Exemplo 1...</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radioExample" id="radio2" checked>
+          <label class="form-check-label" for="radio2">Exemplo 2...</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <label class="form-label">Switch:</label>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="switch1">
+          <label class="form-check-label" for="switch1">Exemplo</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <select class="form-select" id="selectExample">
+            <option selected>Opção padrão</option>
+            <option value="1">Opção 1</option>
+            <option value="2">Opção 2</option>
+            <option value="3">Opção 3</option>
+          </select>
+          <label for="selectExample">Campo de Select</label>
+        </div>
+      </div>
+
+
+      <div class="col-12">
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Digite aqui" id="textareaExample"></textarea>
+          <label for="textareaExample">Campo de texto grande</label>
+        </div>
+      </div>
+
+
+      <div class="col-12 text-center">
+        <button class="btn btn-primary px-5" type="submit">Enviar</button>
+      </div>
+    </div>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('formFile').addEventListener('change', function(event) {
+      const container = document.getElementById('imagePreviewContainer');
+      container.innerHTML = ''; // Limpa o modal de visualizações anteriores
+      const files = Array.from(event.target.files);
+      const btn = document.getElementById('btnPreview');
+
+      if (files.length > 0) {
+        btn.classList.remove('d-none');
+        // Atualiza o botão para incluir o ícone do olho e a contagem de imagens
+        btn.innerHTML = `<i class="bi bi-eye-fill me-2"></i>`;
+      } else {
+        btn.classList.add('d-none');
+      }
+
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = file.name;
+          container.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+  {% extends 'eventuz/base.html' %}
+  {% load static %}
+
+  {% block title %}Início | Eventuz{% endblock %}
+
+  {% block content %}
+
+  <div class="container py-5">
+
+    <!-- HERO SECTION -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 titulo">Bem-vindo ao <span class="text-success">Eventuz</span></h1>
+      <p class="lead subtitulo">Sua plataforma para gerenciar, divulgar e participar de eventos com facilidade.</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="{% url 'eventuz:eventos' %}" class="btn btn-verde-principal px-4">Ver Eventos</a>
+        <a href="{% url 'eventuz:cadastrar_eventos' %}" class="btn btn-outline-success px-4">Criar Evento</a>
+      </div>
+    </div>
+
+    <!-- IMAGEM HERO -->
+    <div class="text-center mb-5">
+      <img src="{% static 'img/img_index.png' %}" class="img-fluid rounded shadow" style="max-width: 700px;" alt="Imagem de eventos">
+    </div>
+
+    <!-- SOBRE -->
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <img src="{% static 'img/img_index_porque.png' %}" class="img-fluid rounded shadow" alt="Sobre Eventuz">
+      </div>
+      <div class="col-md-6">
+        <h2 class="h3 titulo">Por que usar o Eventuz?</h2>
+        <p class="lead">Nós facilitamos a criação, gerenciamento e divulgação de eventos. Seja online ou presencial, sua experiência é otimizada.</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">✔ Cadastro rápido de eventos</li>
+          <li class="list-group-item">✔ Visualização simplificada</li>
+          <li class="list-group-item">✔ Histórico de eventos</li>
+          <li class="list-group-item">✔ Layout responsivo e intuitivo</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DESTAQUE DE FUNCIONALIDADES -->
+    <h2 class="h4 mb-4 text-center titulo">Funcionalidades</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      <div class="col">
+        <div class="card h-100">
+          <img src="{% static 'img/img_index_create.png' %}" class="card-img-top" alt="Criar evento">
+          <div class="card-body">
+            <h5 class="card-title">Criação de Eventos</h5>
+            <p class="card-text">Cadastre eventos de forma rápida, definindo nome, data, local e descrição.</p>
+            <a href="{% url 'eventuz:cadastrar_eventos' %}" class="btn btn-verde-principal">Cadastrar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <img src="{% static 'img/img_index_find.png' %}" class="card-img-top" alt="Listar eventos">
+          <div class="card-body">
+            <h5 class="card-title">Explorar Eventos</h5>
+            <p class="card-text">Veja todos os eventos disponíveis, filtre por categoria, data ou local.</p>
+            <a href="{% url 'eventuz:eventos' %}" class="btn btn-verde-principal">Explorar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <img src="{% static 'img/img_index_history.png' %}" class="card-img-top" alt="Histórico de eventos">
+          <div class="card-body">
+            <h5 class="card-title">Histórico de Eventos</h5>
+            <p class="card-text">Acompanhe os eventos que você participou ou criou anteriormente.</p>
+            <a href="{% url 'eventuz:historico' %}" class="btn btn-verde-principal">Ver Histórico</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALL TO ACTION FINAL -->
+    <div class="bg-success bg-opacity-10 p-5 rounded mt-5 text-center shadow-sm">
+      <h2 class="titulo mb-3">Pronto para criar seu evento?</h2>
+      <p class="lead">Aproveite todos os recursos do Eventuz para tornar seus eventos inesquecíveis.</p>
+      <a href="{% url 'eventuz:cadastrar_eventos' %}" class="btn btn-verde-principal px-5">Começar Agora</a>
+    </div>
+
+  </div>
+
+  {% endblock %}
