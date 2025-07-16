@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import *
+from .models import Categoria, Objeto, HistoricoTransacao, Mensagem, AvaliacaoUsuario, Oferta, FotoObjeto 
+
+class FotoObjetoInline(admin.TabularInline): 
+    model = FotoObjeto
+    extra = 1 
+    fields = ['imagem'] 
+
 
 
 @admin.register(Transacao)
@@ -19,6 +25,8 @@ class ObjetoAdmin(admin.ModelAdmin):
     list_display = ['nome', 'tipo', 'preco', 'categoria', 'usuario', 'estado', 'data_cadastro']
     search_fields = ['nome', 'descricao', 'usuario__username']
     list_filter = ['tipo', 'categoria', 'estado']
+    inlines = [FotoObjetoInline] 
+
 admin.site.register(Objeto, ObjetoAdmin)
 
 class HistoricoTransacaoAdmin(admin.ModelAdmin):
@@ -40,12 +48,11 @@ class MensagemAdmin(admin.ModelAdmin):
         return (obj.mensagem[:40] + '...') if len(obj.mensagem) > 40 else obj.mensagem
     mensagem_resumida.short_description = 'Mensagem'
 
- 
 class AvaliacaoUsuarioAdmin(admin.ModelAdmin):
     list_display = ['usuario', 'nota', 'comentario', 'data_avaliacao']
     search_fields = ['usuario__username', 'comentario']
-    list_filter = ['nota', 'data_avaliacao']  
-    ordering = ['-data_avaliacao']  
+    list_filter = ['nota', 'data_avaliacao']    
+    ordering = ['-data_avaliacao']    
 admin.site.register(AvaliacaoUsuario, AvaliacaoUsuarioAdmin)
 
 
@@ -54,11 +61,3 @@ class OfertaAdmin(admin.ModelAdmin):
     list_display = ['titulo', 'preco', 'data_criacao']
     search_fields = ['titulo']
     list_filter = ['data_criacao']
-
-@admin.register(DenunciaIrregular)
-class DenunciaIrregularAdmin(admin.ModelAdmin):
-    list_display = ['id', 'usuario', 'oferta', 'motivo_da_denuncia', 'status', 'data_denuncia']
-    list_filter = ['status', 'motivo_da_denuncia', 'data_denuncia']
-    search_fields = ['usuario__username', 'oferta__titulo']
-    autocomplete_fields = ['usuario', 'oferta']
-    ordering = ['-data_denuncia']
