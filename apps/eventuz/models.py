@@ -13,7 +13,7 @@ class Evento(models.Model):
     local = models.CharField(max_length=200)
     descricao = models.TextField()
     organizador = models.CharField(max_length=100)
-    cnpj = models.CharField(max_length=14, blank=True, null=True)
+    cnpj = models.CharField(max_length=18, blank=True, null=True)
     contato = models.CharField(max_length=100)
     categoria = models.ForeignKey('Categoria', on_delete=models.PROTECT, related_name='eventos')
     aprovado = models.BooleanField(default=False)
