@@ -1,6 +1,6 @@
 from django.db import models
 
-class Motorista(models.Model):
+class Motorista_MoveMuz(models.Model):
     nome = models.CharField("Nome completo", max_length=100)
     cpf = models.CharField("CPF", max_length=14, unique=True)
     telefone = models.CharField("Telefone", max_length=15, blank=True, null=True)
@@ -16,9 +16,6 @@ class Motorista(models.Model):
 
     def __str__(self):
         return self.nome
-
-# class Combustivel(models.Model):
-#     nome = models.CharField(max_length=100)
 
 ESTADOS_BRASIL = [
     ("AC", "Acre"),
@@ -156,26 +153,9 @@ class HorarioTransporte(models.Model):
         db_table = 'horario_transporte'
         ordering = ['-horario_partida']
 
-# class Motorista(models.Model):
-#     nome = models.CharField("Nome completo", max_length=100)
-#     cpf = models.CharField("CPF", max_length=14, unique=True)
-#     telefone = models.CharField("Telefone", max_length=15, blank=True, null=True)
-#     email = models.EmailField("E-mail", blank=True, null=True)
-#     cnh_numero = models.CharField("Número da CNH", max_length=20, unique=True)
-#     data_nascimento = models.DateField("Data de nascimento")
-#     ativo = models.BooleanField("Ativo", default=True)
-
-#     class Meta:
-#         verbose_name = "Motorista"
-#         verbose_name_plural = "Motoristas"
-#         ordering = ['nome']
-
-#     def __str__(self):
-#         return self.nome
-
 
 class Viagem(models.Model):
-    motorista = models.ForeignKey(Motorista, verbose_name="motorista", on_delete=models.CASCADE)
+    motorista = models.ForeignKey(Motorista_MoveMuz, verbose_name="motorista", on_delete=models.CASCADE)
     origem = models.ForeignKey(Local, verbose_name="Origem", on_delete=models.CASCADE, related_name='viagens_origem')
     destino = models.ForeignKey(Local, verbose_name="Destino", on_delete=models.CASCADE, related_name='viagens_destino')
     data_saida = models.DateTimeField("Data e hora de saída")
@@ -205,3 +185,57 @@ class Passageiro(models.Model):
 
     def __str__(self):
         return f"{self.nome} ({self.viagem})"
+
+class Ponto(models.Model):
+    nome = models.CharField("Nome do ponto", max_length=100)
+    localizacao = models.CharField("Descrição ou endereço", max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Ponto de Embarque/Desembarque"
+        verbose_name_plural = "Pontos de Embarque/Desembarque"
+        ordering = ['nome']
+        db_table = 'ponto'
+
+    def __str__(self):
+        return self.nome
+
+class Parada(models.Model):
+    horario_transporte = models.ForeignKey(
+        'HorarioTransporte',
+        verbose_name="Horário de Transporte",
+        on_delete=models.CASCADE,
+        related_name='paradas'
+    )
+    ponto = models.ForeignKey(Ponto, verbose_name="Ponto", on_delete=models.CASCADE)
+    horario = models.TimeField("Horário da parada")
+    passageiros_estimados = models.PositiveIntegerField("Nº de passageiros", default=0)
+
+    class Meta:
+        verbose_name = "Parada"
+        verbose_name_plural = "Paradas"
+        ordering = ['horario']
+        db_table = 'parada'
+
+    def __str__(self):
+        return f"{self.ponto} às {self.horario} - {self.passageiros_estimados} passageiros"
+
+class OcupacaoVeiculo(models.Model):
+    horario_transporte = models.ForeignKey(
+        'HorarioTransporte',
+        verbose_name="Horário de Transporte",
+        on_delete=models.CASCADE,
+        related_name='ocupacoes'
+    )
+    data = models.DateField("Data da viagem")
+    passageiros_a_bordo = models.PositiveIntegerField("Passageiros a bordo")
+    atualizado_em = models.DateTimeField("Atualizado em", auto_now=True)
+
+    class Meta:
+        verbose_name = "Ocupação do Veículo"
+        verbose_name_plural = "Ocupações dos Veículos"
+        unique_together = ('horario_transporte', 'data')
+        ordering = ['-data', '-atualizado_em']
+        db_table = 'ocupacao_veiculo'
+
+    def __str__(self):
+        return f"{self.horario_transporte} - {self.data} ({self.passageiros_a_bordo} passageiros)"

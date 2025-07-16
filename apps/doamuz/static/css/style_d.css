@@ -1,0 +1,274 @@
+:root {
+  --verde-principal: #28a745;
+  --hover-components: #1f7e35;
+  --background-color: #e8fccf;
+}
+
+html{
+  width: 100%;
+  height: 100vh;
+}
+
+body { 
+  margin: 0; 
+  padding: 0; 
+
+  padding-top: 50px;
+
+}
+
+  form {
+    width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  form input,
+  form select,
+  form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    border-color: gray;
+  }
+
+  form input[type="checkbox"],
+  form input[type="radio"] {
+    width: auto;
+    margin-right: 0.5rem;
+  }
+
+  form input[type="submit"],
+  form input[type="reset"] {
+    width: auto;
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+
+form input[type="text"],
+
+
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+form input[type="date"],
+form input[type="time"],
+form input[type="datetime-local"],
+form input[type="tel"],
+form select,
+form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  outline: none;
+  font-family: "Roboto", sans-serif;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus,
+form input[type="time"]:focus,
+form input[type="datetime-local"]:focus,
+form input[type="tel"]:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: white;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+}
+
+/* Botões (mantém) */
+form input[type="submit"],
+form input[type="reset"] {
+  width: auto;
+  margin-right: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.3s ease;
+  font-family: "Roboto", sans-serif;
+}
+
+.floatingInput{
+  margin-left: 0;
+}
+
+#label{
+  color: rgb(105, 105, 105);
+}
+
+input.form-check-input:checked {
+  background-color: var(--verde-principal) !important; /* verde Bootstrap */
+  border-color: var(--verde-principal) !important;
+}
+
+input.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25) !important;
+  border-color: var(--verde-principal) !important;
+}
+
+form h2{
+  color: var(--verde-principal);
+}
+
+.btn-verde-principal {
+  background-color: var(--verde-principal);
+  border-color: var(--verde-principal);
+  color: #fff; /* se quiser garantir contraste */
+}
+
+.btn-verde-principal:hover {
+  background-color: var(--hover-components); /* ajuste o tom conforme necessário */
+  border-color: var(--hover-components);
+  color: #fff; /* se quiser garantir contraste */
+}
+
+.table-container{
+  width: 80%;
+  margin: auto;
+}
+
+
+/* Select e input com foco */
+.form-select:focus{
+  outline: none !important;;
+  border-color: white !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.acoes{
+  display: flex;
+  justify-content: center;
+}
+
+.acoes-th{
+  width: 15%;
+}
+
+.titulo{
+  color: var(--verde-principal);
+}
+
+.subtitulo{
+  color: var(--hover-components);
+}
+
+.list-group-item {
+  background-color: transparent !important;
+}
+
+.navbar-custom {
+  background-color: #f8f9fa; /* tom claro (você pode trocar por branco puro: #ffffff) */
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* leve sombra moderna */
+
+}
+
+.navbar-custom a {
+  color: #333;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 18px;
+}
+
+.navbar-custom a.nav-link {
+  color: #333;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 15px;
+}
+
+.navbar-custom a.nav-link:hover {
+  color: var(--hover-components); /* azul Bootstrap */
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+footer{
+  background-color: #0000001c;
+}
+
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.link-pessoal:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-menu-sem-borda {
+  border: none !important;
+  background-color: #f5f5f5 !important;
+  box-shadow: none !important;
+  color: rgb(83, 83, 83); /* cor do texto e seta */
+  font-size: 1rem; /* tamanho da fonte */
+  font-weight: 400;
+  border-radius: 10px;
+}
+
+.btn-menu-sem-borda:hover,
+.btn-menu-sem-borda:focus {
+  background-color: #f5f5f5 !important;
+  box-shadow: none !important;
+  color: rgb(83, 83, 83);
+}
+
+.btn-menu-sem-borda svg {
+  width: 1em;       /* tamanho igual à fonte */
+  height: 1em;      /* tamanho igual à fonte */
+  fill: currentColor; /* pega a cor do texto automaticamente */
+  vertical-align: middle; /* alinha no meio da linha do texto */
+  margin-left: 0.25em; /* espaço entre texto e seta */
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #e9ecef; /* cinza clarinho */
+  color: #000; /* opcional, mantém o texto preto no hover */
+}
+
+.dropdown-menu .dropdown-item {
+  transition: background-color 0.2s ease;
+}
+
+
+@media (max-width: 768px) {
+  form {
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  }
+}
+  
+  @media (max-width: 480px) {
+  form {
+  width: 100%;
+  padding: 0.75rem;
+  }
+}

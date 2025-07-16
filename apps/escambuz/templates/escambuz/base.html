@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Escambuz{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  {# Você pode adicionar um link para um arquivo CSS estático seu aqui se precisar #}
+</head>
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm px-3">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="{% static 'escambuz/img/img-base.png' %}" alt="Logo Escambuz" width="30" height="30" class="d-inline-block align-text-top me-2"> 
+        Escambuz 
+      </a> 
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <form class="d-flex ms-auto" role="search">
+          <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="text-dark py-4 mt-auto">
+    <div class="container text-center">
+      <p>&copy; {% now "Y" %} Escambuz. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

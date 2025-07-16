@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 urlpatterns = [
@@ -7,4 +8,3 @@ urlpatterns = [
     path('home/', views.home_view, name='home'),
     path('adicionar_objeto/', views.adicionar_objeto, name='adicionar_objeto'), 
 ]
-

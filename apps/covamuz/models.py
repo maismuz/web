@@ -40,19 +40,19 @@ class HorarioVisitacao(models.Model):
         verbose_name = "Horário"
         verbose_name_plural = "Horários"
 
-class Dia(models.Model):
-    dia = models.CharField(max_length=3, verbose_name="Dia")
+class HoraDiaVisitacao(models.Model):
+    hora = models.TimeField(max_length=100, verbose_name="Horas de visitação")
+    DIAS_SEMANA = [
+        ('SEG', 'Segunda-feira'),
+        ('TER', 'Terça-feira'),
+        ('QUA', 'Quarta-feira'),
+        ('QUI', 'Quinta-feira'),
+        ('SEX', 'Sexta-feira'),
+        ('SAB', 'Sábado'),
+        ('DOM', 'Domingo'),
+    ]
+    dia = models.CharField(max_length=3, choices=DIAS_SEMANA, verbose_name="Dia")
     diahorario = models.ForeignKey(HorarioVisitacao, on_delete = models.PROTECT)
-
-    def __str__(self):
-        return f"{self.dia}"
-    class Meta:
-        verbose_name = "Dia"
-        verbose_name_plural = "Dias"
-
-class Hora(models.Model):
-    hora = models.CharField(max_length=100, verbose_name="Horas de visitação")
-    diahora = models.ForeignKey(Dia, on_delete = models.PROTECT)
 
     def __str__(self):
         return f"{self.hora}"

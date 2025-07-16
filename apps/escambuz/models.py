@@ -19,6 +19,7 @@ class Objeto(models.Model):
 
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
+    imagem = models.ImageField(upload_to='objetos_imgs/', blank=True, null=True) 
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     tipo = models.CharField(choices=TIPO_CHOICES, max_length=10)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
@@ -38,6 +39,31 @@ class FotoObjeto(models.Model):
     class Meta:
         verbose_name = 'Foto do Objeto'
         verbose_name_plural = 'Fotos dos Objetos'
+
+
+class Transacao(models.Model):
+    TIPO_CHOICES = [
+        ('venda', 'Venda'),
+        ('troca', 'Troca'),
+        ('doacao', 'Doação'),
+        ('outro', 'Outro'),
+    ]
+
+    nome = models.CharField(max_length=255)
+    descricao = models.TextField(blank=True)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES, default='outro')
+    preco = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True, related_name='transacoes')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transacoes')
+    estado = models.CharField(max_length=100)
+    data_transacao = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.nome} ({self.tipo})'
+
+    class Meta:
+        verbose_name = "Transação"
+        verbose_name_plural = "Transações"
 
 class HistoricoTransacao(models.Model):
     objeto_oferecido = models.ForeignKey(Objeto, on_delete=models.SET_NULL, null=True, related_name='ofertas')
