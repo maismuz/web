@@ -1,27 +1,9 @@
-# config/urls.py (assuming this is your main project urls file)
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('forms/', include('apps.movemuz.urls_forms')), # Corrected path
-    path('tabela/', include('apps.movemuz.urls_table')), # Corrected path
-    path('pagina/', include('apps.movemuz.urls_page')), # Corrected path
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # Use STATIC_ROOT for staticfiles_dirs setup
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# apps/movemuz/urls.py
 from django.urls import path
 from . import views
 
 app_name = 'movemuz'
 
-urlpatterns += [
+urlpatterns = [
     # Homepage and main views
     path('', views.homepage_view, name='homepage'),
     path('dashboard/', views.dashboard_view, name='dashboard'),

@@ -40,7 +40,7 @@ class EventoAdmin(admin.ModelAdmin):
         'nome', 'data_hora', 'local', 'categoria', 'organizador', 
         'status', 'get_resumo_descricao', 'get_link_rede_social'
     )
-    list_filter = ('status', 'categoria', 'data_hora', 'eh_gratuito')
+    list_filter = ('status', 'categoria', 'data_hora')
     search_fields = ('nome', 'organizador', 'local', 'descricao')
     date_hierarchy = 'data_hora'
     inlines = [MidiaInline]
