@@ -1,0 +1,323 @@
+:root {
+  --verde-principal: #28a745; /* Cor verde primária para o tema */
+  --hover-components: #1f7e35; /* Cor para hover em componentes */
+  --background-color: #e8fccf; /* Cor de fundo principal */
+}
+
+html {
+  width: 100%;
+  height: 100vh; /* Garante que o html ocupe toda a altura da viewport */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif; /* Adicionado para consistência */
+  background-color: var(--background-color); /* Usando a variável de cor de fundo */
+}
+
+/* Regras de formulário para estilização base e responsividade */
+form {
+  width: 500px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  form {
+    width: 100%;
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  form {
+    width: 100%;
+    padding: 0.75rem;
+  }
+}
+
+/* Regras base para .form-control e .form-select para garantir padding e altura corretos
+   antes das regras de flutuação. Isso replica o comportamento padrão do Bootstrap 5
+   para inputs e selects. */
+.form-control,
+.form-select {
+    padding: 0.375rem 0.75rem; /* Padding padrão do Bootstrap para inputs/selects normais */
+    height: calc(3.5rem + 2px); /* Altura padrão do Bootstrap para form-floating com label */
+    border: 1px solid #dee2e6; /* Cor da borda padrão do Bootstrap */
+    border-radius: 0.375rem; /* Raio da borda padrão do Bootstrap (você pode sobrescrever abaixo) */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    font-size: 1rem; /* Tamanho da fonte padrão */
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
+}
+
+/* Personalização do border-radius para inputs, selects e textareas */
+/* Esta regra é mais específica e sobrescreve o border-radius padrão do .form-control/.form-select */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+form input[type="date"],
+form input[type="time"],
+form input[type="datetime-local"],
+form input[type="tel"],
+form select,
+form textarea {
+  border-radius: 12px; /* Seu border-radius personalizado */
+  font-family: "Roboto", sans-serif;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  border: 1px solid #ccc; /* Cor da borda inicial */
+  background-color: #fff;
+  outline: none; /* Remove o outline padrão do navegador */
+}
+
+/* Ajustes para Bootstrap 5 floating labels para evitar sobreposição */
+/* Esta regra define o padding inicial dentro do .form-floating,
+   quando a label ainda está "dentro" do campo. */
+.form-floating > .form-control,
+.form-floating > .form-select {
+    padding: 1rem 0.75rem; /* Padding inicial para inputs/selects dentro de form-floating */
+}
+
+/* Esta regra ajusta o padding e a posição da label quando o campo *não* está mostrando o placeholder
+   (ou seja, quando está preenchido ou focado), forçando a label a "flutuar" corretamente. */
+.form-floating > .form-control:not(:placeholder-shown),
+.form-floating > .form-select:not(.form-select-sm, .form-select-lg):not(:placeholder-shown) {
+    padding-top: 1.625rem; /* Aumenta o padding superior para a label flutuar acima da borda */
+    padding-bottom: 0.625rem; /* Ajusta o padding inferior para manter a altura */
+}
+
+/* Ajusta a transformação (escala e translação) e opacidade da label quando ela flutua */
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select:not(:placeholder-shown) ~ label {
+    opacity: 0.65; /* Opacidade padrão do Bootstrap para a label flutuante */
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem); /* Posição final da label flutuante */
+}
+
+/* Garante que o placeholder seja transparente quando a label flutua para evitar sobreposição de texto */
+.form-control:not(:placeholder-shown)::-webkit-input-placeholder { color: transparent; }
+.form-control:not(:placeholder-shown)::-moz-placeholder { color: transparent; }
+.form-control:not(:placeholder-shown)::-ms-input-placeholder { color: transparent; }
+.form-control:not(:placeholder-shown)::placeholder { color: transparent; }
+
+/* Estilo de foco para inputs e selects (quando estão ativos) */
+.form-control:focus,
+.form-select:focus,
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form input[type="number"]:focus,
+form input[type="date"]:focus,
+form input[type="time"]:focus,
+form input[type="datetime-local"]:focus,
+form input[type="tel"]:focus,
+form textarea:focus {
+    border-color: var(--verde-principal); /* Cor da borda no foco */
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25); /* Sombra de foco com transparência */
+    outline: none; /* Remove o outline padrão do navegador */
+}
+
+/* Ajuste específico para input de arquivo para evitar herdar estilos de floating label */
+input[type="file"].form-control {
+    padding-top: 0.375rem; /* Padding padrão do Bootstrap para input normal */
+    padding-bottom: 0.375rem;
+    height: auto; /* Permite que a altura se ajuste ao conteúdo */
+}
+
+/* Checkboxes e Radios - Estilos para form-check */
+form input[type="checkbox"],
+form input[type="radio"] {
+  width: auto; /* Volta para largura automática para não interferir com o checkbox */
+  margin-right: 0.5rem;
+}
+
+input.form-check-input:checked {
+  background-color: var(--verde-principal) !important; /* Cor de fundo quando checado */
+  border-color: var(--verde-principal) !important; /* Cor da borda quando checado */
+}
+
+input.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25) !important; /* Sombra de foco para checkboxes */
+  border-color: var(--verde-principal) !important; /* Borda no foco para checkboxes */
+}
+
+
+/* Botões de Submit/Reset (Personalização básica) */
+form input[type="submit"],
+form input[type="reset"] {
+  width: auto;
+  margin-right: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.3s ease;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Estilos para os botões com a cor principal (verde) */
+.btn-verde-principal {
+  background-color: var(--verde-principal); /* Cor de fundo do botão */
+  border-color: var(--verde-principal); /* Cor da borda do botão */
+  color: #fff; /* Cor do texto do botão */
+}
+
+.btn-verde-principal:hover {
+  background-color: var(--hover-components); /* Cor de fundo no hover */
+  border-color: var(--hover-components); /* Cor da borda no hover */
+  color: #fff;
+}
+
+/* Estilos para a tabela de visualização */
+.table-container {
+  width: 80%; /* Largura da tabela, pode ajustar para 100% em media queries */
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.acoes {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Alinha verticalmente os botões */
+  gap: 5px; /* Espaçamento entre os botões */
+}
+
+.acoes-th {
+  width: 15%; /* Largura da coluna de ações */
+  white-space: nowrap; /* Evita que o texto ou botões quebrem a linha */
+}
+
+/* Títulos e Subtítulos principais da página */
+.titulo {
+  color: var(--verde-principal); /* Cor do título principal */
+}
+
+.subtitulo {
+  color: var(--hover-components); /* Cor do subtítulo */
+}
+
+/* Estilos para listas */
+.list-group-item {
+  background-color: transparent !important; /* Garante fundo transparente */
+}
+
+/* Estilos para as Navbars (já existentes no seu HTML) */
+/* Observação: As classes 'navbar-custom' podem não ser estritamente necessárias se você estiver usando as classes padrão do Bootstrap diretamente nas suas navbars no HTML, mas são mantidas aqui se forem usadas. */
+.navbar-custom {
+  background-color: #f8f9fa; /* Fundo claro */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+.navbar-custom a {
+  color: #333;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 18px;
+}
+
+.navbar-custom a.nav-link {
+  color: #333;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 15px;
+}
+
+.navbar-custom a.nav-link:hover {
+  color: var(--hover-components);
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* Estilo para o Rodapé */
+footer {
+  background-color: #0000001c; /* Fundo transparente com leve opacidade */
+}
+
+/* Comportamento de dropdown no hover para Navbars */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block; /* Faz o dropdown aparecer no hover */
+}
+
+/* Estilo para links de navegação internos */
+.link-pessoal:hover {
+  background-color: #f1f1f1; /* Fundo no hover */
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Estilos para o botão de menu sem borda (geralmente mobile) */
+.btn-menu-sem-borda {
+  border: none !important;
+  background-color: #f5f5f5 !important;
+  box-shadow: none !important;
+  color: rgb(83, 83, 83);
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 10px;
+}
+
+.btn-menu-sem-borda:hover,
+.btn-menu-sem-borda:focus {
+  background-color: #f5f5f5 !important;
+  box-shadow: none !important;
+  color: rgb(83, 83, 83);
+}
+
+.btn-menu-sem-borda svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  vertical-align: middle;
+  margin-left: 0.25em;
+}
+
+/* Estilos para itens de dropdown */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+.dropdown-menu .dropdown-item {
+  transition: background-color 0.2s ease;
+}
+
+/* Estilos para o modal de visualização de imagem (no base_forms.html) */
+.image-modal .modal-dialog {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.image-modal .modal-body {
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.image-modal .modal-body img {
+  max-width: 100%;
+  max-height: 300px;
+  height: auto;
+  width: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
