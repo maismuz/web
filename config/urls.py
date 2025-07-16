@@ -9,11 +9,18 @@ Inclui rotas para:
 from django.urls import path, include, re_path
 from config import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 
 urlpatterns = [
-    path("", include("apps.core.urls")),
 
-]
+    path('admin/', admin.site.urls),
+    path('turismuz/', include('apps.turismuz.urls')),
+    path('doamuz/', include('apps.doamuz.urls')),  # Certifique-se de que o caminho está correto
+
+    path("", include("apps.core.urls")),]
+
+
+
 # Configuração de arquivos de mídia
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

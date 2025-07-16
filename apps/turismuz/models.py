@@ -58,7 +58,9 @@ class Estabelecimento(models.Model):
         Categorias,
         verbose_name='Categoria',
         help_text='Categoria do estabelecimento',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
     )
     endereco = models.CharField(
         verbose_name='Endereço',
@@ -152,6 +154,13 @@ class GuiaTuristico(models.Model):
         blank=True,
         null=True
     )
+    contato = models.CharField(
+        verbose_name='Contato do Guia',
+        help_text='Informações de contato do guia (telefone, email, etc.)',
+        max_length=200,
+        blank=True,
+        null=True
+    )
 
     class Meta:
 
@@ -168,7 +177,8 @@ class GuiaTuristico(models.Model):
     )
 
     def __str__(self):
-        return f"{self.nome} - {self.nome_tour}"
+        return f"{self.nome}"
+
 
 
 class Publicacao(models.Model):
@@ -193,6 +203,26 @@ class Publicacao(models.Model):
         blank=True,
         null=True
     )
+    legenda = models.CharField(
+        max_length=255,
+        verbose_name='Legenda da imagem',
+        help_text='Legenda da imagem da publicação',
+        blank=True,
+        null=True
+    )
+    categoria = models.ForeignKey(
+        Categorias,
+        on_delete=models.SET_NULL,
+        verbose_name='Categoria',
+        help_text='Categoria da publicação',
+        blank=True,
+        null=True
+    )
+
+    class Meta:
+        verbose_name = 'Publicação'
+        verbose_name_plural = 'Publicações'
+        ordering = ['-data_de_publicacao']
 
     def __str__(self):
         return self.titulo
@@ -244,5 +274,4 @@ class Avaliacao(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - Nota: {self.nota}"
-
 

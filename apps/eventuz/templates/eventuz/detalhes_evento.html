@@ -1,0 +1,74 @@
+{% extends 'eventuz/base.html' %}
+{% load static %}
+
+{% block title %}{{ evento.nome }} | Detalhes{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="display-4 text-center mb-4 titulo">{{ evento.nome }}</h1>
+    <h2 class="h5 text-muted text-center mb-5 subtitulo">{{ evento.categoria }}</h2>
+
+    <div class="d-flex flex-column flex-md-row align-items-start gap-4">
+
+        <!-- Carrossel de mídias -->
+        <div id="carouselMidias" class="carousel slide mb-4" data-bs-ride="carousel" style="max-width: 500px;">
+            <div class="carousel-inner" style="width: 500px; height: 300px;">
+
+                {% if evento.midias.exists %}
+                    {% for midia in evento.midias.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            {% if midia.is_foto %}
+                                <img src="{{ midia.arquivo.url }}" class="d-block w-100 rounded shadow object-fit-cover" alt="Imagem do evento" style="height: 300px;">
+                            {% elif midia.is_video %}
+                                {% if midia.arquivo %}
+                                    <video controls class="d-block w-100 rounded shadow" style="height: 300px; object-fit: cover;">
+                                        <source src="{{ midia.arquivo.url }}" type="video/mp4">
+                                        Seu navegador não suporta vídeos.
+                                    </video>
+                                {% elif midia.url_video %}
+                                    <div class="ratio ratio-16x9" style="height: 300px;">
+                                        <iframe class="rounded shadow" src="{{ midia.url_video }}" title="Vídeo do evento" allowfullscreen style="width: 100%; height: 100%;"></iframe>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="carousel-item active">
+                        <img src="{% static 'img/img-base.png' %}" class="d-block w-100 rounded shadow object-fit-cover" alt="Imagem padrão do evento" style="height: 300px;">
+                    </div>
+                {% endif %}
+
+            </div>
+
+            {% if evento.midias.count > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselMidias" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselMidias" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Próximo</span>
+                </button>
+            {% endif %}
+        </div>
+
+        <!-- Detalhes do evento -->
+        <div>
+            <p><strong>Data e Hora:</strong> {{ evento.data_hora|date:"d/m/Y H:i" }}</p>
+            <p><strong>Local:</strong> {{ evento.local }}</p>
+            <p><strong>Organizador:</strong> {{ evento.organizador }}</p>
+            <p><strong>CNPJ:</strong> {{ evento.cnpj }}</p>
+            <p><strong>Contato:</strong> {{ evento.contato }}</p>
+            <p><strong>Descrição:</strong><br>{{ evento.descricao }}</p>
+
+            <a href="{% url 'eventuz:eventos' %}" class="btn btn-secondary mt-3">Voltar aos eventos</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

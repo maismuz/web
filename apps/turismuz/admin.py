@@ -6,4 +6,5 @@ admin.site.register(GuiaTuristico)
 admin.site.register(Publicacao)
 admin.site.register(ImagemPublicacao)
 admin.site.register(Avaliacao)
+admin.site.register(Permissao)
 

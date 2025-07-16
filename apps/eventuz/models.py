@@ -9,7 +9,7 @@ class Categoria(models.Model):
 
 class Evento(models.Model):
     nome = models.CharField(max_length=200)
-    data = models.DateField()
+    data_hora = models.DateTimeField()
     local = models.CharField(max_length=200)
     descricao = models.TextField()
     organizador = models.CharField(max_length=100)
