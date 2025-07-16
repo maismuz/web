@@ -83,15 +83,15 @@ class Pessoa(models.Model):
             verbose_name_plural = "PessoasOngs"
 
 class Solicitacao(models.Model):
-        nome = models.CharField(max_length=200)
         categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
-        prazo =models.TextField(help_text="",null=True, blank=True)
-        titulo = models.TextField(help_text="")
-        descricao = models.TextField(help_text="")
+        prazo = models.DateField(help_text="Prazo", null=True, blank=True)
+        titulo = models.TextField(help_text="Título")
+        descricao = models.TextField(help_text="Descrição completa")
+        contato = models.CharField(max_length=100, help_text="Telefone")  
         imagem = models.ImageField(upload_to='pessoas/', null=True, blank=True, verbose_name="Imagem")  
         def __str__(self):
-            if self.mostrar_nome:
-                return f"{self.nome}"
+            if self.titulo:
+                return f"{self.titulo}"
             return "Anônimo"
 
         class Meta:

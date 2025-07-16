@@ -201,3 +201,18 @@ class InstituicaoParceira(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Evento(models.Model):
+    nome = models.CharField(max_length=200, verbose_name="Nome do Evento")
+    data = models.DateField(verbose_name="Data do Evento")
+    hora = models.TimeField(verbose_name="Hora do Evento")
+    local = models.CharField(max_length=255, verbose_name="Local")
+    organizador = models.CharField(max_length=150, verbose_name="Organizador")
+
+    class Meta:
+        verbose_name = "Evento"
+        verbose_name_plural = "Eventos"
+        ordering = ['data', 'hora']
+
+    def __str__(self):
+        return f"{self.nome} - {self.data.strftime('%d/%m/%Y')} às {self.hora.strftime('%H:%M')}"
