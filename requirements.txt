@@ -1,5 +1,5 @@
 # Dependências principais do Django
-Django==5.1.0
+Django==5.2
 asgiref==3.8.1
 sqlparse==0.5.3
 tzdata==2025.2
