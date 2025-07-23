@@ -77,26 +77,26 @@
 	<div class="col-12">
 		<ul class="nav nav-tabs" id="campeonatoTabs" role="tablist">
 			<li class="nav-item" role="presentation">
-				<a class="nav-link {% if aba == 'info' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?aba=info">
+				<a class="nav-link {% if tab == 'info' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?tab=info">
 					<i class="bi bi-info-circle me-1"></i>
 					Informações
 				</a>
 			</li>
 			<li class="nav-item" role="presentation">
-				<a class="nav-link {% if aba == 'equipes' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?aba=equipes">
+				<a class="nav-link {% if tab == 'equipes' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?tab=equipes">
 					<i class="bi bi-people me-1"></i>
 					Equipes
 					({{ campeonato.total_equipes }})
 				</a>
 			</li>
 			<li class="nav-item" role="presentation">
-				<a class="nav-link {% if aba == 'classificacao' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?aba=classificacao">
+				<a class="nav-link {% if tab == 'classificacao' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?tab=classificacao">
 					<i class="bi bi-list-ol me-1"></i>
 					Classificação
 				</a>
 			</li>
 			<li class="nav-item" role="presentation">
-				<a class="nav-link {% if aba == 'partidas' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?aba=partidas">
+				<a class="nav-link {% if tab == 'partidas' %}active{% endif %}" href="{% url 'campeonato_detail' campeonato.pk %}?tab=partidas">
 					<i class="bi bi-calendar-event me-1"></i>
 					Partidas
 				</a>
