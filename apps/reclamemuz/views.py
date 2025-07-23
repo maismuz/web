@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from .forms import DenunciaForm
-
+from .models import Denuncia
 def index(request):
     return render(request, 'homereclamemuz.html')
 
@@ -21,5 +21,17 @@ def denuncias(request):
 def denuncia_sucesso(request):
     return render(request, 'denuncia_sucesso.html')
 
+# def listar_denuncias(request):
+#     return render(request, 'denuncias.html')
+
 def listar_denuncias(request):
-    return render(request, 'denuncias.html')
+    # 1. Busca todas as denúncias no banco de dados, ordenando pelas mais recentes.
+    lista_de_denuncias = Denuncia.objects.all().order_by('-data_criacao')
+    
+    # 2. Cria o "contexto", que é um dicionário para enviar os dados para o template.
+    contexto = {
+        'denuncias': lista_de_denuncias
+    }
+    
+    # 3. Renderiza o template 'listar_denuncias.html' e envia os dados para ele.
+    return render(request, 'listar_denuncias.html', contexto)
