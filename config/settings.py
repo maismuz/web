@@ -35,14 +35,14 @@ DB_CREDENTIALS = {
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Hosts permitidos e origens CSRF confiáveis
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='http://localhost').split(',')
 
 # Configurações de banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': DB_CREDENTIALS['ENGINE'],
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': DB_CREDENTIALS['NAME'],
         'USER': DB_CREDENTIALS['USER'],
         'PASSWORD': DB_CREDENTIALS['PASSWORD'],
@@ -59,8 +59,6 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # API
     'rest_framework',
 ]
 
@@ -124,16 +122,16 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATE_DIRS = [
     os.path.join(BASE_DIR, f"apps/{app}/templates/")
     for app in [
-        'core'
+        'adotamuz', 'contratamuz', 'core', 'covamuz', 'doamuz',
+        'escambuz', 'esportemuz', 'eventuz', 'movemuz', 'muzeu',
+        'muzsaude', 'reclamemuz', 'teste', 'turismuz',
     ]
 ]
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'apps/doamuz/templates'),  # Certifique-se de que o caminho está correto
-        ],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -228,4 +226,5 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+    
 }

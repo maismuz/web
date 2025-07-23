@@ -1,0 +1,31 @@
+#titleAdota{
+    color: orange;
+}
+
+.navbar img{
+    border-radius: 100%;
+    border: 1px solid orange;
+    height: 50px;
+    width: 50px;
+}
+
+.navbar-custom {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* sombra leve abaixo da nav */
+  }
+
+.no-wrap-row {
+flex-wrap: nowrap !important;
+overflow-x: auto;
+}
+
+.card-text {
+max-height: 4.5em;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.card-img-top {
+object-fit: cover;
+height: 180px;
+}
+  

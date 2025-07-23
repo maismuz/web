@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 def lista_racas(request):
-    return HttpResponse("Aqui serão listadas as raças.")
+   return render(request, 'index.html')

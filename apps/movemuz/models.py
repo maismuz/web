@@ -1,6 +1,6 @@
 from django.db import models
 
-class Motorista(models.Model):
+class Motorista_MoveMuz(models.Model):
     nome = models.CharField("Nome completo", max_length=100)
     cpf = models.CharField("CPF", max_length=14, unique=True)
     telefone = models.CharField("Telefone", max_length=15, blank=True, null=True)
@@ -155,7 +155,7 @@ class HorarioTransporte(models.Model):
 
 
 class Viagem(models.Model):
-    motorista = models.ForeignKey(Motorista, verbose_name="motorista", on_delete=models.CASCADE)
+    motorista = models.ForeignKey(Motorista_MoveMuz, verbose_name="motorista", on_delete=models.CASCADE)
     origem = models.ForeignKey(Local, verbose_name="Origem", on_delete=models.CASCADE, related_name='viagens_origem')
     destino = models.ForeignKey(Local, verbose_name="Destino", on_delete=models.CASCADE, related_name='viagens_destino')
     data_saida = models.DateTimeField("Data e hora de saída")
@@ -239,4 +239,3 @@ class OcupacaoVeiculo(models.Model):
 
     def __str__(self):
         return f"{self.horario_transporte} - {self.data} ({self.passageiros_a_bordo} passageiros)"
-

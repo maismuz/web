@@ -1,0 +1,369 @@
+{% load static %}
+<!-- Mensagens de sistema -->
+{% include 'components/messages.html' %}
+
+<!-- Botão flutuante para adicionar conteúdo -->
+<div class="floating-add-container">
+  <!-- Botão principal -->
+  <button class="floating-add-btn" type="button" data-bs-toggle="modal" data-bs-target="#addContentModal">
+    <i class="fas fa-plus"></i>
+  </button>
+  
+  <!-- Tooltip -->
+  <div class="floating-tooltip">
+    {% if page_type == 'estabelecimentos' %}
+      Adicionar Estabelecimento
+    {% elif page_type == 'guias' %}
+      Adicionar Guia
+    {% elif page_type == 'publicacoes' or page_type == 'hometur' %}
+      Adicionar Publicação
+    {% else %}
+      Adicionar Conteúdo
+    {% endif %}
+  </div>
+</div>
+
+<!-- Modal para adicionar conteúdo -->
+<div class="modal fade" id="addContentModal" tabindex="-1" aria-labelledby="addContentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addContentModalLabel">
+          {% if page_type == 'estabelecimentos' %}
+            Novo Estabelecimento
+          {% elif page_type == 'guias' %}
+            Novo Guia Turístico
+          {% elif page_type == 'publicacoes' or page_type == 'hometur' %}
+            Nova Publicação
+          {% else %}
+            Novo Conteúdo
+          {% endif %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      {% if page_type == 'publicacoes' or page_type == 'hometur' %}
+        <!-- Formulário para Publicações -->
+        <form method="post" action="{% url 'add_publicacao' %}" enctype="multipart/form-data">
+          <div class="modal-body">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="titulo" class="form-label">Título</label>
+              <input type="text" class="form-control" id="titulo" name="titulo" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="categoria" class="form-label">Categoria</label>
+              <select class="form-select" id="categoria" name="categoria">
+                <option value="">Selecione uma categoria</option>
+                {% for categoria in categorias %}
+                  <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="texto_da_noticia" class="form-label">Conteúdo</label>
+              <textarea class="form-control" id="texto_da_noticia" name="texto_da_noticia" rows="8" required></textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="imagem" class="form-label">Imagem</label>
+              <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*">
+            </div>
+            
+            <div class="mb-3">
+              <label for="legenda" class="form-label">Legenda da Imagem</label>
+              <input type="text" class="form-control" id="legenda" name="legenda">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Publicar</button>
+          </div>
+        </form>
+        
+      {% elif page_type == 'estabelecimentos' %}
+        <!-- Formulário para Estabelecimentos -->
+        <form method="post" action="{% url 'add_estabelecimento' %}" enctype="multipart/form-data">
+          <div class="modal-body">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome do Estabelecimento</label>
+              <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="categoria" class="form-label">Categoria</label>
+              <select class="form-select" id="categoria" name="categoria">
+                <option value="">Selecione uma categoria</option>
+                {% for categoria in categorias %}
+                  <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="descricao" class="form-label">Descrição</label>
+              <textarea class="form-control" id="descricao" name="descricao" rows="5" required></textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="endereco" class="form-label">Endereço</label>
+              <input type="text" class="form-control" id="endereco" name="endereco">
+            </div>
+            
+            <div class="mb-3">
+              <label for="contato" class="form-label">Contato</label>
+              <input type="text" class="form-control" id="contato" name="contato">
+            </div>
+            
+            <div class="mb-3">
+              <label for="imagem" class="form-label">Imagem</label>
+              <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar Estabelecimento</button>
+          </div>
+        </form>
+        
+      {% elif page_type == 'guias' %}
+        <!-- Formulário para Guias -->
+        <form method="post" action="{% url 'add_guia' %}" enctype="multipart/form-data">
+          <div class="modal-body">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="nome" class="form-label">Nome do Guia</label>
+              <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="descricao" class="form-label">Descrição</label>
+              <textarea class="form-control" id="descricao" name="descricao" rows="5" required></textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="duracao" class="form-label">Duração (em horas)</label>
+              <input type="number" class="form-control" id="duracao" name="duracao" step="0.5" min="0.5">
+            </div>
+            
+            <div class="mb-3">
+              <label for="nivel_dificuldade" class="form-label">Nível de Dificuldade</label>
+              <select class="form-select" id="nivel_dificuldade" name="nivel_dificuldade">
+                <option value="">Selecione o nível</option>
+                <option value="FACIL">Fácil</option>
+                <option value="MEDIO">Médio</option>
+                <option value="DIFICIL">Difícil</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="valor" class="form-label">Valor (R$)</label>
+              <input type="number" class="form-control" id="valor" name="valor" step="0.01" min="0">
+            </div>
+            
+            <div class="mb-3">
+              <label for="entidade_responsavel" class="form-label">Entidade Responsável</label>
+              <input type="text" class="form-control" id="entidade_responsavel" name="entidade_responsavel">
+            </div>
+            
+            <div class="mb-3">
+              <label for="contato" class="form-label">Contato</label>
+              <input type="text" class="form-control" id="contato" name="contato">
+            </div>
+            
+            <div class="mb-3">
+              <label for="imagem" class="form-label">Imagem</label>
+              <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Adicionar Guia</button>
+          </div>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.floating-add-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+
+.floating-add-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-add-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(40, 167, 69, 0.6);
+  background: linear-gradient(135deg, #218838, #1e7e34);
+}
+
+.floating-add-btn:active {
+  transform: scale(0.95);
+}
+
+.floating-tooltip {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  background-color: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.floating-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  border: 6px solid transparent;
+  border-top-color: #333;
+}
+
+.floating-add-container:hover .floating-tooltip {
+  opacity: 1;
+  visibility: visible;
+  bottom: 75px;
+}
+
+.modal-content {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  border-radius: 15px 15px 0 0;
+  border-bottom: none;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+@media (max-width: 768px) {
+  .floating-add-container {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .floating-add-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .floating-tooltip {
+    display: none;
+  }
+}
+</style>
+
+<!-- Font Awesome para o ícone -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+// Script para melhorar a experiência do modal
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('addContentModal');
+  const form = modal.querySelector('form');
+  const imageInputs = modal.querySelectorAll('input[type="file"]');
+  
+  // Preview da imagem selecionada
+  imageInputs.forEach(function(imageInput) {
+    imageInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        // Remove preview anterior se existir
+        const existingPreview = modal.querySelector('.image-preview');
+        if (existingPreview) {
+          existingPreview.remove();
+        }
+        
+        // Cria novo preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const preview = document.createElement('div');
+          preview.className = 'image-preview mt-2';
+          preview.innerHTML = `
+            <img src="${e.target.result}" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
+            <button type="button" class="btn btn-sm btn-outline-danger mt-1" onclick="this.parentElement.remove(); this.parentElement.previousElementSibling.querySelector('input[type=file]').value='';">
+              <i class="fas fa-times"></i> Remover
+            </button>
+          `;
+          imageInput.parentNode.appendChild(preview);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+  
+  // Limpar form quando modal é fechado
+  modal.addEventListener('hidden.bs.modal', function() {
+    if (form) {
+      form.reset();
+      const preview = modal.querySelector('.image-preview');
+      if (preview) {
+        preview.remove();
+      }
+    }
+  });
+  
+  // Contador de caracteres para campos de texto
+  const textInputs = modal.querySelectorAll('input[type="text"], textarea');
+  textInputs.forEach(function(input) {
+    if (input.name === 'titulo' || input.name === 'nome') {
+      const container = input.parentNode;
+      const counter = document.createElement('small');
+      counter.className = 'text-muted';
+      container.appendChild(counter);
+      
+      input.addEventListener('input', function() {
+        const length = this.value.length;
+        const maxLength = this.name === 'titulo' || this.name === 'nome' ? 100 : 500;
+        counter.textContent = `${length}/${maxLength} caracteres`;
+        if (length > maxLength * 0.8) {
+          counter.className = 'text-warning';
+        } else {
+          counter.className = 'text-muted';
+        }
+      });
+    }
+  });
+});
+</script>
