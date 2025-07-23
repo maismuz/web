@@ -56,8 +56,8 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'reclamemuz:index' %}">
-                <img src="{% static 'img/logo.png' %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
+            <a class="navbar-brand fw-bold" href="{% url 'reclamemuz:listar_denuncias' %}">
+                <img src="{% static 'img/logo_reclamamuz.png' %}"alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
                 Reclame Muzambinho
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -65,9 +65,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reclamemuz:index' %}"><i class="bi bi-house-door-fill me-1"></i>Início</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'reclamemuz:listar_denuncias' %}"><i class="bi bi-list-ul me-1"></i>Ver Denúncias</a>
                     </li>
@@ -98,7 +95,6 @@
                                 {% if denuncia.anexo %}
                                     <img src="{{ denuncia.anexo.url }}" class="card-img-top" alt="{{ denuncia.titulo }}">
                                 {% else %}
-                                    <img src="{% static 'img/img-base.png' %}" class="card-img-top" alt="Imagem padrão">
                                 {% endif %}
                                 <span class="badge rounded-pill status-badge-overlay
                                     {% if denuncia.status == 'pendente' %} bg-warning text-dark
@@ -126,7 +122,7 @@
                                     <i class="bi bi-calendar-event-fill me-2 metadata-icon"></i>
                                     <span>Ocorrência em: {{ denuncia.data_ocorrencia|date:"d/m/Y" }}</span>
                                 </div>
-                                <a href="#" class="btn btn-outline-success w-100">Ver Detalhes</a>
+                                <a href="{% url 'reclamemuz:detalhe_denuncia' denuncia.id %}" class="btn btn-outline-success w-100">Ver Detalhes</a>
                             </div>
                         </div>
                     </div>
