@@ -302,7 +302,7 @@ async function addTeamToChampionship(championshipId, teamId) {
             showAlert('error', result.message);
         }
     } catch (error) {
-        showAlert('error', 'Erro ao adicionar equipe. Tente novamente.');
+        showAlert('error', `Erro ao adicionar equipe: ${error.message || 'Tente novamente.'}`);
         console.error('Error:', error);
     } finally {
         showLoading(false);
