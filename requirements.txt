@@ -4,6 +4,7 @@ asgiref==3.8.1
 sqlparse==0.5.3
 tzdata==2025.2
 gunicorn==23.0.0
+djangorestframework>=3.16.0
 
 # Extensões e utilitários do Django
 django-crispy-forms==2.4
