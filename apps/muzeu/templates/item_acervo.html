@@ -81,7 +81,7 @@
   style="background-color: #ffffff; border: 1px solid #ddd;">
   <!-- Logo: TROQUE PELA A DO SEU PROJETO. TODAS JÁ FEITAS EM CORE/STATIC/IMG/logo-(...).png -->
   <div class="d-flex align-items-center me-3">
-    <img src="{% static 'img/logo-contratamuz.png' %}" alt="Logo" style="height: 40px;">
+  <img src="{% static 'img/logo-muzeu.png' %}" alt="Logo" style="height: 40px;">
   </div>
   <ul class="nav d-none d-lg-flex align-items-center gap-3 mb-0">
       <li class="nav-item">
@@ -93,8 +93,8 @@
     </li>
 
     <span style="color: #ccc;">|</span>
-    <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Itens do Acervo</a>
+  <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/item-acervo/">Itens do Acervo</a>
     </li>
 
   </ul>
@@ -115,11 +115,16 @@
       <li><a class="dropdown-item" href="#">Item 3</a></li>
     </ul>
   </div>
-  
+</nav>
   <!-- CONTEÚDOS DA PAGINA -->
   <body class="bg-light">
   <div class="container py-5">
-    <h1 class="display-4 text-center mb-4 titulo">Itens do Acervo</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="display-4 titulo mb-0">Itens do Acervo</h1>
+      <a href="{% url 'form_itens_acervo' %}" class="btn btn-success">
+        Cadastrar Novo Item
+      </a>
+    </div>
     {% if itens_acervo %}
     <div class="row">
       {% for item in itens_acervo %}
