@@ -629,7 +629,7 @@ def api_equipes(request):
         except Campeonato.DoesNotExist:
             pass
 
-    equipes = equipes[:20]  # Limitar resultados
+    equipes = equipes[:EQUIPES_LIMIT]  # Limitar resultados
 
     data = [{
         'id': equipe.id,
