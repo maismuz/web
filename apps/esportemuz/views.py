@@ -421,7 +421,7 @@ def partidas_list(request):
         partidas_para_organizar = page_obj.object_list
     else:
         # Se não há filtro, mostrar todas organizadas (limitadas para performance)
-        partidas_para_organizar = partidas[:100]  # Limitar para performance
+        partidas_para_organizar = partidas[:MAX_PARTIDAS_LIMIT]  # Limitar para performance
         page_obj = None
 
     for partida in partidas_para_organizar:
