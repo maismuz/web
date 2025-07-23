@@ -548,8 +548,8 @@ def adicionar_partida_manual(request, campeonato_id, rodada_id):
         'campeonato': campeonato,
         'rodada': rodada,
         'form': form,
-        # Mostrar apenas 10 sugestões
-        'partidas_disponiveis': partidas_disponiveis[:10]
+        # Mostrar apenas um número configurável de sugestões
+        'partidas_disponiveis': partidas_disponiveis[:MAX_PARTIDAS_SUGESTOES]
     }
     return render(request, 'campeonatos/adicionar_partida_manual.html', context)
 
