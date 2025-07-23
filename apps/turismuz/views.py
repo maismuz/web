@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 def hometur(request):
-    publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')
+    publicacoes = Publicacao.objects.all().order_by('-data_publicacao')
     categorias = Categorias.objects.all()
     return render(request, 'hometur.html', {
         'publicacoes': publicacoes, 
@@ -39,7 +39,7 @@ def guias(request):
     })
 
 def publicacoes(request):
-    publicacoes = Publicacao.objects.all().order_by('-data_de_publicacao')
+    publicacoes = Publicacao.objects.all().order_by('-data_publicacao')
     categorias = Categorias.objects.all()
     return render(request, 'publicacoes.html', {
         'publicacoes': publicacoes, 
@@ -78,24 +78,28 @@ def add_publicacao(request):
     if request.method == 'POST':
         try:
             titulo = request.POST.get('titulo')
-            texto_da_noticia = request.POST.get('texto_da_noticia')
+            texto_noticia = request.POST.get('texto_noticia')
             categoria_id = request.POST.get('categoria')
-            legenda = request.POST.get('legenda')
-            imagem = request.FILES.get('imagem')
+            legenda_imagem = request.POST.get('legenda') or ''
+            imagem_principal = request.FILES.get('imagem')
+            autor = request.POST.get('autor', 'Usuário')
             
-            # Criar a publicação
+            # Verificar se categoria foi fornecida
+            if not categoria_id:
+                messages.error(request, 'Categoria é obrigatória!')
+                return redirect('hometur')
+            
+            categoria = Categorias.objects.get(id=categoria_id)
+            
+            # Criar a publicação com todos os campos obrigatórios
             publicacao = Publicacao.objects.create(
                 titulo=titulo,
-                texto_da_noticia=texto_da_noticia,
-                legenda=legenda,
-                imagem=imagem,
+                texto_noticia=texto_noticia,
+                categoria=categoria,
+                legenda_imagem=legenda_imagem,
+                imagem_principal=imagem_principal,
+                autor=autor
             )
-            
-            # Adicionar categoria se fornecida
-            if categoria_id:
-                categoria = Categorias.objects.get(id=categoria_id)
-                publicacao.categoria = categoria
-                publicacao.save()
             
             messages.success(request, 'Publicação criada com sucesso!')
             return redirect('hometur')

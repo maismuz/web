@@ -285,6 +285,7 @@ class Publicacao(models.Model):
     legenda_imagem = models.CharField(
         max_length=255,
         blank=True,
+        null=True,
         verbose_name='Legenda da Imagem',
         help_text='Legenda da imagem principal'
     )

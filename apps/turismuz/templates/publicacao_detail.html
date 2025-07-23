@@ -101,18 +101,18 @@
     {% include 'components/navbar_turismuz.html' %}
 
     <div class="main-content">
-        {% if publicacao.imagem %}
-            <img src="{{ publicacao.imagem.url }}" class="pub-img" alt="{{ publicacao.titulo }}">
+        {% if publicacao.imagem_principal %}
+            <img src="{{ publicacao.imagem_principal.url }}" class="pub-img" alt="{{ publicacao.titulo }}">
         {% endif %}
-        {% if publicacao.legenda %}
-            <div class="pub-caption">{{ publicacao.legenda }}</div>
+        {% if publicacao.legenda_imagem %}
+            <div class="pub-caption">{{ publicacao.legenda_imagem }}</div>
         {% endif %}
         <div class="pub-title">{{ publicacao.titulo }}</div>
         <div class="pub-meta">
-            Publicado em {{ publicacao.data_de_publicacao|date:"d/m/Y H:i" }}
+            Publicado em {{ publicacao.data_publicacao|date:"d/m/Y H:i" }}
         </div>
         <div class="pub-desc">
-            {{ publicacao.texto_da_noticia|linebreaks }}
+            {{ publicacao.texto_noticia|linebreaks }}
         </div>
     </div>
 

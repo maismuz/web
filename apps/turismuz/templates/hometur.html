@@ -115,8 +115,8 @@
         {% for pub in publicacoes %}
           <a href="{% url 'publicacao_detail' pub.pk %}" style="text-decoration: none;">
             <div class="pub-card">
-              {% if pub.imagem %}
-                <img src="{{ pub.imagem.url }}" alt="{{ pub.titulo }}" class="pub-img">
+              {% if pub.imagem_principal %}
+                <img src="{{ pub.imagem_principal.url }}" alt="{{ pub.titulo }}" class="pub-img">
               {% else %}
                 <img src="{% static 'img/user-default.png' %}" alt="Sem imagem" class="pub-img">
               {% endif %}
@@ -127,9 +127,9 @@
                   {% endif %}
                 </div>
                 <div class="pub-titulo">{{ pub.titulo }}</div>
-                <div class="pub-desc">{{ pub.texto_da_noticia|truncatewords:18 }}</div>
+                <div class="pub-desc">{{ pub.texto_noticia|truncatewords:18 }}</div>
                 <div class="pub-meta">
-                  Há {{ pub.data_de_publicacao|timesince }} — Em {{ pub.data_de_publicacao|date:"d/m/Y H:i" }}
+                  Há {{ pub.data_publicacao|timesince }} — Em {{ pub.data_publicacao|date:"d/m/Y H:i" }}
                 </div>
               </div>
             </div>
