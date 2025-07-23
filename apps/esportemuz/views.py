@@ -674,7 +674,7 @@ def campeonato_delete(request, pk):
     # Excluir todas as participações, rodadas, partidas e classificações relacionadas
     Participacao.objects.filter(campeonato=campeonato).delete()
     Rodada.objects.filter(campeonato=campeonato).delete()
-    Partida.objects.filter(rodada__campeonato=campeonato).delete()
+    Partida.objects.select_related('rodada', 'rodada__campeonato').filter(rodada__campeonato=campeonato).delete()
     Classificacao.objects.filter(campeonato=campeonato).delete()
 
     # Excluir o campeonato
