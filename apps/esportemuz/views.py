@@ -97,7 +97,7 @@ def campeonato_detail(request, pk):
 
             # Identificar todos os grupos existentes
             for participacao in participacoes:
-                grupo = participacao.grupo or 'A'
+                grupo = participacao.grupo or DEFAULT_GROUP
                 if grupo not in grupos:
                     grupos[grupo] = []
 
