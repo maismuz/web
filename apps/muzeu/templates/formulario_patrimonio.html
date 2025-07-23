@@ -79,28 +79,26 @@
   </div>
 </nav>
 
-<!-- Navbar 3: Navegação pelo projeto interna (ALTERAR) -->
 <nav class="container mt-3 py-2 px-3 shadow-sm rounded-pill d-flex align-items-center justify-content-between flex-wrap"
   style="background-color: #ffffff; border: 1px solid #ddd;">
   <!-- Logo: TROQUE PELA A DO SEU PROJETO. TODAS JÁ FEITAS EM CORE/STATIC/IMG/logo-(...).png -->
   <div class="d-flex align-items-center me-3">
-    <img src="{% static 'img/logo-muzeu.png' %}" alt="Logo" style="height: 40px;">
+  <img src="{% static 'img/logo-muzeu.png' %}" alt="Logo" style="height: 40px;">
   </div>
   <ul class="nav d-none d-lg-flex align-items-center gap-3 mb-0">
+      <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/">Home</a>
+    </li>
+ <span style="color: #ccc;">|</span>
     <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 1</a>
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/lista_item/">Patrimônios</a>
     </li>
 
     <span style="color: #ccc;">|</span>
-    <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 2</a>
+ <li class="nav-item">
+      <a class="nav-link link-pessoal text-dark px-3 rounded" href="/muzeu/item-acervo/">Itens do Acervo</a>
     </li>
 
-    <span style="color: #ccc;">|</span>
-    <li class="nav-item">
-      <a class="nav-link link-pessoal text-dark px-3 rounded" href="#">Navegação 3</a>
-    </li>
-    <!-- ADICIONAR MAIS SE NECESSÁRIO -->
   </ul>
 
   <div class="dropdown d-lg-none">
@@ -120,61 +118,102 @@
     </ul>
   </div>
 </nav>
+  
 
 <body>
 
-  <h1 class="text-center mb-4">Formulário com todos os tipos de campos</h1>
+  <div class="container py-4">
+    <div class="col-lg-10 col-xl-9 mx-auto">
 
-  <form action="#" method="post" enctype="multipart/form-data">
-    <h2 class="mb-4 fw-semibold text-center border-bottom pb-2">Título do Formulário</h2>
-    <div class="row g-4">
-
-      <!-- Texto simples -->
-      <div class="col-12">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="inputTexto" placeholder="Nome do patrimônio">
-          <label for="inputTexto">Nome do patrimônio</label>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2 class="mb-4 fw-semibold text-center border-bottom pb-2">Cadastro de Patrimônio</h2>
+        <div class="row g-4">
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.nome }}
+              <label for="{{ patrimonio_form.nome.id_for_label }}">Nome do Patrimônio</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.descricao }}
+              <label for="{{ patrimonio_form.descricao.id_for_label }}">Descrição</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.tipo }}
+              <label for="{{ patrimonio_form.tipo.id_for_label }}">Tipo</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.data_origem }}
+              <label for="{{ patrimonio_form.data_origem.id_for_label }}">Data de Origem</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.localizacao }}
+              <label for="{{ patrimonio_form.localizacao.id_for_label }}">Localização</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.coordenadas }}
+              <label for="{{ patrimonio_form.coordenadas.id_for_label }}">Coordenadas</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.status }}
+              <label for="{{ patrimonio_form.status.id_for_label }}">Status</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-floating">
+              {{ patrimonio_form.importancia_historica }}
+              <label for="{{ patrimonio_form.importancia_historica.id_for_label }}">Importância Histórica</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <h4>Imagens do Patrimônio</h4>
+            {{ formset.management_form }}
+            {% for form in formset %}
+              <div class="mb-3 border rounded p-3">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      {{ form.imagem }}
+                      <label for="{{ form.imagem.id_for_label }}">Imagem</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      {{ form.legenda }}
+                      <label for="{{ form.legenda.id_for_label }}">Legenda</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      {{ form.eh_principal }}
+                      <label for="{{ form.eh_principal.id_for_label }}">Principal?</label>
+                    </div>
+                  </div>
+                  <!-- Se houver campo oculto (ex: id), renderize normalmente -->
+                  {{ form.id }}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary px-5">Salvar</button>
+          </div>
         </div>
-      </div>
-
-      <!-- Textarea -->
-      <div class="col-12">
-        <div class="form-floating">
-          <textarea class="form-control" placeholder="Digite aqui" id="Descrição"></textarea>
-          <label for="textareaExample">Descrição</label>
-        </div>
-      </div>
-
-      <!-- Data -->
-      <div class="col-12">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="inputData" placeholder="Data de Origem"
-            onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'">
-          <label for="inputData">Data de Origem</label>
-        </div>
-      </div>
-
-      <!-- Arquivo -->
-      <div class="col-12">
-        <label for="formFile" class="form-label">Imagem do patrimônio</label>
-        <input class="form-control" type="file" id="formFile">
-      </div>
-
-      <!-- Data -->
-      <div class="col-12">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="inputData" placeholder="Data de Adição"
-            onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'">
-          <label for="inputData">Data de Adição</label>
-        </div>
-      </div>
-
-      <!-- Botão -->
-      <div class="col-12 text-center">
-        <button class="btn btn-verde-principal px-5" type="submit">Enviar</button>
-      </div>
+      </form>
     </div>
-  </form>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>

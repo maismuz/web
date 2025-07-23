@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -6,6 +6,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import *
+from django.forms import inlineformset_factory
+from .forms import *
+
 
 class IndexView(View):
     def get(self, request):
@@ -32,7 +35,20 @@ class ItemAcervoView(View):
                 'imagens_itens_acervo': imagens_itens_acervo
             }
         )
-
+class DetalheItemAcervoView(View):
+    def get(self, request, pk):
+        item = ItemAcervo.objects.filter(pk=pk).first()
+        imagens = []
+        if item:
+            imagens = ImagemItemAcervo.objects.filter(item_acervo=item)
+        return render(
+            request,
+            'detalhe_item_acervo.html',
+            {
+                'item': item,  # Corrigido para 'item'
+                'imagens': imagens
+            }
+        )
 class PatrimonioView(View):
     def get(self, request, pk=None):
         patrimonio = None
@@ -66,15 +82,6 @@ class DocumentoHistoricoView(View):
     def get(self, request):
         return render(request, 'documento_historico.html')
     
-class FormItensAcervoView(View):
-    
-    def get(self, request):
-        return render(request, 'formulario_itens.html')
-    
-class FormPatrimonioView(View):
-    
-    def get(self, request):
-        return render(request, 'formulario_patrimonio.html')
     
 class FormDocumentoHistoricoView(View):
     
@@ -82,3 +89,67 @@ class FormDocumentoHistoricoView(View):
         return render(request, 'formulario_docshistorico.html')
 # Create your views here.
 
+
+class PatrimonioCreateView(View):
+    def get(self, request):
+        patrimonio_form = PatrimonioForm()
+        ImagemFormSet = inlineformset_factory(
+            Patrimonio, ImagemPatrimonio, form=ImagemPatrimonioForm, extra=3, can_delete=False
+        )
+        formset = ImagemFormSet()
+        return render(request, 'formulario_patrimonio.html', {
+            'patrimonio_form': patrimonio_form,
+            'formset': formset
+        })
+
+    def post(self, request):
+        ImagemFormSet = inlineformset_factory(
+            Patrimonio, ImagemPatrimonio, form=ImagemPatrimonioForm, extra=3, can_delete=False
+        )
+        patrimonio_form = PatrimonioForm(request.POST)
+        formset = ImagemFormSet(request.POST, request.FILES)
+        if patrimonio_form.is_valid() and formset.is_valid():
+            patrimonio = patrimonio_form.save(commit=False)
+            patrimonio.usuario_adicionado = request.user
+            patrimonio.save()
+            imagens = formset.save(commit=False)
+            for imagem in imagens:
+                imagem.patrimonio = patrimonio
+                imagem.save()
+            return redirect('patrimonio', pk=patrimonio.pk)
+        return render(request, 'formulario_patrimonio.html', {
+            'patrimonio_form': patrimonio_form,
+            'formset': formset
+        })
+
+class ItemAcervoCreateView(View):
+    def get(self, request):
+        item_form = ItemAcervoForm()
+        ImagemFormSet = inlineformset_factory(
+            ItemAcervo, ImagemItemAcervo, form=ImagemItemAcervoForm, extra=3, can_delete=False
+        )
+        formset = ImagemFormSet()
+        return render(request, 'formulario_itens.html', {
+            'item_form': item_form,
+            'formset': formset
+        })
+
+    def post(self, request):
+        ImagemFormSet = inlineformset_factory(
+            ItemAcervo, ImagemItemAcervo, form=ImagemItemAcervoForm, extra=3, can_delete=False
+        )
+        item_form = ItemAcervoForm(request.POST)
+        formset = ImagemFormSet(request.POST, request.FILES)
+        if item_form.is_valid() and formset.is_valid():
+            item = item_form.save(commit=False)
+            item.usuario_adicionado = request.user
+            item.save()
+            imagens = formset.save(commit=False)
+            for imagem in imagens:
+                imagem.item_acervo = item
+                imagem.save()
+            return redirect('detalhe_item_acervo', pk=item.pk)
+        return render(request, 'formulario_itens.html', {
+            'item_form': item_form,
+            'formset': formset
+        })
