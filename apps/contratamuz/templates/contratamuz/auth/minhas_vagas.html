@@ -1,0 +1,225 @@
+{% extends 'contratamuz/base.html' %}
+
+{% block title %}Minhas Vagas - ContrataMuz{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="display-5 mb-2">Minhas Vagas</h1>
+                    <p class="text-muted">Gerencie suas vagas publicadas</p>
+                </div>
+                <a href="{% url 'publicar_vaga' %}" class="btn btn-primary">
+                    <i data-lucide="plus"></i> Nova Vaga
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estatísticas -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center border-primary">
+                <div class="card-body">
+                    <i data-lucide="briefcase" class="text-primary mb-2" style="width: 32px; height: 32px;"></i>
+                    <h4 class="text-primary">{{ vagas.count }}</h4>
+                    <small class="text-muted">Total de Vagas</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <i data-lucide="check-circle" class="text-success mb-2" style="width: 32px; height: 32px;"></i>
+                    <h4 class="text-success">{{ vagas|length }}</h4>
+                    <small class="text-muted">Vagas Ativas</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-info">
+                <div class="card-body">
+                    <i data-lucide="users" class="text-info mb-2" style="width: 32px; height: 32px;"></i>
+                    <h4 class="text-info">0</h4>
+                    <small class="text-muted">Candidaturas</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-warning">
+                <div class="card-body">
+                    <i data-lucide="eye" class="text-warning mb-2" style="width: 32px; height: 32px;"></i>
+                    <h4 class="text-warning">0</h4>
+                    <small class="text-muted">Visualizações</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lista de Vagas -->
+    {% if vagas %}
+        <div class="row">
+            {% for vaga in vagas %}
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5 class="card-title mb-1">{{ vaga.titulo }}</h5>
+                                    <p class="text-muted mb-2">
+                                        <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+                                        {{ vaga.localizacao }}
+                                        <span class="mx-2">•</span>
+                                        <i data-lucide="tag" style="width: 16px; height: 16px;"></i>
+                                        {{ vaga.categoria|title }}
+                                        {% if vaga.salario %}
+                                            <span class="mx-2">•</span>
+                                            <i data-lucide="dollar-sign" style="width: 16px; height: 16px;"></i>
+                                            R$ {{ vaga.salario }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text">{{ vaga.descricao|truncatewords:25 }}</p>
+                                    <small class="text-muted">
+                                        <i data-lucide="calendar" style="width: 16px; height: 16px;"></i>
+                                        Publicada em {{ vaga.criado_em|date:"d/m/Y" }}
+                                    </small>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    {% if vaga.ativa %}
+                                        <span class="badge bg-success mb-2">
+                                            <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i>
+                                            Ativa
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary mb-2">
+                                            <i data-lucide="pause-circle" style="width: 14px; height: 14px;"></i>
+                                            Inativa
+                                        </span>
+                                    {% endif %}
+                                    <div>
+                                        <button class="btn btn-outline-primary btn-sm me-2" 
+                                                onclick="carregarDetalhesVaga({{ vaga.id }})">
+                                            <i data-lucide="eye" style="width: 16px; height: 16px;"></i>
+                                            Ver
+                                        </button>
+                                        <button class="btn btn-outline-secondary btn-sm me-2">
+                                            <i data-lucide="edit" style="width: 16px; height: 16px;"></i>
+                                            Editar
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm">
+                                            <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                                            Excluir
+                                        </button>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">
+                                        0 candidaturas
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <i data-lucide="briefcase-x" class="text-muted mb-3" style="width: 64px; height: 64px;"></i>
+                        <h4>Nenhuma vaga publicada</h4>
+                        <p class="text-muted">Você ainda não publicou nenhuma vaga de emprego.</p>
+                        <a href="{% url 'publicar_vaga' %}" class="btn btn-primary">
+                            <i data-lucide="plus"></i> Publicar Primeira Vaga
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal de Detalhes da Vaga -->
+<div class="modal fade" id="modalDetalhesVaga" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalhes da Vaga</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo será carregado via AJAX -->
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function carregarDetalhesVaga(vagaId) {
+    const modal = new bootstrap.Modal(document.getElementById('modalDetalhesVaga'));
+    const modalBody = document.querySelector('#modalDetalhesVaga .modal-body');
+    
+    // Mostrar loading
+    modalBody.innerHTML = `
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+        </div>
+    `;
+    
+    modal.show();
+    
+    // Carregar dados via AJAX
+    fetch(`/contratamuz/vagas/${vagaId}/`)
+        .then(response => response.json())
+        .then(data => {
+            modalBody.innerHTML = `
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>${data.titulo}</h4>
+                        <div class="mb-3">
+                            <span class="badge bg-primary me-2">${data.categoria}</span>
+                            <span class="badge bg-secondary me-2">
+                                <i data-lucide="map-pin"></i> ${data.localizacao}
+                            </span>
+                            ${data.salario ? `<span class="badge bg-success">R$ ${data.salario}</span>` : ''}
+                        </div>
+                        
+                        <h6>Descrição da Vaga</h6>
+                        <p style="white-space: pre-line;">${data.descricao}</p>
+                        
+                        <small class="text-muted d-block mt-3">
+                            <i data-lucide="calendar"></i> Publicada em ${data.criado_em}
+                        </small>
+                    </div>
+                </div>
+            `;
+            
+            // Reiniticar ícones Lucide
+            lucide.createIcons();
+        })
+        .catch(error => {
+            modalBody.innerHTML = `
+                <div class="alert alert-danger">
+                    <h5>Erro ao carregar detalhes</h5>
+                    <p>Não foi possível carregar os detalhes da vaga. Tente novamente.</p>
+                </div>
+            `;
+        });
+}
+
+// Inicializar ícones quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+});
+</script>
+{% endblock %}

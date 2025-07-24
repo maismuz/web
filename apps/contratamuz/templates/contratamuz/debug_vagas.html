@@ -1,0 +1,63 @@
+{% extends 'contratamuz/base.html' %}
+
+{% block title %}Debug Vagas - ContrataMuz{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1>Debug - Página de Vagas</h1>
+    
+    <div class="alert alert-info">
+        <h4>Informações de Debug:</h4>
+        <p><strong>Total de vagas:</strong> {{ total_vagas|default:"N/A" }}</p>
+        <p><strong>Categoria selecionada:</strong> {{ categoria_selecionada|default:"Nenhuma" }}</p>
+        <p><strong>Busca:</strong> {{ busca|default:"Nenhuma" }}</p>
+        <p><strong>Página atual:</strong> {{ page_obj.number|default:"N/A" }}</p>
+        <p><strong>Total de páginas:</strong> {{ page_obj.paginator.num_pages|default:"N/A" }}</p>
+    </div>
+    
+    {% if page_obj %}
+        <h3>Lista de Vagas ({{ page_obj.object_list|length }} itens na página)</h3>
+        
+        {% if page_obj.object_list %}
+            <div class="row">
+                {% for vaga in page_obj.object_list %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ vaga.titulo|default:"[Sem título]" }}</h5>
+                                <p class="card-text">{{ vaga.descricao|default:"[Sem descrição]" }}</p>
+                                <p><strong>Categoria:</strong> {{ vaga.categoria|default:"[Sem categoria]" }}</p>
+                                <p><strong>Localização:</strong> {{ vaga.localizacao|default:"[Sem localização]" }}</p>
+                                <p><strong>Salário:</strong> R$ {{ vaga.salario|default:"Não informado" }}</p>
+                                <p><strong>Empresa:</strong> {{ vaga.usuario.nome|default:"[Sem empresa]" }}</p>
+                                <p><strong>Ativa:</strong> {{ vaga.ativa|yesno:"Sim,Não" }}</p>
+                                <p><small><strong>ID:</strong> {{ vaga.id }}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <h4>Nenhuma vaga encontrada!</h4>
+                <p>A consulta retornou uma lista vazia.</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-danger">
+            <h4>Erro!</h4>
+            <p>page_obj não foi passado no contexto ou é None.</p>
+        </div>
+    {% endif %}
+    
+    <h3>Query SQL Debug</h3>
+    <div class="alert alert-secondary">
+        <p>Para debug adicional, verifique:</p>
+        <ul>
+            <li>Se as migrações foram aplicadas</li>
+            <li>Se existem vagas no banco de dados</li>
+            <li>Se a view está retornando o contexto correto</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+/* RESET E TIPOGRAFIA */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* HEADER STICKY NO TOPO */
+
+.custom-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    /* Espaçamento de ~32px dos lados */
+    max-width: 100%;
+}
+
+.header-left a {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #0d6efd;
+    padding: 0.5rem 1rem;
+}
+
+.header-right a {
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.header-right a:hover {
+    color: #0d6efd;
+}
+
+/* MAIN FLEXÍVEL ENTRE HEADER E FOOTER */
+main {
+    flex: 1;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+/* FOOTER FIXO NO FINAL */
+footer {
+    background-color: #f1f3f5;
+    border-top: 1px solid #dee2e6;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* LINKS */
+a {
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #0d6efd;
+}
+
+/* ÍCONES NO BOTÃO */
+.btn i {
+    vertical-align: middle;
+}
+
+/* AJUSTE DE CONTAINER */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}

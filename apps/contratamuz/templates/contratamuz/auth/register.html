@@ -405,10 +405,17 @@
     passwordConfirm.addEventListener('input', validatePasswords);
     
     // Animação do botão de registro
-    document.querySelector('.btn-register').addEventListener('click', function(e) {
-        if (this.form.checkValidity()) {
-            this.innerHTML = '<i data-lucide="loader-2" size="16" class="animate-spin"></i> Criando conta...';
-            this.disabled = true;
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const button = this.querySelector('.btn-register');
+        if (this.checkValidity()) {
+            button.innerHTML = '<i data-lucide="loader-2" size="16" class="animate-spin"></i> Criando conta...';
+            button.disabled = true;
+            // Reabilitar o botão após 5 segundos em caso de erro
+            setTimeout(() => {
+                button.innerHTML = '<i data-lucide="user-plus" size="16"></i> Criar Conta';
+                button.disabled = false;
+                lucide.createIcons();
+            }, 5000);
         }
     });
     

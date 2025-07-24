@@ -7,6 +7,7 @@ urlpatterns = [
     # Páginas principais
     path('', views.inicial, name='home'),
     path('vagas/', views.listar_vagas, name='listar_vagas'),
+    path('vagas/<int:vaga_id>/', views.detalhe_vaga, name='detalhe_vaga'),
     path('servicos/', views.listar_servicos, name='listar_servicos'),
     path('servicos/<int:servico_id>/', views.detalhe_servico, name='detalhe_servico'),
     path('publicar/', views.publicar_servico, name='publicar_servico'),
@@ -20,6 +21,10 @@ urlpatterns = [
     path('perfil/', views.perfil_view, name='perfil'),
     path('meus-servicos/', views.meus_servicos_view, name='meus_servicos'),
     path('publicar-servico/', views.publicar_servico_auth, name='publicar_servico_auth'),
+    
+    # URLs de vagas
+    path('publicar-vaga/', views.publicar_vaga, name='publicar_vaga'),
+    path('minhas-vagas/', views.minhas_vagas_view, name='minhas_vagas'),
 ]
 
 if settings.DEBUG:

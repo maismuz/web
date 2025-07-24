@@ -362,6 +362,34 @@
                         {% endif %}
                     </div>
                     
+                    <!-- Configurações da Conta -->
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Conta</label>
+                        <div class="form-check">
+                            <input type="checkbox" 
+                                   class="form-check-input" 
+                                   id="eh_empresa" 
+                                   name="eh_empresa"
+                                   {% if usuario.eh_empresa %}checked{% endif %}>
+                            <label class="form-check-label" for="eh_empresa">
+                                <i data-lucide="building" size="16"></i>
+                                Sou uma empresa
+                            </label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" 
+                                   class="form-check-input" 
+                                   id="eh_prestador" 
+                                   name="eh_prestador"
+                                   {% if usuario.eh_prestador %}checked{% endif %}>
+                            <label class="form-check-label" for="eh_prestador">
+                                <i data-lucide="briefcase" size="16"></i>
+                                Quero oferecer serviços
+                            </label>
+                        </div>
+                    </div>
+                    
                     <button type="submit" class="btn-primary">
                         <i data-lucide="save" size="16"></i>
                         Salvar Alterações
@@ -369,43 +397,8 @@
                 </form>
             </div>
             
-            <!-- Configurações da Conta -->
+            <!-- Estatísticas -->
             <div class="profile-card">
-                <h2 class="card-title">
-                    <i data-lucide="settings" size="20"></i>
-                    Configurações da Conta
-                </h2>
-                
-                <form method="post">
-                    {% csrf_token %}
-                    
-                    <div class="form-check">
-                        <input type="checkbox" 
-                               class="form-check-input" 
-                               id="eh_empresa" 
-                               name="eh_empresa"
-                               {% if usuario.eh_empresa %}checked{% endif %}>
-                        <label class="form-check-label" for="eh_empresa">
-                            <i data-lucide="building" size="16"></i>
-                            Sou uma empresa
-                        </label>
-                    </div>
-                    
-                    <div class="form-check">
-                        <input type="checkbox" 
-                               class="form-check-input" 
-                               id="eh_prestador" 
-                               name="eh_prestador"
-                               {% if usuario.eh_prestador %}checked{% endif %}>
-                        <label class="form-check-label" for="eh_prestador">
-                            <i data-lucide="briefcase" size="16"></i>
-                            Quero oferecer serviços
-                        </label>
-                    </div>
-                </form>
-                
-                <hr style="margin: 2rem 0; border-color: #e5e7eb;">
-                
                 <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: #374151;">
                     <i data-lucide="activity" size="16"></i>
                     Estatísticas

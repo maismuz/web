@@ -10,6 +10,10 @@ from datetime import date
 
 def validate_cpf(value):
     """Validador personalizado para CPF"""
+    # Se o valor estiver vazio, não precisa validar
+    if not value:
+        return
+        
     # Remove caracteres não numéricos
     cpf = re.sub(r'[^0-9]', '', value)
     
@@ -163,6 +167,8 @@ class Perfil(models.Model):
     cpf = models.CharField(
         max_length=14,
         unique=True,
+        blank=True,
+        null=True,
         validators=[validate_cpf],
         verbose_name=_('CPF')
     )
@@ -251,7 +257,11 @@ def create_user_profile(sender, instance, created, **kwargs):
     Cria automaticamente um perfil para cada usuário criado.
     """
     if created:
-        Perfil.objects.create(usuario=instance)
+        try:
+            Perfil.objects.create(usuario=instance)
+        except:
+            # Se já existe um perfil ou houve algum erro, ignora
+            pass
 
 
 

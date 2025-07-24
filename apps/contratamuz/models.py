@@ -61,7 +61,6 @@ class Servico(models.Model):
         verbose_name="Categoria"
     )
     contato = models.CharField(max_length=20, verbose_name="Telefone de Contato", blank=True)
-    telefone_contato = models.CharField(max_length=20, verbose_name="Telefone de Contato", blank=True)
     imagem = models.ImageField(
         upload_to='servicos/', 
         blank=True, 
@@ -125,12 +124,25 @@ class Servico(models.Model):
 
 
 class VagaEmprego(models.Model):
+    CATEGORIAS_CHOICES = [
+        ('musica', 'Música'),
+        ('audio', 'Áudio e Produção'),
+        ('eventos', 'Eventos'),
+        ('marketing', 'Marketing Musical'),
+        ('ensino', 'Ensino Musical'),
+        ('instrumentos', 'Instrumentos'),
+        ('tecnologia', 'Tecnologia Musical'),
+        ('administracao', 'Administração'),
+        ('vendas', 'Vendas'),
+        ('outros', 'Outros'),
+    ]
+    
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='vagas')
     titulo = models.CharField(max_length=100)
     descricao = models.TextField()
     salario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     localizacao = models.CharField(max_length=100)
-    categoria = models.CharField(max_length=100)
+    categoria = models.CharField(max_length=50, choices=CATEGORIAS_CHOICES, default='outros')
     criado_em = models.DateTimeField(auto_now_add=True)
     ativa = models.BooleanField(default=True)
 

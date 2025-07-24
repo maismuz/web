@@ -208,10 +208,17 @@
     });
     
     // Animação do botão de login
-    document.querySelector('.btn-login').addEventListener('click', function(e) {
-        if (this.form.checkValidity()) {
-            this.innerHTML = '<i data-lucide="loader-2" size="16" class="animate-spin"></i> Entrando...';
-            this.disabled = true;
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const button = this.querySelector('.btn-login');
+        if (this.checkValidity()) {
+            button.innerHTML = '<i data-lucide="loader-2" size="16" class="animate-spin"></i> Entrando...';
+            button.disabled = true;
+            // Reabilitar o botão após 5 segundos em caso de erro
+            setTimeout(() => {
+                button.innerHTML = '<i data-lucide="log-in" size="16"></i> Entrar';
+                button.disabled = false;
+                lucide.createIcons();
+            }, 5000);
         }
     });
 </script>

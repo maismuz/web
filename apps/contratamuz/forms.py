@@ -1,5 +1,5 @@
 from django import forms
-from .models import Usuario, Servico
+from .models import Usuario, Servico, VagaEmprego
 
 
 class UsuarioForm(forms.ModelForm):
@@ -44,7 +44,7 @@ class ServicoForm(forms.ModelForm):
     
     class Meta:
         model = Servico
-        fields = ['titulo', 'descricao', 'categoria', 'telefone_contato', 'imagem']
+        fields = ['titulo', 'descricao', 'categoria', 'contato', 'imagem']
         widgets = {
             'titulo': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -58,7 +58,7 @@ class ServicoForm(forms.ModelForm):
             'categoria': forms.Select(attrs={
                 'class': 'form-select'
             }),
-            'telefone_contato': forms.TextInput(attrs={
+            'contato': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': '(11) 99999-9999'
             }),
@@ -285,4 +285,46 @@ class PerfilForm(forms.ModelForm):
             self.fields['first_name'].initial = user.first_name
             self.fields['last_name'].initial = user.last_name
             self.fields['email'].initial = user.email
+
+
+class VagaEmpregoForm(forms.ModelForm):
+    """Formulário para criação e edição de vagas de emprego"""
+    
+    class Meta:
+        model = VagaEmprego
+        fields = ['titulo', 'descricao', 'categoria', 'localizacao', 'salario']
+        widgets = {
+            'titulo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: Produtor Musical, Professor de Piano, etc.'
+            }),
+            'descricao': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 6,
+                'placeholder': 'Descreva as responsabilidades, requisitos e benefícios da vaga...'
+            }),
+            'categoria': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'localizacao': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: São Paulo - SP, Remoto, etc.'
+            }),
+            'salario': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ex: 3000.00 (opcional)',
+                'step': '0.01'
+            }),
+        }
+        labels = {
+            'titulo': 'Título da Vaga',
+            'descricao': 'Descrição',
+            'categoria': 'Categoria',
+            'localizacao': 'Localização',
+            'salario': 'Salário (R$)',
+        }
+        help_texts = {
+            'salario': 'Campo opcional. Informe o valor em reais.',
+            'descricao': 'Inclua informações sobre responsabilidades, requisitos, benefícios e como se candidatar.',
+        }
 
