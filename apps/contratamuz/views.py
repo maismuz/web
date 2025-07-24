@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Usuario, Servico, VagaEmprego, Candidatura, Avaliacao
-from .forms import UsuarioForm, ServicoForm
+from .forms import UsuarioForm, ServicoForm, VagaEmpregoForm
 
 
 def inicial(request):
@@ -22,7 +22,7 @@ def inicial(request):
         'total_servicos': total_servicos,
         'total_prestadores': total_prestadores,
     }
-    return render(request, 'contratamuz/index.html', context)
+    return render(request, 'contratamuz/home.html', context)
 
 
 def listar_vagas(request):
@@ -104,7 +104,7 @@ def detalhe_servico(request, servico_id):
         'descricao': servico.descricao,
         'categoria': servico.get_categoria_display(),
         'categoria_icon': servico.get_categoria_display_icon(),
-        'telefone_contato': servico.telefone_contato or servico.contato,
+        'telefone_contato': servico.contato,
         'imagem_url': servico.imagem_url,
         'prestador': {
             'nome': servico.usuario.nome,
@@ -166,7 +166,7 @@ def contato(request):
 def login_view(request):
     """View para login de usuários"""
     if request.user.is_authenticated:
-        return redirect('index')
+        return redirect('home')
     
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -179,7 +179,7 @@ def login_view(request):
                 messages.success(request, f'Bem-vindo de volta, {user.first_name or user.username}!')
                 
                 # Redirecionar para a página solicitada ou home
-                next_url = request.GET.get('next', 'index')
+                next_url = request.GET.get('next', 'home')
                 return redirect(next_url)
             else:
                 messages.error(request, 'Usuário ou senha incorretos.')
@@ -192,7 +192,7 @@ def login_view(request):
 def register_view(request):
     """View para registro de novos usuários"""
     if request.user.is_authenticated:
-        return redirect('index')
+        return redirect('home')
     
     if request.method == 'POST':
         # Dados do usuário Django
@@ -247,10 +247,10 @@ def register_view(request):
                 # Fazer login automático
                 login(request, user)
                 messages.success(request, f'Conta criada com sucesso! Bem-vindo, {nome}!')
-                return redirect('index')
+                return redirect('home')
                 
             except Exception as e:
-                messages.error(request, 'Erro ao criar conta. Tente novamente.')
+                messages.error(request, f'Erro ao criar conta: {str(e)}')
     
     return render(request, 'contratamuz/auth/register.html')
 
@@ -262,7 +262,7 @@ def logout_view(request):
         logout(request)
         messages.success(request, f'Até logo, {nome}! Você foi desconectado com sucesso.')
     
-    return redirect('index')
+    return redirect('home')
 
 
 @login_required
@@ -352,4 +352,81 @@ def publicar_servico_auth(request):
         'form': form,
     }
     return render(request, 'contratamuz/publicar_servico.html', context)
+
+
+# Views de Vagas de Emprego
+
+def detalhe_vaga(request, vaga_id):
+    """Retorna detalhes da vaga em JSON para o modal"""
+    vaga = get_object_or_404(VagaEmprego, id=vaga_id)
+    
+    data = {
+        'id': vaga.id,
+        'titulo': vaga.titulo,
+        'descricao': vaga.descricao,
+        'categoria': vaga.categoria,
+        'localizacao': vaga.localizacao,
+        'salario': str(vaga.salario) if vaga.salario else None,
+        'empresa': {
+            'nome': vaga.usuario.nome,
+            'cidade': vaga.usuario.cidade,
+            'telefone': vaga.usuario.telefone,
+            'biografia': vaga.usuario.biografia,
+            'imagem_url': vaga.usuario.imagem_url,
+            'eh_empresa': vaga.usuario.eh_empresa,
+        },
+        'criado_em': vaga.criado_em.strftime('%d/%m/%Y') if vaga.criado_em else '',
+        'ativa': vaga.ativa,
+    }
+    
+    return JsonResponse(data)
+
+
+@login_required
+def publicar_vaga(request):
+    """Página para publicar uma nova vaga de emprego (apenas empresas)"""
+    try:
+        usuario = request.user.usuario
+        if not usuario.eh_empresa:
+            messages.error(request, 'Apenas empresas podem publicar vagas de emprego.')
+            return redirect('listar_vagas')
+    except Usuario.DoesNotExist:
+        messages.error(request, 'Você precisa completar seu perfil antes de publicar vagas.')
+        return redirect('perfil')
+    
+    if request.method == 'POST':
+        form = VagaEmpregoForm(request.POST)
+        if form.is_valid():
+            vaga = form.save(commit=False)
+            vaga.usuario = usuario
+            vaga.save()
+            
+            messages.success(request, 'Vaga publicada com sucesso!')
+            return redirect('minhas_vagas')
+    else:
+        form = VagaEmpregoForm()
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'contratamuz/publicar_vaga.html', context)
+
+
+@login_required
+def minhas_vagas_view(request):
+    """View para listar vagas do usuário logado (empresas)"""
+    try:
+        usuario = request.user.usuario
+        if not usuario.eh_empresa:
+            messages.error(request, 'Apenas empresas podem acessar esta página.')
+            return redirect('listar_vagas')
+        
+        vagas = VagaEmprego.objects.filter(usuario=usuario).order_by('-criado_em')
+    except Usuario.DoesNotExist:
+        vagas = []
+    
+    context = {
+        'vagas': vagas,
+    }
+    return render(request, 'contratamuz/auth/minhas_vagas.html', context)
 
